@@ -12,7 +12,7 @@
             </span>
         </div>
         <div class="col-md-6">
-            <a href="add-customer"><button class="btn btn-info text-light float-right">顧客を追加</button></a>>
+            <a href="/add-customer"><button class="btn btn-info text-light float-right">顧客を追加</button></a>
         </div>
     </form>
     <!-- 6件ずつページネーションさせる -->
