@@ -21,3 +21,5 @@ Route::get('/search', 'SearchController@index')->name('search');
 
 Route::get('/record', 'RecordController@index')->name('record');
 
+Route::get('/add-customer', 'AddCustomerController@index')->name('add-customer');
+
