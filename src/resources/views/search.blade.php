@@ -11,12 +11,14 @@
                 </button>
             </span>
         </div>
-        <div class="col-md-6"></div>
+        <div class="col-md-6">
+            <a href="add-customer"><button class="btn btn-info text-light float-right">顧客を追加</button></a>>
+        </div>
     </form>
     <!-- 6件ずつページネーションさせる -->
     <div class="table-responsive">
         <table class="table table-hover text-nowrap">
-            <caption>この表は横スクロールに対応しています</caption>
+            <caption>この表は横スクロールできます（挟画面時のみ）</caption>
             <thead class="thead-light">
                 <tr>
                     <th scope="col">顧客番号</th>
