@@ -15,7 +15,19 @@ class CreateAnnotationContentsTable extends Migration
     {
         Schema::create('annotation_contents', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('customer_id')->unsigned();
+            $table->integer('annotation_id')->unsigned();
+            $table->string('content');
             $table->timestamps();
+            
+            //外部キー制約
+            $table->foreign('customer_id')
+            ->references('id')->on('customers')
+            ->onDelete('cascade');
+
+            $table->foreign('annotation_id')
+            ->references('id')->on('annotation_titles')
+            ->onDelete('cascade');
         });
     }
 
