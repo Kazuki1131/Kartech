@@ -21,6 +21,7 @@ class CreateCustomersTable extends Migration
             $table->date('birthday');
             $table->string('tel');
             $table->string('email');
+            $table->text('memo');
             $table->timestamps()->useCurrent();
             
             //外部キー制約
