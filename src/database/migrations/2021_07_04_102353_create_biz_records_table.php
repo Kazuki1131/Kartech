@@ -17,7 +17,7 @@ class CreateBizRecordsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('customer_id')->unsigned();
             $table->integer('menu_id')->unsigned();
-            $table->string('note');
+            $table->text('note');
             $table->string('image');
             $table->date('visited_at');
             $table->timestamps();
