@@ -15,12 +15,13 @@ class CreateCustomersTable extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->Integer('user_id')->unsigned();
+            $table->integer('user_id')->unsigned();
             $table->string('name');
             $table->string('name_kana');
             $table->date('birthday');
             $table->string('tel');
             $table->string('email');
+            $table->text('memo');
             $table->timestamps()->useCurrent();
             
             //外部キー制約

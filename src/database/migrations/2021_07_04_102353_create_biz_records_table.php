@@ -15,7 +15,21 @@ class CreateBizRecordsTable extends Migration
     {
         Schema::create('biz_records', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('customer_id')->unsigned();
+            $table->integer('menu_id')->unsigned();
+            $table->text('note');
+            $table->string('image');
+            $table->date('visited_at');
             $table->timestamps();
+            
+            //外部キー制約
+            $table->foreign('customer_id')
+            ->references('id')->on('customers')
+            ->onDelete('cascade');
+
+            $table->foreign('menu_id')
+            ->references('id')->on('menus')
+            ->onDelete('cascade');
         });
     }
 
