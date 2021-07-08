@@ -26,10 +26,6 @@ class CreateBizRecordsTable extends Migration
             $table->foreign('customer_id')
             ->references('id')->on('customers')
             ->onDelete('cascade');
-
-            $table->foreign('menu_id')
-            ->references('id')->on('menus')
-            ->onDelete('cascade');
         });
     }
 
