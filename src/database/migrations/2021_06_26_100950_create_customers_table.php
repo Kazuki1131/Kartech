@@ -22,7 +22,7 @@ class CreateCustomersTable extends Migration
             $table->string('tel');
             $table->string('email');
             $table->text('memo');
-            $table->timestamps()->useCurrent();
+            $table->timestamps();
             
             //外部キー制約
             $table->foreign('user_id')

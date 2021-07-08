@@ -47,7 +47,7 @@
                     <p class="text-danger mb-0">メールアドレスを入力してください。</p>
                 </div>
                 <button type="submit" class="btn btn-success btn-lg d-block mx-auto mt-4">投稿する</button>
-                <a href="/">
+                <a href="{{ route('search') }}">
                     <button type="button" class="btn btn-secondary btn-lg d-block mx-auto mt-3">　戻る　</button>
                 </a>
             </form>
