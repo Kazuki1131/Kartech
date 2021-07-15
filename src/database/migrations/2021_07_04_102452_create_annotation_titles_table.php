@@ -15,7 +15,7 @@ class CreateAnnotationTitlesTable extends Migration
     {
         Schema::create('annotation_titles', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('user_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
             $table->string('title');
             $table->timestamps();
             
