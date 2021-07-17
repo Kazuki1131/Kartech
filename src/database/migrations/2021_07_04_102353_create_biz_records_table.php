@@ -15,13 +15,13 @@ class CreateBizRecordsTable extends Migration
     {
         Schema::create('biz_records', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('customer_id')->unsigned();
-            $table->integer('menu_id')->unsigned();
-            $table->text('note');
-            $table->string('image');
-            $table->date('visited_at');
+            $table->bigInteger('customer_id')->unsigned();
+            $table->bigInteger('menu_id')->unsigned();
+            $table->text('note')->nullable();
+            $table->string('image')->nullable();
+            $table->date('visited_at')->nullable();
             $table->timestamps();
-            
+
             //外部キー制約
             $table->foreign('customer_id')
             ->references('id')->on('customers')
