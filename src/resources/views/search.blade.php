@@ -33,9 +33,9 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($customers as $customer)
+                @foreach ($customers as $key => $customer)
                     <tr>
-                        <th scope="row">{{ $customer->id }}</th>
+                        <th scope="row">{{ $key + 1 }}</th>
                         <td><a href="/record">{{ $customer->name_kana }}</a></td>
                         @foreach ($lastVisitDates as $customerId => $lastVisitDate)
                             @if ($customer->id === $customerId)
@@ -47,7 +47,11 @@
                                 <td>{{ $visitedTime }}</td>
                             @endif
                         @endforeach
-                        <td>◯円</td>
+                        @foreach ($averagePurchasePrices as $customerId => $averagePurchasePrice)
+                            @if ($customer->id === $customerId)
+                                <td>{{ $averagePurchasePrice }}円</td>
+                            @endif
+                        @endforeach
                         <td>{{ $customer->tel }}</td>
                     </tr>
                 @endforeach
