@@ -2,7 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\AnnotationTitle;
+use App\Models\AnnotationTitle;
 use Faker\Generator as Faker;
 
 $factory->define(AnnotationTitle::class, function (Faker $faker) {
