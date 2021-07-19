@@ -1,12 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\User;
-use App\Customer;
-use App\Menu;
-use App\BizRecord;
-use App\AnnotationTitle;
-use App\AnnotationContent;
+use App\Models\{User, Customer, Menu, BizRecord, AnnotationTitle, AnnotationContent};
 
 class DatabaseSeeder extends Seeder
 {

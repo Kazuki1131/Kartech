@@ -2,7 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\AnnotationContent;
+use App\Models\AnnotationContent;
 use Faker\Generator as Faker;
 
 $factory->define(AnnotationContent::class, function (Faker $faker) {
