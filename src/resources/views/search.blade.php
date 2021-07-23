@@ -33,39 +33,33 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td><a href="/record">ヤマダハナコ</a></td>
-                    <td>{{ NOW() }}</td>
-                    <td>◯回</td>
-                    <td>◯円</td>
-                    <td>000-0000-0000</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>タナカタロウ</td>
-                    <td>{{ NOW() }}</td>
-                    <td>◯回</td>
-                    <td>◯円</td>
-                    <td>111-1111-1111</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>スズキイチロウ</td>
-                    <td>{{ NOW() }}</td>
-                    <td>◯回</td>
-                    <td>◯円</td>
-                    <td>222-2222-2222</td>
-                </tr>
+                @foreach ($customers as $customer)
+                    <tr>
+                        <th scope="row">{{ $customer->id }}</th>
+                        <td><a href="/record">{{ $customer->name_kana }}</a></td>
+                        @foreach ($lastVisitDates as $customerId => $lastVisitDate)
+                            @if ($customer->id === $customerId)
+                                <td>{{ $lastVisitDate }}</td>
+                            @endif
+                        @endforeach
+                        @foreach ($visitedTimes as $customerId => $visitedTime)
+                            @if ($customer->id === $customerId)
+                                <td>{{ $visitedTime }}</td>
+                            @endif
+                        @endforeach
+                        @foreach ($averagePurchasePrices as $customerId => $averagePurchasePrice)
+                            @if ($customer->id === $customerId)
+                                <td>{{ $averagePurchasePrice }}円</td>
+                            @endif
+                        @endforeach
+                        <td>{{ $customer->tel }}</td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-            <li class="page-item disabled"><a class="page-link" href="#"><</a></li>
-            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">></a></li>
-        </ul>
-    </nav>
+        <div class="text-center">
+            {{ $customers->links() }}
+        </div>
 </div>
 @endsection
