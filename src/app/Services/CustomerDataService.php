@@ -7,10 +7,10 @@ use Illuminate\Support\Facades\Auth;
 
 final class CustomerDataService
 {
-    //ログインユーザーに紐ずくcustomersテーブルのレコードを取得
+    //ログインユーザーに紐づく顧客レコードを取得
     private function getCustomers()
     {
-        $customers = Customer::where('user_id', 6)->paginate(10);
+        $customers = Customer::where('user_id', 3)->paginate(10);
         return $customers;
     }
 
@@ -44,7 +44,10 @@ final class CustomerDataService
         return $visitedTimes;
     }
 
-    //顧客ごとの平均単価を取得
+    /*
+     * 顧客ごとの平均単価を取得
+     * 要修正：メニューの金額を変更すると平均単価に影響してしまう
+     */
     private function averagePurchasePrices(): array
     {
         foreach ($this->getCustomers() as $customer) {

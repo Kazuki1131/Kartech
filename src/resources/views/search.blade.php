@@ -33,9 +33,9 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($customers as $key => $customer)
+                @foreach ($customers as $customer)
                     <tr>
-                        <th scope="row">{{ $key + 1 }}</th>
+                        <th scope="row">{{ $customer->id }}</th>
                         <td><a href="/record">{{ $customer->name_kana }}</a></td>
                         @foreach ($lastVisitDates as $customerId => $lastVisitDate)
                             @if ($customer->id === $customerId)
