@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\CustomerDataService;
 
-class RecordController extends Controller
+class CustomerController extends Controller
 {
     public function __construct()
     {
@@ -17,8 +17,9 @@ class RecordController extends Controller
         return view('customers.addition');
     }
 
-    public function detail()
+    public function detail(Request $request, CustomerDataService $data)
     {
-        return view('customers.detail');
+        $detailData = $data->detailDataList($request);
+        return view('customers.detail', $detailData);
     }
 }
