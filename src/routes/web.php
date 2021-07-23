@@ -17,9 +17,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/search', 'SearchController@index')->name('search');
+Route::get('/search-customer', 'SearchController@index')->name('customer.search');
 
-Route::get('/record', 'RecordController@index')->name('record');
+Route::get('/add-customer', 'CustomerController@create')->name('customer.create');
 
-Route::get('/add-customer', 'AddCustomerController@index')->name('add-customer');
-
+Route::get('/customer-details', 'CustomerController@detail')->name('customer.detail');

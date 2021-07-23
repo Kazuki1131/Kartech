@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\CustomerDataService;
 
 class RecordController extends Controller
 {
@@ -10,9 +11,14 @@ class RecordController extends Controller
     {
         $this->middleware('auth');
     }
-    
-    public function index()
+
+    public function create()
     {
-        return view('record');
-    } 
+        return view('customers.addition');
+    }
+
+    public function detail()
+    {
+        return view('customers.detail');
+    }
 }
