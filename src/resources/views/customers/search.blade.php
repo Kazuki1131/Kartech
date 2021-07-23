@@ -36,7 +36,10 @@
                 @foreach ($customers as $customer)
                     <tr>
                         <th scope="row">{{ $customer->id }}</th>
-                        <td><a href="/record">{{ $customer->name_kana }}</a></td>
+                        <td>
+                            <a href="{{ route('customer.detail', ['id' => $customer]) }}">
+                            {{ $customer->name_kana }}</a>
+                        </td>
                         @foreach ($lastVisitDates as $customerId => $lastVisitDate)
                             @if ($customer->id === $customerId)
                                 <td>{{ $lastVisitDate }}</td>

@@ -11,7 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    
+
     <!-- fontawesomeインストール -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
     <!-- Fonts -->
@@ -25,7 +25,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                    <a class="navbar-brand p-0" href="{{ url('search') }}">
+                    <a class="navbar-brand p-0" href="{{ route('customer.search') }}">
                         <h1>{{ config('app.name', 'home') }}</h1>
                     </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -48,7 +48,7 @@
                         @else
                             <li class="nav-item">
                                 @if (\Route::is('index'))
-                                    <a class="nav-link" href="{{ route('search') }}">カルテを検索する</a>
+                                    <a class="nav-link" href="{{ route('customer.search') }}">カルテを検索する</a>
                                 @endif
                             </li>
                             <li class="nav-item dropdown">

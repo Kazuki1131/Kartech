@@ -14,6 +14,6 @@ class SearchController extends Controller
 
     public function index(CustomerDataService $customer)
     {
-        return view('search', $customer->customerDataLists());
+        return view('customers.search', $customer->customerDataLists());
     }
 }
