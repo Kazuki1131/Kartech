@@ -7,24 +7,24 @@ use Illuminate\Support\Facades\Auth;
 
 final class CustomerDataService
 {
-    //ログインユーザーに紐づく顧客レコードをすべて取得
+    //顧客レコードをログインユーザーに紐づくものすべて取得
     private function getCustomers()
     {
         $customers = Customer::where('user_id', 3)->paginate(10);
         return $customers;
     }
 
-    //リクエストされた顧客レコードのみ取得
-    private function getRequestCustomer($request)
+    //顧客レコードをリクエストされたものだけ取得
+    private function getRequestCustomer(int $request)
     {
         $customer = Customer::where([
-            ['user_id', '=', 3],
-            ['id', '=', $request->id],
+            ['user_id', 3],
+            ['id', $request],
         ])->first();
         return $customer;
     }
 
-    //ログインユーザーに紐づく顧客すべての来店日を取得
+    //来店日を取得（ログインユーザーに紐づく顧客すべて）
     private function allVisitedAts(): array
     {
         foreach ($this->getCustomers() as $customer) {
@@ -34,16 +34,20 @@ final class CustomerDataService
         return $visitedAts;
     }
 
-    //リクエストされた顧客の来店日を取得
-    private function requestVisitedAts($request)
+    //来店日を取得（リクエストされた顧客のみ）
+    private function requestVisitedAts(int $request)
     {
-        $visitedAts = BizRecord::where('customer_id', $request->id)
+        $customer = $this->getRequestCustomer($request);
+        if(empty($customer->id)){
+            return [];
+        }
+        $visitedAts = BizRecord::where('customer_id', $customer->id)
         ->orderBy('visited_at', 'desc')->pluck('visited_at');
 
         return $visitedAts;
     }
 
-    //ログインユーザーに紐づく顧客すべての最終来店日を取得
+    //最終来店日を取得（ログインユーザーに紐づく顧客すべて）
     private function allLastVisitDates(): array
     {
         foreach ($this->getCustomers() as $customer) {
@@ -53,7 +57,7 @@ final class CustomerDataService
         return $lastVisitDates;
     }
 
-    //ログインユーザーに紐づく顧客すべての総来店回数を取得
+    //総来店回数を取得（ログインユーザーに紐づく顧客すべて）
     private function allVisitedTimes(): array
     {
         foreach ($this->getCustomers() as $customer) {
@@ -82,12 +86,16 @@ final class CustomerDataService
     }
 
     //リクエストされた顧客の平均単価を取得
-    private function requestAveragePurchasePrice($request)
+    private function requestAveragePurchasePrice(int $request): int
     {
+        $customer = $this->getRequestCustomer($request);
+        if(empty($customer->id)){
+            return 0;
+        }
         $notRoundedAveragePurchasePrice = BizRecord::select('price')
             ->join('menus', function ($join) use ($request) {
                 $join->on('menus.id', 'biz_records.menu_id')
-                ->where('customer_id', $request->id);
+                ->where('customer_id', $request);
             })->avg('price');
 
         return intval(round($notRoundedAveragePurchasePrice));
@@ -100,9 +108,9 @@ final class CustomerDataService
     }
 
     //リクエストされた顧客の補足情報をすべて取得
-    private function requestAnnotationContents($request)
+    private function requestAnnotationContents(int $request)
     {
-        return AnnotationContent::where('customer_id', $request->id)->get();
+        return AnnotationContent::where('customer_id', $request)->get();
     }
 
     public function customerDataLists(): array
@@ -115,11 +123,11 @@ final class CustomerDataService
         ];
     }
 
-    public function detailDataList($request): array
+    public function detailDataList(int $request): array
     {
         return [
             'customer' => $this->getRequestCustomer($request),
-            'lastVisitDate' => $this->requestVisitedAts($request)[0],
+            'lastVisitDate' => $this->requestVisitedAts($request)[0] ?? null,
             'visitedTimes' => count($this->requestVisitedAts($request)),
             'averagePurchasePrices' => $this->requestAveragePurchasePrice($request),
             'annotationTitles' => $this->requestAnnotationTitles(),

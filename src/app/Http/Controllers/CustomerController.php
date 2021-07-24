@@ -19,7 +19,10 @@ class CustomerController extends Controller
 
     public function detail(Request $request, CustomerDataService $data)
     {
-        $detailData = $data->detailDataList($request);
+        if(!is_numeric($request->id)){
+            return abort(404);
+        }
+        $detailData = $data->detailDataList($request->id);
         return view('customers.detail', $detailData);
     }
 }
