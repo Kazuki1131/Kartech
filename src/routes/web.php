@@ -11,14 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-})->name('index');
+Route::get('/top', function () {
+    return view('top');
+})->name('top');
 
 Auth::routes();
 
-Route::get('/search-customer', 'SearchController@index')->name('customer.search');
-
-Route::get('/add-customer', 'CustomerController@create')->name('customer.create');
-
-Route::get('/customer-details', 'CustomerController@detail')->name('customer.detail');
+Route::resource('customers', 'CustomerController');

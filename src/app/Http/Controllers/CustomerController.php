@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\CustomerRequest;
 use App\Services\CustomerDataService;
+use App\Models\Customer;
 
 class CustomerController extends Controller
 {
@@ -12,17 +14,27 @@ class CustomerController extends Controller
         $this->middleware('auth');
     }
 
-    public function create()
+    public function index(CustomerDataService $customer)
     {
-        return view('customers.addition');
+        return view('customers.index', $customer->customerDataLists());
     }
 
-    public function detail(Request $request, CustomerDataService $data)
+    public function create()
     {
-        if(!is_numeric($request->id)){
+        return view('customers.create');
+    }
+
+    public function store(CustomerRequest $request, Customer $customer)
+    {
+        return redirect()->route('customers.index')->with('flash_message', '新しい顧客を追加しました。');
+    }
+
+    public function show(Request $request, CustomerDataService $data)
+    {
+        if(!is_numeric($request->customer)){
             return abort(404);
         }
-        $detailData = $data->detailDataList($request->id);
-        return view('customers.detail', $detailData);
+        $showData = $data->showDataList($request->customer);
+        return view('customers.show', $showData);
     }
 }

@@ -12,7 +12,7 @@
             </span>
         </div>
         <div class="col-md-6">
-            <a href="/add-customer">
+            <a href="{{ route('customers.create') }}">
                 <button type="button" class="btn btn-info font-weight-bold
                 text-light float-right">顧客を追加</button>
             </a>
@@ -37,7 +37,7 @@
                     <tr>
                         <th scope="row">{{ $customer->id }}</th>
                         <td>
-                            <a href="{{ route('customer.detail', ['id' => $customer]) }}">
+                            <a href="{{ route('customers.show', ['customer' => $customer]) }}">
                             {{ $customer->name_kana }}</a>
                         </td>
                         @foreach ($lastVisitDates as $customerId => $lastVisitDate)
