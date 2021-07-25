@@ -123,7 +123,7 @@ final class CustomerDataService
         ];
     }
 
-    public function detailDataList(int $request): array
+    public function showDataList(int $request): array
     {
         return [
             'customer' => $this->getRequestCustomer($request),

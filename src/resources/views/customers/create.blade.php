@@ -8,12 +8,11 @@
         </div>
         <div class="card-body mx-auto w-75">
             <p class="text-center h6"><span class="text-danger">*</span>は入力必須項目です</p>
-            <form action="" method="post">
+            <form action="" method="POST">
+                @csrf
                 <div class="form-group mt-4">
-                    <label for="name_formal" class="mb-0">
-                        <h5><span class="text-danger">* </span>お客様名</h5>
-                    </label>
-                    <input type="text" class="form-control" id="name_formal"
+                    <label for="name_formal" class="mb-0"><h5>お客様名</h5></label>
+                    <input type="text" class="form-control" id="name"
                     name="title" maxlength="30" placeholder="山田花子" autofocus>
                     <p class="text-danger">名前は30文字以下で入力してください。</p>
                 </div>
@@ -47,7 +46,7 @@
                     <p class="text-danger mb-0">メールアドレスを入力してください。</p>
                 </div>
                 <button type="submit" class="btn btn-success btn-lg d-block mx-auto mt-4">投稿する</button>
-                <a href="{{ route('search') }}">
+                <a href="{{ route('customers.index') }}">
                     <button type="button" class="btn btn-secondary btn-lg d-block mx-auto mt-3">　戻る　</button>
                 </a>
             </form>
