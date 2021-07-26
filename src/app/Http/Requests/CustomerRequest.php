@@ -26,9 +26,9 @@ class CustomerRequest extends FormRequest
         return [
             'name' => 'required|string|max:30',
             'name_kana' => 'required|string|max:30',
-            'gender' => 'required|integer|digits:1',
+            'gender' => 'required|digits:1',
             'birthday' => 'required|date',
-            'tel' => 'required|string|url',
+            'tel' => 'required|digits_between:8,11',
             'email' => 'required|email',
         ];
     }
