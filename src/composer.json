@@ -14,6 +14,8 @@
         "laravel/tinker": "^2.5"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^2.6.5",
+        "doctrine/dbal": "^2.10",
         "facade/ignition": "^1.16.15",
         "fakerphp/faker": "^1.9.1",
         "laravel/ui": "1.x",
