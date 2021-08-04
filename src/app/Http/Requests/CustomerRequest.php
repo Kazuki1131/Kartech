@@ -24,12 +24,13 @@ class CustomerRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:30',
+            'name' => 'string|max:30',
             'name_kana' => 'required|string|max:30',
-            'gender' => 'required|digits:1',
-            'birthday' => 'required|date',
-            'tel' => 'required|digits_between:8,11',
-            'email' => 'required|email',
+            'gender' => 'digits:1',
+            'birthday' => 'date',
+            'tel' => 'digits_between:8,11',
+            'email' => 'email',
+            'memo' => 'string|max:1000',
         ];
     }
     public function attributes()
@@ -40,7 +41,8 @@ class CustomerRequest extends FormRequest
             'gender' => '性別',
             'birthday' => '生年月日',
             'tel' => '電話番号',
-            'email' => 'email',
+            'email' => 'メールアドレス',
+            'memo' => 'メモ'
         ];
     }
 }
