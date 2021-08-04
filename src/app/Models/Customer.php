@@ -41,6 +41,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Customer extends Model
 {
+    protected $fillable = ['user_id', 'name', 'name_kana', 'gender', 'birthday', 'tel', 'email', 'memo'];
     public function user()
     {
         return $this->belongsTo(User::class);
