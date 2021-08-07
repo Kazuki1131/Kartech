@@ -16,6 +16,9 @@
                         <li class="list-group-item">顧客番号：{{ $customer->id ?? '' }}</li>
                         <li class="list-group-item">生年月日：{{ $customer->birthday ?? '' }}</li>
                         <li class="list-group-item">電話番号：{{ $customer->tel ?? '' }}</li>
+                        <li class="list-group-item">
+                            性別：{{ $customer->gender ?  $customer->gender === 1 ? '女性' : '男性' : ''}}
+                        </li>
                         <li class="list-group-item">職業：{{ $customer->tel ?? '' }}</li>
                     </ul>
                 </div>
@@ -64,5 +67,8 @@
             </div>
         </div>
     </div>
+    <a href="{{ route('customers.index') }}">
+        <button type="button" class="btn btn-secondary btn-lg d-block mx-auto mt-3">　戻る　</button>
+    </a>
 </div>
 @endsection

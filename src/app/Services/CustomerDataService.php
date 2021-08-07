@@ -124,7 +124,7 @@ final class CustomerDataService
         return AnnotationContent::where('customer_id', $request)->get();
     }
 
-    public function customerDataLists(): array
+    public function indexDataList(): array
     {
         return [
             'customers' => $this->getCustomers(),

@@ -61,7 +61,7 @@
             </tbody>
         </table>
     </div>
-        <div class="text-center">
+        <div class="row justify-content-center">
             {{ $customers->links() }}
         </div>
 </div>

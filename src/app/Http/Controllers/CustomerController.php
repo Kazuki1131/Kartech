@@ -17,7 +17,7 @@ class CustomerController extends Controller
 
     public function index(CustomerDataService $customer)
     {
-        return view('customers.index', $customer->customerDataLists());
+        return view('customers.index', $customer->indexDataList());
     }
 
     public function create()
