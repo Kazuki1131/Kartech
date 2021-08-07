@@ -3,14 +3,14 @@
 namespace App\Services;
 
 use App\Models\{Customer, BizRecord, AnnotationTitle, AnnotationContent};
-use Illuminate\Support\Facades\Auth;
+use Auth;
 
 final class CustomerDataService
 {
     //顧客レコードをログインユーザーに紐づくものすべて取得
     private function getCustomers()
     {
-        $customers = Customer::where('user_id', 3)->paginate(10);
+        $customers = Customer::where('user_id', Auth::id())->paginate(10);
         return $customers;
     }
 
@@ -18,7 +18,7 @@ final class CustomerDataService
     private function getRequestCustomer(int $request)
     {
         $customer = Customer::where([
-            ['user_id', 3],
+            ['user_id', Auth::id()],
             ['id', $request],
         ])->first();
         return $customer;
@@ -28,8 +28,12 @@ final class CustomerDataService
     private function allVisitedAts(): array
     {
         foreach ($this->getCustomers() as $customer) {
-            $visitedAts[$customer->id] = BizRecord::where('customer_id', $customer->id)
-            ->orderBy('visited_at', 'desc')->pluck('visited_at');
+            if (BizRecord::where('customer_id', $customer->id)->exists()) {
+                $visitedAts[$customer->id] = BizRecord::where('customer_id', $customer->id)
+                ->orderBy('visited_at', 'desc')->pluck('visited_at');
+            } else {
+                $visitedAts[$customer->id] = null;
+            }
         }
         return $visitedAts;
     }
@@ -52,7 +56,7 @@ final class CustomerDataService
     {
         foreach ($this->getCustomers() as $customer) {
             $visitedAts = $this->allVisitedAts();
-            $lastVisitDates[$customer->id] = $visitedAts[$customer->id][0];
+            $lastVisitDates[$customer->id] =  $visitedAts[$customer->id][0] ?? null;
         }
         return $lastVisitDates;
     }
@@ -62,47 +66,54 @@ final class CustomerDataService
     {
         foreach ($this->getCustomers() as $customer) {
             $visitedAts = $this->allVisitedAts();
-            $visitedTimes[$customer->id] = count($visitedAts[$customer->id]);
+            $visitedTimes[$customer->id] = $visitedAts[$customer->id] ? count($visitedAts[$customer->id]) : 0;
         }
         return $visitedTimes;
     }
 
-    /*
+    /**
      * ログインユーザーに紐づく顧客すべての平均単価を取得
      * 要修正：メニューの金額を変更すると平均単価に影響してしまう
      */
-    private function allAveragePurchasePrices(): array
+    private function allAvgPurchasePrices(): array
     {
         foreach ($this->getCustomers() as $customer) {
-            $notRoundedAveragePurchasePrice = BizRecord::select('price')
-                ->join('menus', function ($join) use ($customer) {
-                    $join->on('menus.id', 'biz_records.menu_id')
-                    ->where('customer_id', $customer->id);
-                })->avg('price');
+            if (BizRecord::where('customer_id', $customer->id)->exists()){
+                $rawAvgPurchasePrice = BizRecord::select('price')
+                    ->join('menus', function ($join) use ($customer) {
+                        $join->on('menus.id', 'biz_records.menu_id')
+                        ->where('customer_id', $customer->id);
+                    })->avg('price');
 
-            $roundedAveragePurchasePrices[$customer->id] = intval(round($notRoundedAveragePurchasePrice));
+                $roundedAvgPurchasePrices[$customer->id] = intval(round($rawAvgPurchasePrice));
+            } else {
+                $roundedAvgPurchasePrices[$customer->id] = 0;
+            }
         }
-        return $roundedAveragePurchasePrices;
+        return $roundedAvgPurchasePrices;
     }
 
-    //リクエストされた顧客の平均単価を取得
-    private function requestAveragePurchasePrice(int $request): int
+    /**
+     * リクエストされた顧客の平均単価を取得
+     * 要修正：メニューの金額を変更すると平均単価に影響してしまう
+     */
+    private function requestAvgPurchasePrice(int $request): int
     {
         $customer = $this->getRequestCustomer($request);
         if(empty($customer->id)){
             return 0;
         }
-        $notRoundedAveragePurchasePrice = BizRecord::select('price')
+        $rawAvgPurchasePrice = BizRecord::select('price')
             ->join('menus', function ($join) use ($request) {
                 $join->on('menus.id', 'biz_records.menu_id')
                 ->where('customer_id', $request);
             })->avg('price');
 
-        return intval(round($notRoundedAveragePurchasePrice));
+        return intval(round($rawAvgPurchasePrice));
     }
 
     //ログインユーザーに紐づく顧客補足情報のタイトルをすべて取得
-    private function requestAnnotationTitles()
+    private function AnnotationTitles()
     {
         return AnnotationTitle::where('user_id', 3)->get();
     }
@@ -119,7 +130,7 @@ final class CustomerDataService
             'customers' => $this->getCustomers(),
             'lastVisitDates' => $this->allLastVisitDates(),
             'visitedTimes' => $this->allVisitedTimes(),
-            'averagePurchasePrices' => $this->allAveragePurchasePrices(),
+            'avgPurchasePrices' => $this->allAvgPurchasePrices(),
         ];
     }
 
@@ -129,8 +140,8 @@ final class CustomerDataService
             'customer' => $this->getRequestCustomer($request),
             'lastVisitDate' => $this->requestVisitedAts($request)[0] ?? null,
             'visitedTimes' => count($this->requestVisitedAts($request)),
-            'averagePurchasePrices' => $this->requestAveragePurchasePrice($request),
-            'annotationTitles' => $this->requestAnnotationTitles(),
+            'avgPurchasePrices' => $this->requestAvgPurchasePrice($request),
+            'annotationTitles' => $this->AnnotationTitles(),
             'annotationContents' => $this->requestAnnotationContents($request),
         ];
     }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CustomerRequest;
 use App\Services\CustomerDataService;
 use App\Models\Customer;
+use Auth;
 
 class CustomerController extends Controller
 {
