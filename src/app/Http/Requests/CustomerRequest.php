@@ -29,7 +29,7 @@ class CustomerRequest extends FormRequest
             'name_kana' => 'required|string|max:30',
             'gender' => 'nullable|digits:1',
             'birthday' => 'nullable|date',
-            'tel' => 'nullable|url',
+            'tel' => 'nullable|digits_between:8,11',
             'email' => 'nullable|email',
             'memo' => 'nullable|string|max:1000',
         ];
