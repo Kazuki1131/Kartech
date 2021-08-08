@@ -26,8 +26,8 @@
                     <ul class="list-group list-group-flush list-group-item-light">
                         <li class="list-group-item">最終来店日：{{ $lastVisitDate ?? '' }}</li>
                         <li class="list-group-item">総来店回数：{{ $visitedTimes ?? '' }}回</li>
-                        <li class="list-group-item">平均単価：{{ $averagePurchasePrices ?? '' }}円</li>
-                        <li class="list-group-item">アレルギー：{{ $averagePurchasePrices ?? '' }}円</li>
+                        <li class="list-group-item">平均単価：{{ $avgPurchasePrices ?? '' }}円</li>
+                        <li class="list-group-item">アレルギー：{{ $avgPurchasePrices ?? '' }}円</li>
                     </ul>
                 </div>
             </div>

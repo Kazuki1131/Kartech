@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CustomerRequest;
 use App\Services\CustomerDataService;
 use App\Models\Customer;
+use Auth;
 
 class CustomerController extends Controller
 {
@@ -26,6 +27,9 @@ class CustomerController extends Controller
 
     public function store(CustomerRequest $request, Customer $customer)
     {
+        $customer->user_id = Auth::id();
+        $customer->fill($request->all());
+        $customer->save();
         return redirect()->route('customers.index')->with('flash_message', '新しい顧客を追加しました。');
     }
 

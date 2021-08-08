@@ -47,12 +47,12 @@
                         @endforeach
                         @foreach ($visitedTimes as $customerId => $visitedTime)
                             @if ($customer->id === $customerId)
-                                <td>{{ $visitedTime }}</td>
+                                <td>{{ $visitedTime }}回</td>
                             @endif
                         @endforeach
-                        @foreach ($averagePurchasePrices as $customerId => $averagePurchasePrice)
+                        @foreach ($avgPurchasePrices as $customerId => $avgPurchasePrice)
                             @if ($customer->id === $customerId)
-                                <td>{{ $averagePurchasePrice }}円</td>
+                                <td>{{ $avgPurchasePrice }}円</td>
                             @endif
                         @endforeach
                         <td>{{ $customer->tel }}</td>
