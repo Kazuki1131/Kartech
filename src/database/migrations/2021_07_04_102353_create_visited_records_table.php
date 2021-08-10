@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBizRecordsTable extends Migration
+class CreateVisitedRecordsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateBizRecordsTable extends Migration
      */
     public function up()
     {
-        Schema::create('biz_records', function (Blueprint $table) {
+        Schema::create('visited_records', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('customer_id')->unsigned();
             $table->bigInteger('menu_id')->unsigned();
@@ -24,8 +24,8 @@ class CreateBizRecordsTable extends Migration
 
             //外部キー制約
             $table->foreign('customer_id')
-            ->references('id')->on('customers')
-            ->onDelete('cascade');
+                ->references('id')->on('customers')
+                ->onDelete('cascade');
         });
     }
 
@@ -36,6 +36,6 @@ class CreateBizRecordsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('biz_records');
+        Schema::dropIfExists('visited_records');
     }
 }

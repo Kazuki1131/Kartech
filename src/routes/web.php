@@ -18,3 +18,5 @@ Route::get('/top', function () {
 Auth::routes();
 
 Route::resource('customers', 'CustomerController');
+
+Route::resource('visited_records', 'VisitedRecordController');

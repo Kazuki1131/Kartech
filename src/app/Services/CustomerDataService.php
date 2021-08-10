@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\{Customer, BizRecord, AnnotationTitle, AnnotationContent};
+use App\Models\{Customer, VisitedRecord, AnnotationTitle, AnnotationContent};
 use Auth;
 
 final class CustomerDataService
@@ -28,9 +28,9 @@ final class CustomerDataService
     private function allVisitedAts(): array
     {
         foreach ($this->getCustomers() as $customer) {
-            if (BizRecord::where('customer_id', $customer->id)->exists()) {
-                $visitedAts[$customer->id] = BizRecord::where('customer_id', $customer->id)
-                ->orderBy('visited_at', 'desc')->pluck('visited_at');
+            if (VisitedRecord::where('customer_id', $customer->id)->exists()) {
+                $visitedAts[$customer->id] = VisitedRecord::where('customer_id', $customer->id)
+                    ->orderBy('visited_at', 'desc')->pluck('visited_at');
             } else {
                 $visitedAts[$customer->id] = null;
             }
@@ -42,11 +42,11 @@ final class CustomerDataService
     private function requestVisitedAts(int $request)
     {
         $customer = $this->getRequestCustomer($request);
-        if(empty($customer->id)){
+        if (empty($customer->id)) {
             return [];
         }
-        $visitedAts = BizRecord::where('customer_id', $customer->id)
-        ->orderBy('visited_at', 'desc')->pluck('visited_at');
+        $visitedAts = VisitedRecord::where('customer_id', $customer->id)
+            ->orderBy('visited_at', 'desc')->pluck('visited_at');
 
         return $visitedAts;
     }
@@ -78,11 +78,11 @@ final class CustomerDataService
     private function allAvgPurchasePrices(): array
     {
         foreach ($this->getCustomers() as $customer) {
-            if (BizRecord::where('customer_id', $customer->id)->exists()){
-                $rawAvgPurchasePrice = BizRecord::select('price')
+            if (VisitedRecord::where('customer_id', $customer->id)->exists()) {
+                $rawAvgPurchasePrice = VisitedRecord::select('price')
                     ->join('menus', function ($join) use ($customer) {
                         $join->on('menus.id', 'biz_records.menu_id')
-                        ->where('customer_id', $customer->id);
+                            ->where('customer_id', $customer->id);
                     })->avg('price');
 
                 $roundedAvgPurchasePrices[$customer->id] = intval(round($rawAvgPurchasePrice));
@@ -100,13 +100,13 @@ final class CustomerDataService
     private function requestAvgPurchasePrice(int $request): int
     {
         $customer = $this->getRequestCustomer($request);
-        if(empty($customer->id)){
+        if (empty($customer->id)) {
             return 0;
         }
-        $rawAvgPurchasePrice = BizRecord::select('price')
+        $rawAvgPurchasePrice = VisitedRecord::select('price')
             ->join('menus', function ($join) use ($request) {
                 $join->on('menus.id', 'biz_records.menu_id')
-                ->where('customer_id', $request);
+                    ->where('customer_id', $request);
             })->avg('price');
 
         return intval(round($rawAvgPurchasePrice));
