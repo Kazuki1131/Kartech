@@ -23,7 +23,7 @@ class VisitedRecordController extends Controller
      */
     public function create()
     {
-        //
+        return view('visited_records.create');
     }
 
     /**

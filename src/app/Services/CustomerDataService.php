@@ -7,11 +7,18 @@ use Auth;
 
 final class CustomerDataService
 {
+    /**
+     * @var bool
+     */
+    private $customerExists = true;
+
     //顧客レコードをログインユーザーに紐づくものすべて取得
     private function getCustomers()
     {
-        $customers = Customer::where('user_id', Auth::id())->paginate(10);
-        return $customers;
+        if (Customer::where('user_id', Auth::id())->exists()) {
+            return Customer::where('user_id', Auth::id())->paginate(10);
+        }
+        return $this->customerExists = false;
     }
 
     //顧客レコードをリクエストされたものだけ取得
@@ -27,15 +34,18 @@ final class CustomerDataService
     //来店日を取得（ログインユーザーに紐づく顧客すべて）
     private function allVisitedAts(): array
     {
-        foreach ($this->getCustomers() as $customer) {
-            if (VisitedRecord::where('customer_id', $customer->id)->exists()) {
-                $visitedAts[$customer->id] = VisitedRecord::where('customer_id', $customer->id)
-                    ->orderBy('visited_at', 'desc')->pluck('visited_at');
-            } else {
-                $visitedAts[$customer->id] = null;
+        if ($this->customerExists) {
+            foreach ($this->getCustomers() as $customer) {
+                if (VisitedRecord::where('customer_id', $customer->id)->exists()) {
+                    $visitedAts[$customer->id] = VisitedRecord::where('customer_id', $customer->id)
+                        ->orderBy('visited_at', 'desc')->pluck('visited_at');
+                } else {
+                    $visitedAts[$customer->id] = null;
+                }
             }
+            return $visitedAts;
         }
-        return $visitedAts;
+        return [];
     }
 
     //来店日を取得（リクエストされた顧客のみ）
@@ -45,30 +55,33 @@ final class CustomerDataService
         if (empty($customer->id)) {
             return [];
         }
-        $visitedAts = VisitedRecord::where('customer_id', $customer->id)
-            ->orderBy('visited_at', 'desc')->pluck('visited_at');
-
-        return $visitedAts;
+        return VisitedRecord::where('customer_id', $customer->id)->orderBy('visited_at', 'desc')->pluck('visited_at');
     }
 
     //最終来店日を取得（ログインユーザーに紐づく顧客すべて）
     private function allLastVisitDates(): array
     {
-        foreach ($this->getCustomers() as $customer) {
-            $visitedAts = $this->allVisitedAts();
-            $lastVisitDates[$customer->id] =  $visitedAts[$customer->id][0] ?? null;
+        if ($this->customerExists) {
+            foreach ($this->getCustomers() as $customer) {
+                $visitedAts = $this->allVisitedAts();
+                $lastVisitDates[$customer->id] =  $visitedAts[$customer->id][0] ?? null;
+            }
+            return $lastVisitDates;
         }
-        return $lastVisitDates;
+        return [];
     }
 
     //総来店回数を取得（ログインユーザーに紐づく顧客すべて）
     private function allVisitedTimes(): array
     {
-        foreach ($this->getCustomers() as $customer) {
-            $visitedAts = $this->allVisitedAts();
-            $visitedTimes[$customer->id] = $visitedAts[$customer->id] ? count($visitedAts[$customer->id]) : 0;
+        if ($this->customerExists) {
+            foreach ($this->getCustomers() as $customer) {
+                $visitedAts = $this->allVisitedAts();
+                $visitedTimes[$customer->id] = $visitedAts[$customer->id] ? count($visitedAts[$customer->id]) : 0;
+            }
+            return $visitedTimes;
         }
-        return $visitedTimes;
+        return [];
     }
 
     /**
@@ -77,20 +90,23 @@ final class CustomerDataService
      */
     private function allAvgPurchasePrices(): array
     {
-        foreach ($this->getCustomers() as $customer) {
-            if (VisitedRecord::where('customer_id', $customer->id)->exists()) {
-                $rawAvgPurchasePrice = VisitedRecord::select('price')
-                    ->join('menus', function ($join) use ($customer) {
-                        $join->on('menus.id', 'biz_records.menu_id')
-                            ->where('customer_id', $customer->id);
-                    })->avg('price');
+        if ($this->customerExists) {
+            foreach ($this->getCustomers() as $customer) {
+                if (VisitedRecord::where('customer_id', $customer->id)->exists()) {
+                    $rawAvgPurchasePrice = VisitedRecord::select('price')
+                        ->join('menus', function ($join) use ($customer) {
+                            $join->on('menus.id', 'biz_records.menu_id')
+                                ->where('customer_id', $customer->id);
+                        })->avg('price');
 
-                $roundedAvgPurchasePrices[$customer->id] = intval(round($rawAvgPurchasePrice));
-            } else {
-                $roundedAvgPurchasePrices[$customer->id] = 0;
+                    $roundedAvgPurchasePrices[$customer->id] = intval(round($rawAvgPurchasePrice));
+                } else {
+                    $roundedAvgPurchasePrices[$customer->id] = 0;
+                }
             }
+            return $roundedAvgPurchasePrices;
         }
-        return $roundedAvgPurchasePrices;
+        return [];
     }
 
     /**
