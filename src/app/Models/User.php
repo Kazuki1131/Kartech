@@ -69,6 +69,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function visited_record()
+    {
+        return $this->hasMany(VisitedRecord::class);
+    }
+
     public function customer()
     {
         return $this->hasMany(Customer::class);

@@ -8,9 +8,10 @@ use Illuminate\Database\Eloquent\Model;
  * App\Models\VisitedRecord
  *
  * @property int $id
+ * @property int $user_id
  * @property int $customer_id
  * @property int $menu_id
- * @property string|null $note
+ * @property string|null $memo
  * @property string|null $image
  * @property string|null $visited_at
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -31,6 +32,13 @@ use Illuminate\Database\Eloquent\Model;
  */
 class VisitedRecord extends Model
 {
+    protected $fillable = ['user_id', 'customer_id', 'menu_id', 'memo', 'image', 'visited_at'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function customer()
     {
         return $this->belongsTo(Customer::class);
