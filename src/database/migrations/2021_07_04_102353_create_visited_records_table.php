@@ -17,7 +17,7 @@ class CreateVisitedRecordsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('customer_id')->unsigned();
             $table->bigInteger('menu_id')->unsigned();
-            $table->text('note')->nullable();
+            $table->text('memo')->nullable();
             $table->string('image')->nullable();
             $table->date('visited_at')->nullable();
             $table->timestamps();

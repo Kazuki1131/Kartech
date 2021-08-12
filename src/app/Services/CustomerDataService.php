@@ -95,7 +95,7 @@ final class CustomerDataService
                 if (VisitedRecord::where('customer_id', $customer->id)->exists()) {
                     $rawAvgPurchasePrice = VisitedRecord::select('price')
                         ->join('menus', function ($join) use ($customer) {
-                            $join->on('menus.id', 'biz_records.menu_id')
+                            $join->on('menus.id', 'visited_records.menu_id')
                                 ->where('customer_id', $customer->id);
                         })->avg('price');
 
@@ -121,7 +121,7 @@ final class CustomerDataService
         }
         $rawAvgPurchasePrice = VisitedRecord::select('price')
             ->join('menus', function ($join) use ($request) {
-                $join->on('menus.id', 'biz_records.menu_id')
+                $join->on('menus.id', 'visited_records.menu_id')
                     ->where('customer_id', $request);
             })->avg('price');
 

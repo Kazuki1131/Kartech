@@ -63,6 +63,9 @@
                     <label for="email" class="mb-0"><h5>メールアドレス</h5></label>
                     <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}">
                 </div>
+                @error('email')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
                 <div class="form-group mt-4">
                     <label for="memo" class="mb-0"><h5>メモ</h5></label>
                     <textarea class="form-control" id="memo" name="memo">{{ old('memo') }}</textarea>
@@ -70,7 +73,7 @@
                 @error('memo')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
-                <button type="submit" class="btn btn-success btn-lg d-block mx-auto mt-4">投稿する</button>
+                <button type="submit" class="btn btn-success btn-lg d-block mx-auto mt-4">登録する</button>
                 <a href="{{ route('customers.index') }}">
                     <button type="button" class="btn btn-secondary btn-lg d-block mx-auto mt-3">　戻る　</button>
                 </a>

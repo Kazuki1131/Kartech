@@ -2,9 +2,9 @@
 
 @section('content')
 <div class="container">
-    <a href="{{ route('customers.create') }}">
+    <a href="{{ route('visited_records.create') }}">
         <button type="button" class="btn btn-info font-weight-bold
-        text-light float-right">来店記録の作成</button>
+        text-light float-right mb-2">来店記録の作成</button>
     </a>
     <div class="card mx-auto w-100">
         <div class="card-header p-2 h5 text-center">
