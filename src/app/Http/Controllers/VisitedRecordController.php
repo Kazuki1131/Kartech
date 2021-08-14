@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\VisitedRecordRequest;
+use App\Models\VisitedRecord;
+use Auth;
 
 class VisitedRecordController extends Controller
 {
@@ -21,20 +24,24 @@ class VisitedRecordController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('visited_records.create');
+        return view('visited_records.create', ['customerId' => $request->customer_id]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\VisitedRecordRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(VisitedRecordRequest $request, VisitedRecord $visitedRecord)
     {
-        //
+        $visitedRecord->user_id = Auth::id();
+        $visitedRecord->fill($request->all());
+        $visitedRecord->save();
+        return redirect()->route('customers.show',['customer' => $request->customer_id])
+            ->with('flash_message', '来店記録を追加しました。');
     }
 
     /**

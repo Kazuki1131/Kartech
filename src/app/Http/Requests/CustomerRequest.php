@@ -34,6 +34,7 @@ class CustomerRequest extends FormRequest
             'memo' => 'nullable|string|max:1000',
         ];
     }
+
     public function attributes()
     {
         return [

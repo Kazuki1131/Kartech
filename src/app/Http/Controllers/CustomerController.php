@@ -10,11 +10,6 @@ use Auth;
 
 class CustomerController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function index(CustomerDataService $customer)
     {
         return view('customers.index', $customer->indexDataList());

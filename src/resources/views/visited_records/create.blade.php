@@ -7,8 +7,9 @@
             <h3 class="text-center"><i class="fas fa-pen mr-2"></i>来店記録の作成</h3>
         </div>
         <div class="card-body mx-auto w-75">
-            <form action="{{ route('visited_records.store') }}" method="POST">
+            <form action="{{ route('visited_records.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                <input type="hidden" value="{{ $customerId }}" name="customer_id">
                 <div class="form-group mt-4">
                     <label for="visited_at" class="mb-0">来店日</label>
                     <input type="date" class="form-control" id="visited_at" value="{{ old('visited_at') }}"
@@ -28,10 +29,11 @@
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
                 <div class="form-group mt-4">
-                    <label for="photo" class="mb-0 h5">写真</label>
-                    <input type="file" class="form-control" id="photo" name="photo" value="{{ old('photo') }}">
+                    <label for="image" class="mb-0 h5">写真</label>
+                    <input type="file" class="form-control" id="image" name="image[]"
+                    value="{{ old('image') }}" multiple>
                 </div>
-                @error('photo')
+                @error('image')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
                 <div class="form-group mt-4">

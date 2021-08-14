@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <a href="{{ route('visited_records.create') }}">
+    <a href="{{ route('visited_records.create', ['customer_id' => $customer->id]) }}">
         <button type="button" class="btn btn-info font-weight-bold
         text-light float-right mb-2">来店記録の作成</button>
     </a>
@@ -41,30 +41,30 @@
                 <div class="col-md-6">
                     <ul class="list-group list-group-flush list-group-item-light mb-1">
                         @foreach($annotationTitles as $key => $title)
-                        @if($key % 2 == 0)
-                        <li class="list-group-item">{{ $title->title }}：
-                            @foreach($annotationContents as $content)
-                            @if($content->annotation_id == $title->id)
-                            {{ $content }}
+                            @if($key % 2 == 0)
+                                <li class="list-group-item">{{ $title->title }}：
+                                    @foreach($annotationContents as $content)
+                                        @if($content->annotation_id == $title->id)
+                                            {{ $content }}
+                                        @endif
+                                    @endforeach
+                                </li>
                             @endif
-                            @endforeach
-                        </li>
-                        @endif
                         @endforeach
                     </ul>
                 </div>
                 <div class="col-md-6">
                     <ul class="list-group list-group-flush list-group-item-light">
                         @foreach($annotationTitles as $key => $title)
-                        @unless($key % 2 == 0)
-                        <li class="list-group-item">{{ $title->title }}：
-                            @foreach($annotationContents as $content)
-                            @if($content->annotation_id == $title->id)
-                            {{ $content }}
-                            @endif
-                            @endforeach
-                        </li>
-                        @endunless
+                            @unless($key % 2 == 0)
+                                <li class="list-group-item">{{ $title->title }}：
+                                    @foreach($annotationContents as $content)
+                                        @if($content->annotation_id == $title->id)
+                                            {{ $content }}
+                                        @endif
+                                    @endforeach
+                                </li>
+                            @endunless
                         @endforeach
                     </ul>
                 </div>
