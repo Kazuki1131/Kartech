@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\AnnotationContent[] $annotation_content
  * @property-read int|null $annotation_content_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\BizRecord[] $biz_record
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\VisitedRecord[] $biz_record
  * @property-read int|null $biz_record_count
  * @property-read \App\Models\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|Customer newModelQuery()
@@ -42,6 +42,7 @@ use Illuminate\Database\Eloquent\Model;
 class Customer extends Model
 {
     protected $fillable = ['user_id', 'name', 'name_kana', 'gender', 'birthday', 'tel', 'email', 'memo'];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -49,7 +50,7 @@ class Customer extends Model
 
     public function biz_record()
     {
-        return $this->hasMany(BizRecord::class);
+        return $this->hasMany(VisitedRecord::class);
     }
 
     public function annotation_content()

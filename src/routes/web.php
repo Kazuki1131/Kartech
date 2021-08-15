@@ -11,10 +11,10 @@
 |
 */
 
-Route::get('/top', function () {
-    return view('top');
-})->name('top');
+Route::get('/', function () { return view('top'); })->name('top');
 
 Auth::routes();
 
-Route::resource('customers', 'CustomerController');
+Route::resource('customers', 'CustomerController')->middleware('auth');
+
+Route::resource('visited_records', 'VisitedRecordController')->middleware('auth');

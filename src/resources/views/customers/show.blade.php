@@ -2,6 +2,10 @@
 
 @section('content')
 <div class="container">
+    <a href="{{ route('visited_records.create', ['customer_id' => $customer->id]) }}">
+        <button type="button" class="btn btn-info font-weight-bold
+        text-light float-right mb-2">来店記録の作成</button>
+    </a>
     <div class="card mx-auto w-100">
         <div class="card-header p-2 h5 text-center">
             <i class="fas fa-user m-2 font-weight-bold text-secondary"></i>

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Models\{User, Customer, Menu, BizRecord, AnnotationTitle, AnnotationContent};
+use App\Models\{User, Customer, Menu, VisitedRecord, AnnotationTitle, AnnotationContent};
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,11 +12,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        factory(User::class, 100)->create();
-        factory(Customer::class, 1000)->create();
-        factory(Menu::class, 1000)->create();
-        factory(BizRecord::class, 3000)->create();
-        factory(AnnotationTitle::class, 500)->create();
-        factory(AnnotationContent::class, 1500)->create();
+        factory(User::class, 10)->create();
+        factory(Customer::class, 100)->create();
+        factory(Menu::class, 100)->create();
+        factory(VisitedRecord::class, 300)->create();
+        factory(AnnotationTitle::class, 50)->create();
+        factory(AnnotationContent::class, 150)->create();
     }
 }
