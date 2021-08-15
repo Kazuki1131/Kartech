@@ -11,7 +11,6 @@ $factory->define(VisitedRecord::class, function (Faker $faker) {
         'customer_id' => $faker->numberBetween($min = 1, $max = 100),
         'menu_id' => $faker->numberBetween($min = 1, $max = 100),
         'memo' => $faker->realText,
-        'image' => $faker->imageUrl,
         'visited_at' => $faker->date($format = 'Y-m-d', $max = 'now'),
     ];
 });

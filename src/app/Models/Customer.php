@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\AnnotationContent[] $annotation_content
  * @property-read int|null $annotation_content_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\VisitedRecord[] $visited_record
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\VisitedRecord[] $biz_record
  * @property-read int|null $biz_record_count
  * @property-read \App\Models\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|Customer newModelQuery()

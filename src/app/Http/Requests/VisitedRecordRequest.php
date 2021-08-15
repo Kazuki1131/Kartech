@@ -28,7 +28,7 @@ class VisitedRecordRequest extends FormRequest
             'customer_id' => 'required|integer',
             'visited_at' => 'nullable|date',
             'menu' => 'nullable|digits:1',
-            'image.*' => 'nullable|image|mimes:jpeg, png, gif, bmp',
+            'images.*' => 'nullable|image|max:30000',
             'memo' => 'nullable|string|max:1000',
         ];
     }
@@ -38,8 +38,15 @@ class VisitedRecordRequest extends FormRequest
         return [
             'visited_at' => '来店日',
             'menu' => '提供メニュー',
-            'image.*' => '写真',
+            'images.*' => '写真',
             'memo' => 'お客様メモ',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'images.*.max' => '一度に送信できるのは30メガバイトまでです。',
         ];
     }
 }

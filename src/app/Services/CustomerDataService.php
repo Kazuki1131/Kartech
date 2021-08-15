@@ -12,7 +12,7 @@ final class CustomerDataService
      */
     private $customerExists = true;
 
-    //顧客レコードをログインユーザーに紐づくものすべて取得
+    //ログインユーザーに紐づく顧客をすべて取得
     private function getCustomers()
     {
         if (Customer::where('user_id', Auth::id())->exists()) {
@@ -21,8 +21,8 @@ final class CustomerDataService
         return $this->customerExists = false;
     }
 
-    //顧客レコードをリクエストされたものだけ取得
-    private function getRequestCustomer(int $request)
+    //リクエストされた顧客だけ取得
+    private function getOrderedCustomer(int $request)
     {
         $customer = Customer::where([
             ['user_id', Auth::id()],
@@ -51,7 +51,7 @@ final class CustomerDataService
     //来店日を取得（リクエストされた顧客のみ）
     private function requestVisitedAts(int $request)
     {
-        $customer = $this->getRequestCustomer($request);
+        $customer = $this->getOrderedCustomer($request);
         if (empty($customer->id)) {
             return [];
         }
@@ -115,7 +115,7 @@ final class CustomerDataService
      */
     private function requestAvgPurchasePrice(int $request): int
     {
-        $customer = $this->getRequestCustomer($request);
+        $customer = $this->getOrderedCustomer($request);
         if (empty($customer->id)) {
             return 0;
         }
@@ -153,7 +153,7 @@ final class CustomerDataService
     public function showDataList(int $request): array
     {
         return [
-            'customer' => $this->getRequestCustomer($request),
+            'customer' => $this->getOrderedCustomer($request),
             'lastVisitDate' => $this->requestVisitedAts($request)[0] ?? null,
             'visitedTimes' => count($this->requestVisitedAts($request)),
             'avgPurchasePrices' => $this->requestAvgPurchasePrice($request),

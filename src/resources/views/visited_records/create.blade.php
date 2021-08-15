@@ -30,10 +30,9 @@
                 @enderror
                 <div class="form-group mt-4">
                     <label for="image" class="mb-0 h5">写真</label>
-                    <input type="file" class="form-control" id="image" name="image[]"
-                    value="{{ old('image') }}" multiple>
+                    <input type="file" class="form-control" id="image" name="images[]" accept="image/*" multiple>
                 </div>
-                @error('image')
+                @error('image.*')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
                 <div class="form-group mt-4">
