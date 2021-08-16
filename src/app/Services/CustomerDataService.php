@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Models\{Customer, VisitedRecord, AnnotationTitle, AnnotationContent};
@@ -99,7 +101,7 @@ final class CustomerDataService
                                 ->where('customer_id', $customer->id);
                         })->avg('price');
 
-                    $roundedAvgPurchasePrices[$customer->id] = intval(round($rawAvgPurchasePrice));
+                    $roundedAvgPurchasePrices[$customer->id] = intval(round($rawAvgPurchasePrice ?? 0));
                 } else {
                     $roundedAvgPurchasePrices[$customer->id] = 0;
                 }
@@ -125,7 +127,7 @@ final class CustomerDataService
                     ->where('customer_id', $request);
             })->avg('price');
 
-        return intval(round($rawAvgPurchasePrice));
+        return intval(round($rawAvgPurchasePrice ?? 0));
     }
 
     //ログインユーザーに紐づく顧客補足情報のタイトルをすべて取得
