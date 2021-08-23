@@ -1,0 +1,14 @@
+.image {
+    display: flex;
+    overflow-x: scroll;
+    text-align: center;
+}
+
+.image img {
+    width: 35vw;
+    padding: 2vw;
+}
+
+.bg-origin-blue {
+    background-color: #eff6fd;
+}

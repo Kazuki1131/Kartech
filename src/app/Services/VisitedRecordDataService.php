@@ -24,7 +24,7 @@ final class VisitedRecordDataService
      *
      * @return Illuminate\Database\Eloquent\Collection
      */
-    public function getVisitedRecord(int $request)
+    public function getVisitedRecords(int $request)
     {
         $this->visitedRecordExist = VisitedRecord::where([
             ['user_id', Auth::id()],
@@ -49,7 +49,7 @@ final class VisitedRecordDataService
     /**
      * @return Illuminate\Database\Eloquent\Collection
      */
-    public function getImagePath($request)
+    public function getImagePaths()
     {
         if ($this->visitedRecordExist) {
             foreach ($this->visitedRecordPrimaryId as $id){
@@ -67,8 +67,8 @@ final class VisitedRecordDataService
     public function showDataList(int $request): array
     {
         return [
-            'visitedAts' => $this->getVisitedRecord($request),
-            'imagePaths' => $this->getImagePath($request),
+            'visitedRecords' => $this->getVisitedRecords($request),
+            'imagePaths' => $this->getImagePaths(),
         ];
     }
 }

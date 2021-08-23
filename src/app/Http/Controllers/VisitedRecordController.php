@@ -44,9 +44,10 @@ class VisitedRecordController extends Controller
 
         if ($request->hasFile('images')){
             foreach ($request->images as $image){
-                DB::table('photos')->insert([
-                    ['record_id' => $visitedRecord->id, 'image_path' => $image->store('public/uploads')]
-                ]);
+                DB::table('photos')->insert([[
+                    'record_id' => $visitedRecord->id,
+                    'image_path' => $image->store('public/uploads')
+                    ]]);
             }
         }
 
