@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property int $user_id
+ * @property int $control_number
  * @property string|null $name
  * @property string $name_kana
  * @property int|null $gender
@@ -22,11 +23,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read int|null $annotation_content_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\VisitedRecord[] $biz_record
  * @property-read int|null $biz_record_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\QuestionnaireAnswer[] $questionnaire_answer
+ * @property-read int|null $questionnaire_answer_count
  * @property-read \App\Models\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|Customer newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Customer newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Customer query()
  * @method static \Illuminate\Database\Eloquent\Builder|Customer whereBirthday($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Customer whereControlNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Customer whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Customer whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Customer whereGender($value)
@@ -56,5 +60,10 @@ class Customer extends Model
     public function annotation_content()
     {
         return $this->hasMany(AnnotationContent::class);
+    }
+
+    public function questionnaire_answer()
+    {
+        return $this->hasMany(QuestionnaireAnswer::class);
     }
 }

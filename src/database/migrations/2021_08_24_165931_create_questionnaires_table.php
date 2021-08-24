@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCustomersTable extends Migration
+class CreateQuestionnairesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,11 @@ class CreateCustomersTable extends Migration
      */
     public function up()
     {
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create('questionnaires', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned();
-            $table->bigInteger('control_number')->unsigned();
-            $table->string('name')->nullable();
-            $table->string('name_kana');
-            $table->tinyInteger('gender')->nullable();
-            $table->date('birthday')->nullable();
-            $table->string('tel')->nullable();
-            $table->string('email')->nullable();
-            $table->text('memo')->nullable();
+            $table->string('item');
+            $table->string('entry_example');
             $table->timestamps();
 
             //外部キー制約
@@ -40,6 +34,6 @@ class CreateCustomersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('questionnaires');
     }
 }
