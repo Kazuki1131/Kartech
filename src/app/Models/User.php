@@ -25,6 +25,8 @@ use Illuminate\Notifications\Notifiable;
  * @property-read int|null $menu_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\AnnotationTitle[] $questionnaire
+ * @property-read int|null $questionnaire_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\VisitedRecord[] $visited_record
  * @property-read int|null $visited_record_count
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
@@ -87,6 +89,11 @@ class User extends Authenticatable
     }
 
     public function annotation_title()
+    {
+        return $this->hasMany(AnnotationTitle::class);
+    }
+
+    public function questionnaire()
     {
         return $this->hasMany(AnnotationTitle::class);
     }
