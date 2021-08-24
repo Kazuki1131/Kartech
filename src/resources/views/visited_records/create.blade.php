@@ -43,9 +43,9 @@
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
                 <button type="submit" class="btn btn-success btn-lg d-block mx-auto mt-4">作成する</button>
-                <a href="{{ route('customers.index') }}">
-                    <button type="button" class="btn btn-secondary btn-lg d-block mx-auto mt-3">　戻る　</button>
-                </a>
+                <button type="button" class="btn btn-secondary btn-lg d-block mx-auto mt-3">
+                    <a href="{{ route('customers.index') }}" class="mx-3">戻る</a>
+                </button>
             </form>
         </div>
     </div>

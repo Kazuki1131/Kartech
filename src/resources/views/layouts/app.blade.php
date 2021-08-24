@@ -24,10 +24,10 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-origin-body">
             <div class="container">
                     <a class="navbar-brand p-0" href="{{ route('customers.index') }}">
-                        <h1>{{ config('app.name', 'home') }}</h1>
+                        <h1 class="font-origin-title">{{ config('app.name', 'home') }}</h1>
                     </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
