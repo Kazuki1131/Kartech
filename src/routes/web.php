@@ -18,3 +18,5 @@ Auth::routes();
 Route::resource('customers', 'CustomerController')->middleware('auth');
 
 Route::resource('visited_records', 'VisitedRecordController')->middleware('auth');
+
+Route::resource('questionnaires', 'QuestionnaireController')->middleware('auth');

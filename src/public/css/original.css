@@ -20,12 +20,17 @@ html {
 }
 
 .font-origin-btn {
+    color: #ffffff;
     font-family: "Arial";
-    font-weight: 200;
+    font-weight: 500;
 }
 
 .bg-origin-btn {
     background-color: #a2a7a7c4;
+}
+
+.bg-origin-btn2 {
+    background-color: #6d590069;
 }
 
 .font-origin-head {
@@ -70,4 +75,27 @@ html {
 .btn a:active {
     color: white;
     text-decoration: none;
+}
+
+.answerStyle {
+    margin: 10px 0;
+}
+
+input.q_option {
+    display: inline-block;
+    width: 75%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    color: #555;
+}
+
+input.pluralBtn {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 5px;
+    padding: 0;
+    margin: 0;
 }

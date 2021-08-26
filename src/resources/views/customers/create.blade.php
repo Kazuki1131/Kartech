@@ -7,8 +7,7 @@
             <h3 class="text-center"><i class="fas fa-pen mr-2"></i>顧客情報登録</h3>
         </div>
         <div class="card-body mx-auto w-75">
-            <p class="text-center h6"><span class="text-danger">*</span>は入力必須項目です</p>
-            <form action="{{ route('customers.store') }}" method="POST">
+            <form action="{{ route('customers.store') }}" method="POST" autocomplete="off">
                 @csrf
                 <div class="form-group mt-4">
                     <label for="name" class="mb-0"><h5>お客様名</h5></label>
@@ -20,7 +19,7 @@
                 @enderror
                 <div class="form-group mt-4">
                     <label for="name_kana" class="mb-0">
-                        <h5><span class="text-danger">* </span>お客様名(カナ)</h5>
+                        <h5>お客様名(カナ)</h5>
                     </label>
                     <input type="text" class="form-control" id="name_kana" value="{{ old('name_kana') }}"
                     name="name_kana" maxlength="30" placeholder="ヤマダハナコ">
@@ -67,14 +66,15 @@
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
                 <div class="form-group mt-4">
-                    <label for="memo" class="mb-0"><h5>メモ</h5></label>
+                    <label for="memo" class="mb-0"><h5>ご要望</h5></label>
                     <textarea class="form-control" id="memo" name="memo">{{ old('memo') }}</textarea>
                 </div>
                 @error('memo')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
-                <button type="submit" class="btn btn-success btn-lg d-block mx-auto mt-4">登録する</button>
-                <button type="button" class="btn btn-secondary btn-lg d-block mx-auto mt-3">
+                <div class="h3 text-center mt-4">アンケートにご協力ください</div>
+                <button type="submit" class="btn bg-origin-btn2 font-origin-btn btn-lg d-block mx-auto mt-4">登録する</button>
+                <button type="button" class="btn bg-origin-btn btn-lg d-block mx-auto mt-3">
                     <a href="{{ route('customers.index') }}" class="mx-3">戻る</a>
                 </button>
             </form>
