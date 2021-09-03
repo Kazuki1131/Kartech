@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\QuestionnaireRequest;
+use App\Services\InsertIntoDatabaseService;
 
 class QuestionnaireController extends Controller
 {
@@ -29,12 +31,13 @@ class QuestionnaireController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Request\QuestionnaireRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(QuestionnaireRequest $request, InsertIntoDatabaseService $insertService)
     {
-        //
+        $insertService->questionnaires($request);
+        return redirect()->route('questionnaires.create')->with('flash_message', '新しいアンケートを追加しました。');
     }
 
     /**
