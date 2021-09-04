@@ -58,17 +58,4 @@ final class VisitedRecordDataService
             return $ImagePaths;
         }
     }
-
-    /**
-     * @property int $request
-     *
-     * @return array
-     */
-    public function showDataList(int $request): array
-    {
-        return [
-            'visitedRecords' => $this->getVisitedRecords($request),
-            'imagePaths' => $this->getImagePaths(),
-        ];
-    }
 }
