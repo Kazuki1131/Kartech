@@ -19,10 +19,14 @@ function formSwitch() {
 }
 window.addEventListener("load", formSwitch());
 
+var i = 1;
 $(document).on("click", ".addSingleAnswer", function() {
-    $("#inputSingleAnswer")
-        .clone(true)
-        .insertAfter($("#inputSingleAnswer"));
+    var clone = $("#inputSingleAnswer").clone(true);
+    var input = clone.children(".q_option");
+    input.attr("name", "singleAnswers[" + i + "]");
+    input.val("");
+    clone.insertBefore($("#addSingle"));
+    i++;
 });
 $(".deleteSingleAnswer").on("click", function() {
     if ($("#singleAnswer #inputSingleAnswer").length > 1) {
@@ -33,9 +37,12 @@ $(".deleteSingleAnswer").on("click", function() {
 });
 
 $(document).on("click", ".addMultipleAnswer", function() {
-    $("#inputMultipleAnswer")
-        .clone(true)
-        .insertAfter($("#inputMultipleAnswer"));
+    var clone = $("#inputMultipleAnswer").clone(true);
+    var input = clone.children(".q_option");
+    input.attr("name", "multipleAnswers[" + i + "]");
+    input.val("");
+    clone.insertBefore($("#addMultiple"));
+    i++;
 });
 $(".deleteMultipleAnswer").on("click", function() {
     if ($("#multipleAnswers #inputMultipleAnswer").length > 1) {

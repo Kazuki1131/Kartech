@@ -4,7 +4,7 @@
 <div class="container">
     <div class="card mx-auto w-100">
         <div class="card-header">
-            <h3 class="text-center"><i class="fas fa-pen mr-2"></i>顧客情報登録</h3>
+            <h3 class="text-center"><i class="fas fa-pen mr-2"></i>お客様情報入力</h3>
         </div>
         <div class="card-body mx-auto w-75">
             <form action="{{ route('customers.store') }}" method="POST" autocomplete="off">
@@ -67,13 +67,51 @@
                 @enderror
                 <div class="form-group mt-4">
                     <label for="memo" class="mb-0"><h5>ご要望</h5></label>
-                    <textarea class="form-control" id="memo" name="memo">{{ old('memo') }}</textarea>
+                    <textarea class="form-control" id="memo" name="memo" cols="30" rows="3" maxlength="1000">{{ old('memo') }}</textarea>
                 </div>
                 @error('memo')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
-                <div class="h3 text-center mt-4">アンケートにご協力ください</div>
-                <button type="submit" class="btn bg-origin-btn2 font-origin-btn btn-lg d-block mx-auto mt-4">登録する</button>
+                @isset($questionnaireList)
+                    <div class="h4 text-center mt-4">アンケートにご協力ください</div>
+                    @foreach($questionnaireList as $id => $questionnaire)
+                        @if($questionnaire['type'] === 0)
+                            <div class="h5 mt-4">{{ $questionnaire['item'] }}</div>
+                            <div class="form-group">
+                                <textarea name="answer_text[{{ $id }}]" class="form-control" cols="30" rows="3" maxlength="1000">{{ old("answer_text.$id") }}</textarea>
+                            </div>
+                            @error('answer_text.*')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        @elseif($questionnaire['type'] === 1)
+                            <div class="h5 mt-4">{{ $questionnaire['item'] }}</div>
+                            <div class="form-group">
+                                <select name="answer_select[{{ $id }}]" class="form-control">
+                                    <option value="">選択してください</option>
+                                    @foreach($questionnaire['options'] as $option)
+                                    <option value="{{ $option }}" {{ old("answer_select.$id") == "$option" ? 'selected' : '' }}>{{ $option }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            @error('answer_select.*')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        @elseif($questionnaire['type'] === 2)
+                            <div class="h5 mt-4">{{ $questionnaire['item'] }}（複数回答可）</div>
+                            @foreach($questionnaire['options'] as $index => $option)
+                                <div class="form-check form-check-inline">
+                                    <input name="answer_check[{{$id}}][{{$index}}]" type="checkbox" id="{{ $index }}" value="{{ $option }}"
+                                    class="form-check-input" {{ old("answer_check.$id.$index") === "$option" ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="{{ $index }}">{{ $option }}</label>
+                                </div>
+                            @endforeach
+                            @error('answer_check.*.*')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        @endif
+                    @endforeach
+                @endisset
+                <button type="submit" class="btn btn-origin btn-lg d-block mx-auto mt-4"><span class="mx-3">完了</span></button>
                 <button type="button" class="btn bg-origin-btn btn-lg d-block mx-auto mt-3">
                     <a href="{{ route('customers.index') }}" class="mx-3">戻る</a>
                 </button>

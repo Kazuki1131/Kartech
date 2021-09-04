@@ -19,18 +19,15 @@ html {
     background-color: #d8d3bd69;
 }
 
-.font-origin-btn {
+.btn-origin {
     color: #ffffff;
     font-family: "Arial";
     font-weight: 500;
+    background-color: #6d590069;
 }
 
 .bg-origin-btn {
     background-color: #a2a7a7c4;
-}
-
-.bg-origin-btn2 {
-    background-color: #6d590069;
 }
 
 .font-origin-head {

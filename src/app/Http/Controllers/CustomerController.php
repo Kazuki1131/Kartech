@@ -4,45 +4,31 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CustomerRequest;
-use App\Services\{CustomerDataService, VisitedRecordDataService};
-use App\Models\Customer;
-use Auth;
+use App\Services\{CustomerDataService, QuestionnaireDataService, InsertIntoDatabaseService, ShowDataService};
 
 class CustomerController extends Controller
 {
-    private $customerDataService;
-
-    public function __construct(CustomerDataService $customerDataService)
+    public function index(CustomerDataService $customer)
     {
-        $this->customerDataService = $customerDataService;
+        return view('customers.index', $customer->indexDataList());
     }
 
-    public function index()
+    public function create(QuestionnaireDataService $questionnaire)
     {
-        return view('customers.index', $this->customerDataService->indexDataList());
+        return view('customers.create', $questionnaire->questionnaireDataList());
     }
 
-    public function create()
+    public function store(CustomerRequest $request, InsertIntoDatabaseService $insertService)
     {
-        return view('customers.create');
-    }
-
-    public function store(CustomerRequest $request, Customer $customer)
-    {
-        $customer->user_id = Auth::id();
-        $customer->fill($request->all());
-        $customer->save();
+        $insertService->customers($request);
         return redirect()->route('customers.index')->with('flash_message', '新しい顧客を追加しました。');
     }
 
-    public function show(Request $request, VisitedRecordDataService $record)
+    public function show(Request $request, ShowDataService $showDataList)
     {
         if(!is_numeric($request->customer)){
             return abort(404);
         }
-        return view('customers.show',
-            $this->customerDataService->showDataList($request->customer),
-            $record->showDataList($request->customer),
-        );
+        return view('customers.show', $showDataList->customer($request->customer));
     }
 }
