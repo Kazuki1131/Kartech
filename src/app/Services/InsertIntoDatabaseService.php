@@ -94,7 +94,7 @@ final class InsertIntoDatabaseService
             foreach ($request->images as $image){
                 $insertData[] = [
                     'record_id' => $visitedRecord->id,
-                    'image_path' => $image->store('public/uploads')
+                    'image_path' => $image->store('images', 's3', 'public')
                 ];
             }
             DB::table('photos')->insert($insertData);

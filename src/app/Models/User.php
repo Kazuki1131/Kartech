@@ -88,11 +88,6 @@ class User extends Authenticatable
         return $this->hasMany(Menu::class);
     }
 
-    public function annotation_title()
-    {
-        return $this->hasMany(AnnotationTitle::class);
-    }
-
     public function questionnaire()
     {
         return $this->hasMany(AnnotationTitle::class);

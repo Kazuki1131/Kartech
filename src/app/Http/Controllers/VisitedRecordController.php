@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\VisitedRecordRequest;
-use App\Models\VisitedRecord;
-use Auth;
-use DB;
+use App\Services\InsertIntoDatabaseService;
 
 class VisitedRecordController extends Controller
 {
@@ -36,21 +34,9 @@ class VisitedRecordController extends Controller
      * @param  App\Http\Requests\VisitedRecordRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(VisitedRecordRequest $request, VisitedRecord $visitedRecord)
+    public function store(VisitedRecordRequest $request, InsertIntoDatabaseService $insertService)
     {
-        $visitedRecord->user_id = Auth::id();
-        $visitedRecord->fill($request->all());
-        $visitedRecord->save();
-
-        if ($request->hasFile('images')){
-            foreach ($request->images as $image){
-                DB::table('photos')->insert([[
-                    'record_id' => $visitedRecord->id,
-                    'image_path' => $image->store('public/uploads')
-                    ]]);
-            }
-        }
-
+        $insertService->visitedRecords($request);
         return redirect()->route('customers.show',['customer' => $request->customer_id])
             ->with('flash_message', '来店記録を追加しました。');
     }

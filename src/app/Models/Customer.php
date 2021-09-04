@@ -45,7 +45,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Customer extends Model
 {
-    protected $fillable = ['user_id', 'name', 'name_kana', 'gender', 'birthday', 'tel', 'email', 'memo'];
+    protected $fillable = ['user_id', 'control_number', 'name', 'name_kana', 'gender', 'birthday', 'tel', 'email', 'memo'];
 
     public function user()
     {
@@ -55,11 +55,6 @@ class Customer extends Model
     public function biz_record()
     {
         return $this->hasMany(VisitedRecord::class);
-    }
-
-    public function annotation_content()
-    {
-        return $this->hasMany(AnnotationContent::class);
     }
 
     public function questionnaire_answer()

@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Services\{CustomerDataService, QuestionnaireDataService, ShowDataService, VisitedRecordDataService};
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Collection; //ページネーション実装に必要なため追記
 use Illuminate\Pagination\LengthAwarePaginator; //ページネーション実装に必要なため追記
+use Auth;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,7 +17,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(QuestionnaireDataService::class, function ($app) {
+            return new QuestionnaireDataService(Auth::id());
+        });
+
+        $this->app->bind(ShowDataService::class, function ($app) {
+            return new ShowDataService(new CustomerDataService, new VisitedRecordDataService, $this->app->make(QuestionnaireDataService::class));
+        });
     }
 
     /**
@@ -46,7 +54,7 @@ class AppServiceProvider extends ServiceProvider
                 [
                     'path' => LengthAwarePaginator::resolveCurrentPath(),
                     'pageName' => $pageName,
-                    // 'query' => $queryParams, //クエリパラメーターをURLに渡すために追記
+                    'query' => $queryParams, //クエリパラメーターをURLに渡すために追記
                 ]
             );
         });

@@ -21,7 +21,7 @@ class CreateCustomersTable extends Migration
             $table->string('name_kana');
             $table->tinyInteger('gender')->nullable();
             $table->date('birthday')->nullable();
-            $table->string('tel')->nullable();
+            $table->string('tel');
             $table->string('email')->nullable();
             $table->text('memo')->nullable();
             $table->timestamps();

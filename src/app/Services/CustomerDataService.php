@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Models\{Customer, VisitedRecord, AnnotationTitle, AnnotationContent};
+use App\Models\{Customer, VisitedRecord};
 use Auth;
 
 final class CustomerDataService
@@ -12,61 +12,66 @@ final class CustomerDataService
     /**
      * @var bool
      */
-    private $customerExists = true;
+    private $customerExists = false;
+
+    /**
+     * @var \Illuminate\Database\Eloquent\Collection
+     */
+    private $customers;
+    private $orderedCustomer;
+    private $visitedAts;
 
     //ログインユーザーに紐づく顧客をすべて取得
     private function getCustomers()
     {
         if (Customer::where('user_id', Auth::id())->exists()) {
-            return Customer::where('user_id', Auth::id())->paginate(10);
+            $this->customerExists = true;
+            return $this->customers = Customer::where('user_id', Auth::id())->paginate(10);
         }
-        return $this->customerExists = false;
+        return $this->customerExists;
     }
 
     //リクエストされた顧客だけ取得
-    private function getOrderedCustomer(int $request)
+    public function getOrderedCustomer(int $request)
     {
-        $customer = Customer::where([
+        return $this->orderedCustomer = Customer::where([
             ['user_id', Auth::id()],
             ['id', $request],
         ])->first();
-        return $customer;
     }
 
     //来店日を取得（ログインユーザーに紐づく顧客すべて）
     private function allVisitedAts(): array
     {
         if ($this->customerExists) {
-            foreach ($this->getCustomers() as $customer) {
+            foreach ($this->customers as $customer) {
                 if (VisitedRecord::where('customer_id', $customer->id)->exists()) {
-                    $visitedAts[$customer->id] = VisitedRecord::where('customer_id', $customer->id)
+                    $this->visitedAts[$customer->id] = VisitedRecord::where('customer_id', $customer->id)
                         ->orderBy('visited_at', 'desc')->pluck('visited_at');
                 } else {
-                    $visitedAts[$customer->id] = null;
+                    $this->visitedAts[$customer->id] = null;
                 }
             }
-            return $visitedAts;
+            return $this->visitedAts;
         }
         return [];
     }
 
     //来店日を取得（リクエストされた顧客のみ）
-    private function requestVisitedAts(int $request)
+    public function requestVisitedAts()
     {
-        $customer = $this->getOrderedCustomer($request);
-        if (empty($customer->id)) {
+        if (empty($this->orderedCustomer)) {
             return [];
         }
-        return VisitedRecord::where('customer_id', $customer->id)->orderBy('visited_at', 'desc')->pluck('visited_at');
+        return VisitedRecord::where('customer_id', $this->orderedCustomer->id)->orderBy('visited_at', 'desc')->pluck('visited_at');
     }
 
     //最終来店日を取得（ログインユーザーに紐づく顧客すべて）
     private function allLastVisitDates(): array
     {
         if ($this->customerExists) {
-            foreach ($this->getCustomers() as $customer) {
-                $visitedAts = $this->allVisitedAts();
-                $lastVisitDates[$customer->id] =  $visitedAts[$customer->id][0] ?? null;
+            foreach ($this->customers as $customer) {
+                $lastVisitDates[$customer->id] =  $this->allVisitedAts()[$customer->id][0] ?? null;
             }
             return $lastVisitDates;
         }
@@ -77,9 +82,8 @@ final class CustomerDataService
     private function allVisitedTimes(): array
     {
         if ($this->customerExists) {
-            foreach ($this->getCustomers() as $customer) {
-                $visitedAts = $this->allVisitedAts();
-                $visitedTimes[$customer->id] = $visitedAts[$customer->id] ? count($visitedAts[$customer->id]) : 0;
+            foreach ($this->customers as $customer) {
+                $visitedTimes[$customer->id] = $this->visitedAts[$customer->id] ? count($this->visitedAts[$customer->id]) : 0;
             }
             return $visitedTimes;
         }
@@ -93,7 +97,7 @@ final class CustomerDataService
     private function allAvgPurchasePrices(): array
     {
         if ($this->customerExists) {
-            foreach ($this->getCustomers() as $customer) {
+            foreach ($this->customers as $customer) {
                 if (VisitedRecord::where('customer_id', $customer->id)->exists()) {
                     $rawAvgPurchasePrice = VisitedRecord::select('price')
                         ->join('menus', function ($join) use ($customer) {
@@ -115,10 +119,9 @@ final class CustomerDataService
      * リクエストされた顧客の平均単価を取得
      * 要修正：メニューの金額を変更すると平均単価に影響してしまう
      */
-    private function requestAvgPurchasePrice(int $request): int
+    public function requestAvgPurchasePrice(int $request): int
     {
-        $customer = $this->getOrderedCustomer($request);
-        if (empty($customer->id)) {
+        if (empty($this->orderedCustomer->id)) {
             return 0;
         }
         $rawAvgPurchasePrice = VisitedRecord::select('price')
@@ -130,16 +133,17 @@ final class CustomerDataService
         return intval(round($rawAvgPurchasePrice ?? 0));
     }
 
-    //ログインユーザーに紐づく顧客補足情報のタイトルをすべて取得
-    private function AnnotationTitles()
+    public function getControlNumberToSet(): int
     {
-        return AnnotationTitle::where('user_id', 3)->get();
-    }
-
-    //リクエストされた顧客の補足情報をすべて取得
-    private function requestAnnotationContents(int $request)
-    {
-        return AnnotationContent::where('customer_id', $request)->get();
+        $controlNumberExist = Customer::select('control_number')
+            ->where('user_id', Auth::id())
+            ->exists();
+            // ddd($controlNumberExist);
+        if ($controlNumberExist) {
+            return Customer::where('user_id', Auth::id())->max('control_number') + 1;
+        } else {
+            return 1;
+        }
     }
 
     public function indexDataList(): array
@@ -149,18 +153,6 @@ final class CustomerDataService
             'lastVisitDates' => $this->allLastVisitDates(),
             'visitedTimes' => $this->allVisitedTimes(),
             'avgPurchasePrices' => $this->allAvgPurchasePrices(),
-        ];
-    }
-
-    public function showDataList(int $request): array
-    {
-        return [
-            'customer' => $this->getOrderedCustomer($request),
-            'lastVisitDate' => $this->requestVisitedAts($request)[0] ?? null,
-            'visitedTimes' => count($this->requestVisitedAts($request)),
-            'avgPurchasePrices' => $this->requestAvgPurchasePrice($request),
-            'annotationTitles' => $this->AnnotationTitles(),
-            'annotationContents' => $this->requestAnnotationContents($request),
         ];
     }
 }

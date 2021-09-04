@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+                <div class="card-header text-center">{{ __('Register') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
@@ -61,13 +61,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn bg-origin-btn">
-                                    <span class="font-origin-btn">{{ __('Register') }}</span>
-                                </button>
-                            </div>
-                        </div>
+                        <button type="submit" class="btn btn-origin d-block mx-auto">{{ __('Register') }}</button>
                     </form>
                 </div>
             </div>
