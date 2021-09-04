@@ -15,8 +15,8 @@ Route::get('/', function () { return view('top'); })->name('top');
 
 Auth::routes();
 
-Route::resource('customers', 'CustomerController')->middleware('auth');
-
-Route::resource('visited_records', 'VisitedRecordController')->middleware('auth');
-
-Route::resource('questionnaires', 'QuestionnaireController')->middleware('auth');
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('customers', 'CustomerController');
+    Route::resource('visited_records', 'VisitedRecordController');
+    Route::resource('questionnaires', 'QuestionnaireController');
+});
