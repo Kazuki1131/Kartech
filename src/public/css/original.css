@@ -19,9 +19,11 @@ html {
     background-color: #d8d3bd69;
 }
 
-.font-origin-btn {
+.btn-origin {
+    color: #ffffff;
     font-family: "Arial";
-    font-weight: 200;
+    font-weight: 500;
+    background-color: #6d590069;
 }
 
 .bg-origin-btn {
@@ -70,4 +72,27 @@ html {
 .btn a:active {
     color: white;
     text-decoration: none;
+}
+
+.answerStyle {
+    margin: 10px 0;
+}
+
+input.q_option {
+    display: inline-block;
+    width: 75%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    color: #555;
+}
+
+input.pluralBtn {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 5px;
+    padding: 0;
+    margin: 0;
 }

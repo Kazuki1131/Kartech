@@ -33,8 +33,8 @@ class QuestionnaireAnswer extends Model
         return $this->belongsTo(Customer::class);
     }
 
-    public function questionnaire_option()
+    public function questionnaire()
     {
-        return $this->belongsTo(QuestionnaireOption::class);
+        return $this->belongsTo(Questionnaire::class);
     }
 }

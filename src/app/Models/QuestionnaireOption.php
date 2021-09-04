@@ -32,9 +32,4 @@ class QuestionnaireOption extends Model
     {
         return $this->belongsTo(Questionnaire::class);
     }
-
-    public function questionnaire_answer()
-    {
-        return $this->hasMany(QuestionnaireAnswer::class);
-    }
 }

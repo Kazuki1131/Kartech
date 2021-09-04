@@ -16,7 +16,7 @@ class CreateQuestionnaireAnswersTable extends Migration
         Schema::create('questionnaire_answers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('customer_id')->unsigned();
-            $table->bigInteger('option_id')->unsigned();
+            $table->bigInteger('questionnaire_id')->unsigned();
             $table->text('answer')->nullable();
             $table->timestamps();
 
@@ -25,8 +25,8 @@ class CreateQuestionnaireAnswersTable extends Migration
             ->references('id')->on('customers')
             ->onDelete('cascade');
 
-            $table->foreign('option_id')
-            ->references('id')->on('questionnaire_options')
+            $table->foreign('questionnaire_id')
+            ->references('id')->on('questionnaires')
             ->onDelete('cascade');
         });
     }

@@ -32,6 +32,9 @@ class CustomerRequest extends FormRequest
             'tel' => 'nullable|digits_between:8,11',
             'email' => 'nullable|email',
             'memo' => 'nullable|string|max:1000',
+            'answer_text.*' => 'nullable|string|max:1000',
+            'answer_select.*' => 'nullable|string|max:100',
+            'answer_check.*.*' => 'nullable|string|max:100',
         ];
     }
 
@@ -45,6 +48,9 @@ class CustomerRequest extends FormRequest
             'tel' => '電話番号',
             'email' => 'メールアドレス',
             'memo' => 'メモ',
+            'answer_text.*' => '回答',
+            'answer_select.*' => '回答',
+            'answer_check.*.*' => '回答',
         ];
     }
 }

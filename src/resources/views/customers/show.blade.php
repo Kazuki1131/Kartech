@@ -3,21 +3,21 @@
 @section('content')
 <div class="container">
     <a href="{{ route('visited_records.create', ['customer_id' => $customer->id]) }}">
-        <button type="button" class="btn bg-origin-btn font-weight-bold
-        text-light float-right mb-2"><span class="font-origin-btn">来店記録の作成</span></button>
+        <button type="button" class="btn btn-origin float-right mb-2">来店記録の作成</button>
     </a>
     <div class="card mx-auto w-100 body-origin">
-        <div class="card-header p-2 h5 text-center bg-light">
+        <div class="card-header p-2 h5 text-center bg-origin-body">
             <i class="fas fa-user m-2 font-weight-bold text-secondary"></i>
             <div class="d-inline font-weight-bold text-secondary">
                 {{ $customer->name ?? '' }}（{{ $customer->name_kana ?? ''}}）
             </div>
         </div>
         <div class="card-body h6 bg-origin-body mt-2">
+            <h2 class="text-center line-origin-color">ー <span class="font-origin-head">基本情報</span> ー</h2>
             <div class="row">
                 <div class="col-md-6">
                     <ul class="list-group list-group-flush list-group-item-light mb-1">
-                        <li class="list-group-item">顧客番号：{{ $customer->id ?? '' }}</li>
+                        <li class="list-group-item">顧客番号：{{ $customer->control_number ?? '' }}</li>
                         <li class="list-group-item">生年月日：{{ $customer->birthday ?? '' }}</li>
                         <li class="list-group-item">電話番号：{{ $customer->tel ?? '' }}</li>
                         <li class="list-group-item">
@@ -30,24 +30,20 @@
                         <li class="list-group-item">最終来店日：{{ $lastVisitDate ?? '' }}</li>
                         <li class="list-group-item">総来店回数：{{ $visitedTimes ?? 0 }}回</li>
                         <li class="list-group-item">平均単価：{{ $avgPurchasePrices ?? 0 }}円</li>
-                        <li class="list-group-item">アレルギー：{{ $avgPurchasePrices ?? '未登録' }}</li>
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="card-body h6 mb-0 px-0">
-            <h2 class="text-center line-origin-color">ー <span class="h3 font-origin-head">補足情報</span> ー</h4>
-            <div class="row bg-origin-body py-4 mx-0">
+        <div class="card-body h6 bg-origin-body">
+            <h2 class="text-center line-origin-color">ー <span class="font-origin-head">アンケートの回答</span> ー</h2>
+            <div class="row py-4">
                 <div class="col-md-6">
                     <ul class="list-group list-group-flush list-group-item-light mb-1">
-                        @foreach($annotationTitles as $key => $title)
-                            @if($key % 2 == 0)
-                                <li class="list-group-item">{{ $title->title }}：
-                                    @foreach($annotationContents as $content)
-                                        @if($content->annotation_id == $title->id)
-                                            {{ $content }}
-                                        @endif
-                                    @endforeach
+                        @foreach($answerList as $index => $answer)
+                            @if($index % 2 === 0)
+                                <li class="list-group-item text-center">
+                                    <h5 class="font-origin-title">{{ $answer['question'] }}</h5>
+                                    <div>{{$answer['answer']}}</div>
                                 </li>
                             @endif
                         @endforeach
@@ -55,14 +51,11 @@
                 </div>
                 <div class="col-md-6">
                     <ul class="list-group list-group-flush list-group-item-light">
-                        @foreach($annotationTitles as $key => $title)
-                            @unless($key % 2 == 0)
-                                <li class="list-group-item">{{ $title->title }}：
-                                    @foreach($annotationContents as $content)
-                                        @if($content->annotation_id == $title->id)
-                                            {{ $content }}
-                                        @endif
-                                    @endforeach
+                        @foreach($answerList as $index => $answer)
+                            @unless($index % 2 === 0)
+                                <li class="list-group-item text-center">
+                                    <h5 class="font-origin-title">{{ $answer['question'] }}</h5>
+                                    <div>{{$answer['answer']}}</div>
                                 </li>
                             @endunless
                         @endforeach
@@ -70,11 +63,11 @@
                 </div>
             </div>
         </div>
-        <div class="card-body px-0">
-            <h2 class="text-center line-origin-color">ー <span class="h3 font-origin-head">来店記録</span> ー</h4>
-            @if($visitedRecords)
+        @if($visitedRecords)
+            <div class="card-body h6 mb-0 px-0 bg-origin-body">
+                <h2 class="text-center line-origin-color">ー <span class="font-origin-head">来店記録</span> ー</h2>
                 @foreach($visitedRecords as $visitedRecord)
-                    <div class="bg-origin-body py-4 mb-1">
+                    <div class="py-4 mb-1">
                         <div class="px-4">
                             @foreach($imagePaths as $recordId => $imagePath)
                                 @if($visitedRecord->id === $recordId)
@@ -84,7 +77,7 @@
                                     <div class="image">
                                         @foreach($imagePath as $image)
                                             <div class="image_mouseover">
-                                                <img src="{{ Storage::url($image) }}" alt="image_{{ $recordId }}">
+                                                <img src="{{ Storage::disk('s3')->url($image) }}" alt="image_{{ $recordId }}">
                                             </div>
                                         @endforeach
                                     </div>
@@ -103,8 +96,8 @@
                         </div>
                     </div>
                 @endforeach
-            @endif
-        </div>
+            </div>
+        @endif
     </div>
     <button type="button" class="btn bg-origin-btn btn-lg d-block mx-auto mt-3">
         <a href="{{ route('customers.index') }}" class="mx-3">戻る</a>

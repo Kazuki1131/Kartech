@@ -6,14 +6,14 @@
         <div class="input-group col-md-6">
             <input type="search" class="form-control mb-4">
             <span class="input-group-btn">
-                <button type="submit" class="btn btn-info rounded-0">
+                <button type="submit" class="btn btn-origin rounded-0">
                     <i class="fa fa-search text-light" aria-hidden="true"></i>
                 </button>
             </span>
         </div>
         <div class="col-md-6">
             <a href="{{ route('customers.create') }}">
-                <button type="button" class="btn btn-info font-weight-bold text-light float-right">顧客を追加</button>
+                <button type="button" class="btn btn-origin float-right">顧客を追加</button>
             </a>
         </div>
     </form>
@@ -35,7 +35,7 @@
                 @if ($customers)
                     @foreach ($customers as $customer)
                         <tr>
-                            <th scope="row">{{ $customer->id }}</th>
+                            <th scope="row">{{ $customer->control_number }}</th>
                             <td>
                                 <a href="{{ route('customers.show', ['customer' => $customer]) }}">{{ $customer->name_kana }}</a>
                             </td>
@@ -62,9 +62,7 @@
         </table>
     </div>
     @if ($customers)
-    <div class="row justify-content-center">
-        {{ $customers->links() }}
-    </div>
+    <div class="row justify-content-center">{{ $customers->links() }}</div>
     @endif
 </div>
 @endsection

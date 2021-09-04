@@ -4,11 +4,10 @@
 <div class="container">
     <div class="card mx-auto w-100">
         <div class="card-header">
-            <h3 class="text-center"><i class="fas fa-pen mr-2"></i>顧客情報登録</h3>
+            <h3 class="text-center"><i class="fas fa-pen mr-2"></i>お客様情報入力</h3>
         </div>
         <div class="card-body mx-auto w-75">
-            <p class="text-center h6"><span class="text-danger">*</span>は入力必須項目です</p>
-            <form action="{{ route('customers.store') }}" method="POST">
+            <form action="{{ route('customers.store') }}" method="POST" autocomplete="off">
                 @csrf
                 <div class="form-group mt-4">
                     <label for="name" class="mb-0"><h5>お客様名</h5></label>
@@ -20,7 +19,7 @@
                 @enderror
                 <div class="form-group mt-4">
                     <label for="name_kana" class="mb-0">
-                        <h5><span class="text-danger">* </span>お客様名(カナ)</h5>
+                        <h5>お客様名(カナ)</h5>
                     </label>
                     <input type="text" class="form-control" id="name_kana" value="{{ old('name_kana') }}"
                     name="name_kana" maxlength="30" placeholder="ヤマダハナコ">
@@ -67,14 +66,53 @@
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
                 <div class="form-group mt-4">
-                    <label for="memo" class="mb-0"><h5>メモ</h5></label>
-                    <textarea class="form-control" id="memo" name="memo">{{ old('memo') }}</textarea>
+                    <label for="memo" class="mb-0"><h5>ご要望</h5></label>
+                    <textarea class="form-control" id="memo" name="memo" cols="30" rows="3" maxlength="1000">{{ old('memo') }}</textarea>
                 </div>
                 @error('memo')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
-                <button type="submit" class="btn btn-success btn-lg d-block mx-auto mt-4">登録する</button>
-                <button type="button" class="btn btn-secondary btn-lg d-block mx-auto mt-3">
+                @isset($questionnaireList)
+                    <div class="h4 text-center mt-4">アンケートにご協力ください</div>
+                    @foreach($questionnaireList as $id => $questionnaire)
+                        @if($questionnaire['type'] === 0)
+                            <div class="h5 mt-4">{{ $questionnaire['item'] }}</div>
+                            <div class="form-group">
+                                <textarea name="answer_text[{{ $id }}]" class="form-control" cols="30" rows="3" maxlength="1000">{{ old("answer_text.$id") }}</textarea>
+                            </div>
+                            @error('answer_text.*')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        @elseif($questionnaire['type'] === 1)
+                            <div class="h5 mt-4">{{ $questionnaire['item'] }}</div>
+                            <div class="form-group">
+                                <select name="answer_select[{{ $id }}]" class="form-control">
+                                    <option value="">選択してください</option>
+                                    @foreach($questionnaire['options'] as $option)
+                                    <option value="{{ $option }}" {{ old("answer_select.$id") == "$option" ? 'selected' : '' }}>{{ $option }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            @error('answer_select.*')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        @elseif($questionnaire['type'] === 2)
+                            <div class="h5 mt-4">{{ $questionnaire['item'] }}（複数回答可）</div>
+                            @foreach($questionnaire['options'] as $index => $option)
+                                <div class="form-check form-check-inline">
+                                    <input name="answer_check[{{$id}}][{{$index}}]" type="checkbox" id="{{ $index }}" value="{{ $option }}"
+                                    class="form-check-input" {{ old("answer_check.$id.$index") === "$option" ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="{{ $index }}">{{ $option }}</label>
+                                </div>
+                            @endforeach
+                            @error('answer_check.*.*')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        @endif
+                    @endforeach
+                @endisset
+                <button type="submit" class="btn btn-origin btn-lg d-block mx-auto mt-4"><span class="mx-3">完了</span></button>
+                <button type="button" class="btn bg-origin-btn btn-lg d-block mx-auto mt-3">
                     <a href="{{ route('customers.index') }}" class="mx-3">戻る</a>
                 </button>
             </form>

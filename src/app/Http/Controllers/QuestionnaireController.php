@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\VisitedRecordRequest;
+use App\Http\Requests\QuestionnaireRequest;
 use App\Services\InsertIntoDatabaseService;
 
-class VisitedRecordController extends Controller
+class QuestionnaireController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,22 +23,21 @@ class VisitedRecordController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        return view('visited_records.create', ['customerId' => $request->customer_id]);
+        return view('questionnaires.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  App\Http\Requests\VisitedRecordRequest  $request
+     * @param  App\Http\Request\QuestionnaireRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(VisitedRecordRequest $request, InsertIntoDatabaseService $insertService)
+    public function store(QuestionnaireRequest $request, InsertIntoDatabaseService $insertService)
     {
-        $insertService->visitedRecords($request);
-        return redirect()->route('customers.show',['customer' => $request->customer_id])
-            ->with('flash_message', '来店記録を追加しました。');
+        $insertService->questionnaires($request);
+        return redirect()->route('questionnaires.create')->with('flash_message', '新しいアンケートを追加しました。');
     }
 
     /**

@@ -17,7 +17,8 @@ class CreateQuestionnairesTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned();
             $table->string('item');
-            $table->string('entry_example');
+            $table->tinyInteger('type')->unsigned();
+            $table->integer('order')->unsigned()->nullable();
             $table->timestamps();
 
             //外部キー制約
