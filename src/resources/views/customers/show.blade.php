@@ -34,35 +34,37 @@
                 </div>
             </div>
         </div>
-        <div class="card-body h6 bg-origin-body">
-            <h2 class="text-center line-origin-color">ー <span class="font-origin-head">アンケートの回答</span> ー</h2>
-            <div class="row py-4">
-                <div class="col-md-6">
-                    <ul class="list-group list-group-flush list-group-item-light mb-1">
-                        @foreach($answerList as $index => $answer)
-                            @if($index % 2 === 0)
-                                <li class="list-group-item text-center">
-                                    <h5 class="font-origin-title">{{ $answer['question'] }}</h5>
-                                    <div>{{$answer['answer']}}</div>
-                                </li>
-                            @endif
-                        @endforeach
-                    </ul>
-                </div>
-                <div class="col-md-6">
-                    <ul class="list-group list-group-flush list-group-item-light">
-                        @foreach($answerList as $index => $answer)
-                            @unless($index % 2 === 0)
-                                <li class="list-group-item text-center">
-                                    <h5 class="font-origin-title">{{ $answer['question'] }}</h5>
-                                    <div>{{$answer['answer']}}</div>
-                                </li>
-                            @endunless
-                        @endforeach
-                    </ul>
+        @if($answerList)
+            <div class="card-body h6 bg-origin-body">
+                <h2 class="text-center line-origin-color">ー <span class="font-origin-head">アンケートの回答</span> ー</h2>
+                <div class="row py-4">
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-flush list-group-item-light mb-1">
+                            @foreach($answerList as $index => $answer)
+                                @if($index % 2 === 0)
+                                    <li class="list-group-item text-center">
+                                        <h5 class="font-origin-title">{{ $answer['question'] }}</h5>
+                                        <div>{{$answer['answer']}}</div>
+                                    </li>
+                                @endif
+                            @endforeach
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-flush list-group-item-light">
+                            @foreach($answerList as $index => $answer)
+                                @unless($index % 2 === 0)
+                                    <li class="list-group-item text-center">
+                                        <h5 class="font-origin-title">{{ $answer['question'] }}</h5>
+                                        <div>{{$answer['answer']}}</div>
+                                    </li>
+                                @endunless
+                            @endforeach
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endif
         @if($visitedRecords)
             <div class="card-body h6 mb-0 px-0 bg-origin-body">
                 <h2 class="text-center line-origin-color">ー <span class="font-origin-head">来店記録</span> ー</h2>
