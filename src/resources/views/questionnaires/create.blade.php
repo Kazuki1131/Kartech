@@ -62,10 +62,8 @@
                 @error('multipleAnswers.*')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
-                <button type="submit" class="btn btn-origin btn-lg d-block mx-auto mt-4">登録する</button>
-                <button type="button" class="btn bg-origin-btn btn-lg d-block mx-auto mt-3">
-                    <a href="{{ route('customers.index') }}" class="mx-3">戻る</a>
-                </button>
+                <button type="submit" class="btn btn-origin d-block mx-auto mt-4">登録する</button>
+                <div class="return"><a class="btn bg-origin-btn mt-3 px-4" href="{{ route('customers.index') }}">戻る</a></div>
             </form>
         </div>
     </div>

@@ -3,8 +3,9 @@
 @section('content')
 <div class="container">
     <div class="card mx-auto w-100">
-        <div class="card-header">
-            <h3 class="text-center"><i class="fas fa-pen mr-2"></i>お客様情報入力</h3>
+        <div class="card-header card-head-origin">
+            <a class="btn bg-origin-btn btn-origin" href="{{ route('customers.index') }}">戻る</a>
+            <span class="title">お客様情報入力</span>
         </div>
         <div class="card-body mx-auto w-75">
             <form action="{{ route('customers.store') }}" method="POST" autocomplete="off">
@@ -111,10 +112,7 @@
                         @endif
                     @endforeach
                 @endisset
-                <button type="submit" class="btn btn-origin btn-lg d-block mx-auto mt-4"><span class="mx-3">完了</span></button>
-                <button type="button" class="btn bg-origin-btn btn-lg d-block mx-auto mt-3">
-                    <a href="{{ route('customers.index') }}" class="mx-3">戻る</a>
-                </button>
+                <button type="submit" class="btn btn-origin d-block mx-auto mt-4">完了</button>
             </form>
         </div>
     </div>

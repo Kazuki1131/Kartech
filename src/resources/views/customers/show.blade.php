@@ -6,30 +6,30 @@
         <button type="button" class="btn btn-origin float-right mb-2">来店記録の作成</button>
     </a>
     <div class="card mx-auto w-100 body-origin">
-        <div class="card-header p-2 h5 text-center bg-origin-body">
-            <i class="fas fa-user m-2 font-weight-bold text-secondary"></i>
-            <div class="d-inline font-weight-bold text-secondary">
+        <div class="card-header card-head-origin bg-origin-body py-4">
+            <div class="title">
+                <i class="fas fa-user m-2 font-weight-bold text-secondary"></i>
                 {{ $customer->name ?? '' }}（{{ $customer->name_kana ?? ''}}）
             </div>
         </div>
-        <div class="card-body h6 bg-origin-body mt-2">
+        <div class="card-body h6 bg-origin-body mb-0">
             <h2 class="text-center line-origin-color">ー <span class="font-origin-head">基本情報</span> ー</h2>
             <div class="row">
                 <div class="col-md-6">
-                    <ul class="list-group list-group-flush list-group-item-light mb-1">
-                        <li class="list-group-item">顧客番号：{{ $customer->control_number ?? '' }}</li>
-                        <li class="list-group-item">生年月日：{{ $customer->birthday ?? '' }}</li>
-                        <li class="list-group-item">電話番号：{{ $customer->tel ?? '' }}</li>
-                        <li class="list-group-item">
+                    <ul>
+                        <li class="origin-li-top">顧客番号：{{ $customer->control_number ?? '' }}</li>
+                        <li class="origin-li">生年月日：{{ $customer->birthday ?? '' }}</li>
+                        <li class="origin-li">電話番号：{{ $customer->tel ?? '' }}</li>
+                        <li class="origin-li">
                             性別：{{ $customer->gender ?  $customer->gender === 1 ? '女性' : '男性' : ''}}
                         </li>
                     </ul>
                 </div>
                 <div class="col-md-6">
-                    <ul class="list-group list-group-flush list-group-item-light">
-                        <li class="list-group-item">最終来店日：{{ $lastVisitDate ?? '' }}</li>
-                        <li class="list-group-item">総来店回数：{{ $visitedTimes ?? 0 }}回</li>
-                        <li class="list-group-item">平均単価：{{ $avgPurchasePrices ?? 0 }}円</li>
+                    <ul>
+                        <li class="origin-li-top">最終来店日：{{ $lastVisitDate ?? '' }}</li>
+                        <li class="origin-li">総来店回数：{{ $visitedTimes ?? 0 }}回</li>
+                        <li class="origin-li">平均単価：{{ $avgPurchasePrices ?? 0 }}円</li>
                     </ul>
                 </div>
             </div>
@@ -101,6 +101,6 @@
             </div>
         @endif
     </div>
-    <div class="return"><a class="btn bg-origin-btn mt-3" href="{{ route('customers.index') }}">戻る</a></div>
+    <div class="return"><a class="btn bg-origin-btn mt-3 px-4" href="{{ route('customers.index') }}">戻る</a></div>
 </div>
 @endsection
