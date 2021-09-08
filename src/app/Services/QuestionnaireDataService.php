@@ -12,17 +12,11 @@ final class QuestionnaireDataService
      * @var bool
      */
     private $questionnaireExists;
-    private $questionnaireSelectiveTypeExists;
 
     /**
      * @var int
      */
     private $authId;
-
-    /**
-     * @var \Illuminate\Database\Eloquent\Collection
-     */
-    private $questionnairePrimaryId;
 
     /**
      * @var \Illuminate\Database\Eloquent\Collection
@@ -40,36 +34,25 @@ final class QuestionnaireDataService
      * @return Illuminate\Database\Eloquent\Collection
      */
 
-    private function getOnlySelectionType()
+    private function getQuestionnaireOptions(): array
     {
         $singleSelectionType = 1;
         $multipleSelectionType = 2;
 
         if (
-            $this->questionnairePrimaryId = Questionnaire::where('user_id', $this->authId)
+            Questionnaire::where('user_id', $this->authId)
                 ->where(function($query) use($singleSelectionType, $multipleSelectionType) {
                     $query->where('type', $singleSelectionType)
                         ->orWhere('type', $multipleSelectionType);
                 })->exists()
         ) {
-            $this->questionnairePrimaryId = Questionnaire::where('user_id', $this->authId)
+            $selectionTypePrimaryId = Questionnaire::where('user_id', $this->authId)
             ->where(function($query) use($singleSelectionType, $multipleSelectionType) {
                 $query->where('type', $singleSelectionType)
                 ->orWhere('type', $multipleSelectionType);
             })->pluck('id');
 
-            return $this->questionnaireSelectiveTypeExists = true;
-        }
-        return $this->questionnaireSelectiveTypeExists = false;
-    }
-
-    /**
-     * @return Illuminate\Database\Eloquent\Collection
-     */
-    private function getQuestionnaireOptions()
-    {
-        if ($this->getOnlySelectionType()) {
-            foreach ($this->questionnairePrimaryId as $id){
+            foreach ($selectionTypePrimaryId as $id){
                 $questionnaireOptions[$id] = QuestionnaireOption::where('questionnaire_id', $id)->pluck('option');
             }
             return $questionnaireOptions;
