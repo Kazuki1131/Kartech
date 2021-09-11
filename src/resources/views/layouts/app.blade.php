@@ -89,7 +89,7 @@
     <main>
         @yield('content')
     </main>
-    <div class="wrapper">
+    <div class="wrapper-origin">
         <footer>
             <nav class="nav justify-content-center">
                 <a href="#" class="nav-link footer-text" data-toggle="modal" data-target="#site-policy">サイトポリシー</a>
@@ -214,7 +214,7 @@
                                     <span>&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body top-text">
+                            <div class="modal-body footer-text">
                                 <p>Kartech（以下，「当社」といいます。）は，本ウェブサイト上で提供するサービス（以下,「本サービス」といいます。）における，ユーザーの個人情報の取扱いについて，以下のとおりプライバシーポリシー（以下，「本ポリシー」といいます。）を定めます。</p>
                                 <h2 class="policy">第1条（個人情報）</h2>
                                 <p>「個人情報」とは，個人情報保護法にいう「個人情報」を指すものとし，生存する個人に関する情報であって，当該情報に含まれる氏名，生年月日，住所，電話番号，連絡先その他の記述等により特定の個人を識別できる情報及び容貌，指紋，声紋にかかるデータ，及び健康保険証の保険者番号などの当該情報単体から特定の個人を識別できる情報（個人識別情報）を指します。</p>
@@ -302,7 +302,7 @@
                 </div>
             </nav>
             <span class="footer-text">Copyright © Kartech 2021 Developed by </span>
-            <a href="https://twitter.com/kzk_engineer">@kzk-engineer</a>
+            <a href="https://twitter.com/kzk_engineer" class="footer-text">@kzk-engineer</a>
         </footer>
     </div>
 </body>
