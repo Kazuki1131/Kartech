@@ -11,7 +11,7 @@ class CustomPasswordValidation implements Rule
     //最大文字数
     private const MAX_CHARACTER = null;
     //1文字以上の半角英字（大文字）
-    private const INCLUDE_LESS_THAN_ONE_UPPER_LETTER = true;
+    // private const INCLUDE_LESS_THAN_ONE_UPPER_LETTER = true;
     //1文字以上の半角英字（小文字）
     private const INCLUDE_LESS_THAN_ONE_LOWER_LETTER = true;
     //1文字以上の半角数字
@@ -41,9 +41,9 @@ class CustomPasswordValidation implements Rule
             $regexOfValidation = "(?=.*?[a-z])" . $regexOfValidation;
         }
         // 半角英字（大文字）1文字以上
-        if (self::INCLUDE_LESS_THAN_ONE_UPPER_LETTER) {
-            $regexOfValidation = "(?=.*?[A-Z])" . $regexOfValidation;
-        }
+        // if (self::INCLUDE_LESS_THAN_ONE_UPPER_LETTER) {
+        //     $regexOfValidation = "(?=.*?[A-Z])" . $regexOfValidation;
+        // }
         // 半角数字1文字以上
         if (self::INCLUDE_LESS_THAN_ONE_NUMBER) {
             $regexOfValidation = "(?=.*?\d)" . $regexOfValidation;
@@ -69,9 +69,9 @@ class CustomPasswordValidation implements Rule
         if (self::INCLUDE_LESS_THAN_ONE_LOWER_LETTER) {
             $validationOneLetterMessage[] = '半角英字（小文字）';
         }
-        if (self::INCLUDE_LESS_THAN_ONE_UPPER_LETTER) {
-            $validationOneLetterMessage[] = '半角英字（大文字）';
-        }
+        // if (self::INCLUDE_LESS_THAN_ONE_UPPER_LETTER) {
+        //     $validationOneLetterMessage[] = '半角英字（大文字）';
+        // }
         if (self::INCLUDE_LESS_THAN_ONE_NUMBER) {
             $validationOneLetterMessage[] = '半角数字';
         }

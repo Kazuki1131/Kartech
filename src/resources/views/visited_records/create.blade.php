@@ -2,7 +2,8 @@
 
 @section('content')
 <div class="container">
-    <div class="card mx-auto w-100">
+    <a class="btn-origin-return float-right" href="{{ route('customers.index') }}">戻る</a>
+    <div class="card mx-auto w-100 bg-origin-card">
         <div class="card-header">
             <h3 class="text-center"><i class="fas fa-pen mr-2"></i>来店記録の作成</h3>
         </div>
@@ -42,10 +43,7 @@
                 @error('memo')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
-                <button type="submit" class="btn btn-origin btn-lg d-block mx-auto mt-4">作成する</button>
-                <button type="button" class="btn bg-origin-btn btn-lg d-block mx-auto mt-3">
-                    <a href="{{ route('customers.index') }}" class="mx-3">戻る</a>
-                </button>
+                <button type="submit" class="btn-origin d-block mx-auto mt-4">作成する</button>
             </form>
         </div>
     </div>

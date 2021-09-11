@@ -2,11 +2,9 @@
 
 @section('content')
 <div class="container">
-    <div class="card mx-auto w-100">
-        <div class="card-header card-head-origin">
-            <a class="btn bg-origin-btn btn-origin" href="{{ route('customers.index') }}">戻る</a>
-            <span class="title">お客様情報入力</span>
-        </div>
+    <a class="btn-origin-return float-right" href="{{ route('customers.index') }}">戻る</a>
+    <div class="card mx-auto w-100 bg-origin-card">
+        <div class="card-header card-head-origin">お客様情報入力</div>
         <div class="card-body mx-auto w-75">
             <form action="{{ route('customers.store') }}" method="POST" autocomplete="off">
                 @csrf

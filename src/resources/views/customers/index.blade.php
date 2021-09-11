@@ -5,16 +5,14 @@
     <form action="" class="row">
         <div class="input-group col-md-6">
             <input type="search" class="form-control mb-4">
-            <span class="input-group-btn">
-                <button type="submit" class="btn btn-origin rounded-0">
-                    <i class="fa fa-search text-light" aria-hidden="true"></i>
+            <span class="mb-4">
+                <button type="submit" class="btn-origin-search">
+                    <i class="fa fa-search" aria-hidden="true"></i>
                 </button>
             </span>
         </div>
         <div class="col-md-6">
-            <a href="{{ route('customers.create') }}">
-                <button type="button" class="btn btn-origin float-right">顧客を追加</button>
-            </a>
+            <a href="{{ route('customers.create') }}" class="btn-origin float-right mb-2">顧客を追加</a>
         </div>
     </form>
     <!-- 10件ずつページネーションさせる -->

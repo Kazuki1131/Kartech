@@ -101,6 +101,8 @@
             </div>
         @endif
     </div>
-    <div class="return"><a class="btn bg-origin-btn mt-3 px-4" href="{{ route('customers.index') }}">戻る</a></div>
+    <div class="text-center mt-4">
+        <a class="btn-origin-return" href="{{ route('customers.index') }}">戻る</a>
+    </div>
 </div>
 @endsection
