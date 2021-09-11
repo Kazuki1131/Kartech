@@ -74,20 +74,20 @@ footer {
 }
 
 .footer-text {
-    font-size: 1vw;
-    margin-top: 2vh;
+    font-size: 18px;
+    margin-top: 30px;
     color: rgba(116, 90, 73);
 }
 
 .policy-title {
     text-align: center;
-    font-size: 2.5vw;
+    font-size: 40px;
     font-weight: bold;
 }
 .policy {
     text-align: center;
-    font-size: 2vw;
-    margin-top: 2vh;
+    font-size: 35px;
+    margin-top: 40px;
 }
 
 .bg-origin-body {
@@ -125,6 +125,7 @@ footer {
     border-radius: 3rem;
     padding: 1vh 2vw;
     margin-top: 4vh;
+    text-align: center;
 }
 
 .btn-origin-top {
@@ -181,16 +182,6 @@ a:hover[class="btn-origin-lg"] {
     background-color: #a2a7a7c4;
 }
 
-.font-origin-head {
-    color: rgb(79, 79, 80);
-    font-weight: 100;
-}
-
-.font-origin-title {
-    color: rgb(79, 79, 80);
-    font-weight: 500;
-}
-
 .line-origin-color {
     color: rgba(116, 90, 73, 0.623);
 }
@@ -223,10 +214,6 @@ a:hover[class="btn-origin-lg"] {
     transition-duration: 0.5s;
 }
 
-.btn-origin-lg {
-    text-align: center;
-}
-
 .origin-li-top {
     list-style: none;
     border-bottom: 1px solid #a1935669;
@@ -248,27 +235,29 @@ a:hover[class="btn-origin-lg"] {
     text-align: center;
 }
 
-.answerStyle {
+.answer-style {
     margin: 10px 0;
 }
 
 input.q_option {
     display: inline-block;
     width: 75%;
-    height: 34px;
+    height: 40px;
     padding: 6px 12px;
     font-size: 14px;
     color: #555;
 }
 
-input.pluralBtn {
-    width: 30px;
-    height: 30px;
+input.plural-btn {
+    width: 40px;
+    height: 40px;
     border: 1px solid #ccc;
     background: #fff;
     border-radius: 5px;
     padding: 0;
     margin: 0;
+    font-weight: bold;
+    color: #847a4c;
 }
 
 @media screen and (max-width: 1024px) {
@@ -279,6 +268,12 @@ input.pluralBtn {
 
     label {
         font-size: 18px;
+    }
+
+    .footer-text {
+        font-size: 5px;
+        margin-top: 10px;
+        color: rgba(116, 90, 73);
     }
 
     .image img {
