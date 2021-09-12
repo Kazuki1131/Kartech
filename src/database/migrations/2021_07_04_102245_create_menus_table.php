@@ -15,15 +15,15 @@ class CreateMenusTable extends Migration
     {
         Schema::create('menus', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('user_id')->unsigned();
-            $table->string('menu_name');
+            $table->bigInteger('store_id')->unsigned();
+            $table->string('name');
             $table->text('description')->nullable();
-            $table->integer('price')->unsigned()->nullable();
+            $table->integer('price')->unsigned();
             $table->timestamps();
 
             //外部キー制約
-            $table->foreign('user_id')
-            ->references('id')->on('users')
+            $table->foreign('store_id')
+            ->references('id')->on('stores')
             ->onDelete('cascade');
         });
     }
