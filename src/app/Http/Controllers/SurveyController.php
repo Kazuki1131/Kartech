@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\QuestionnaireRequest;
+use App\Http\Requests\SurveyRequest;
 use App\Services\InsertIntoDatabaseService;
 
-class QuestionnaireController extends Controller
+class SurveyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,19 +25,19 @@ class QuestionnaireController extends Controller
      */
     public function create()
     {
-        return view('questionnaires.create');
+        return view('surveys.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  App\Http\Request\QuestionnaireRequest  $request
+     * @param  App\Http\Request\SurveyRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(QuestionnaireRequest $request, InsertIntoDatabaseService $insertService)
+    public function store(SurveyRequest $request, InsertIntoDatabaseService $insertService)
     {
-        $insertService->questionnaires($request);
-        return redirect()->route('questionnaires.create')->with('flash_message', '新しいアンケートを追加しました。');
+        $insertService->surveys($request);
+        return redirect()->route('surveys.create')->with('flash_message', '新しいアンケートを追加しました。');
     }
 
     /**

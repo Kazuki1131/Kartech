@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\VisitedRecordRequest;
-use App\Services\InsertIntoDatabaseService;
+use App\Services\{InsertIntoDatabaseService, MenuDataService};
 
 class VisitedRecordController extends Controller
 {
@@ -23,9 +23,9 @@ class VisitedRecordController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create(Request $request, MenuDataService $menus)
     {
-        return view('visited_records.create', ['customerId' => $request->customer_id]);
+        return view('visited_records.create', ['customerId' => $request->customer_id, 'menus' => $menus->getAllMenusInTheShop()]);
     }
 
     /**
@@ -36,7 +36,9 @@ class VisitedRecordController extends Controller
      */
     public function store(VisitedRecordRequest $request, InsertIntoDatabaseService $insertService)
     {
-        $insertService->visitedRecords($request);
+        $visitedRecordId = $insertService->visitedRecords($request);
+        $insertService->photos($request, $visitedRecordId);
+        $insertService->salesHistories($request, $visitedRecordId);
         return redirect()->route('customers.show',['customer' => $request->customer_id])
             ->with('flash_message', '来店記録を追加しました。');
     }
