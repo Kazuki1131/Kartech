@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQuestionnaireOptionsTable extends Migration
+class CreateSurveyOptionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateQuestionnaireOptionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('questionnaire_options', function (Blueprint $table) {
+        Schema::create('survey_options', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('questionnaire_id')->unsigned();
+            $table->bigInteger('survey_id')->unsigned();
             $table->string('option')->nullable();
             $table->timestamps();
 
             //外部キー制約
-            $table->foreign('questionnaire_id')
-            ->references('id')->on('questionnaires')
+            $table->foreign('survey_id')
+            ->references('id')->on('surveys')
             ->onDelete('cascade');
         });
     }
@@ -33,6 +33,6 @@ class CreateQuestionnaireOptionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('questionnaire_options');
+        Schema::dropIfExists('survey_options');
     }
 }
