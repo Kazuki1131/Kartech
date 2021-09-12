@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CustomerRequest;
-use App\Services\{CustomerDataService, QuestionnaireDataService, InsertIntoDatabaseService, ShowDataService};
+use App\Services\{CustomerDataService, SurveyDataService, InsertIntoDatabaseService, ShowDataService};
 
 class CustomerController extends Controller
 {
@@ -13,9 +13,9 @@ class CustomerController extends Controller
         return view('customers.index', $customer->indexDataList());
     }
 
-    public function create(QuestionnaireDataService $questionnaire)
+    public function create(SurveyDataService $survey)
     {
-        return view('customers.create', $questionnaire->questionnaireDataList());
+        return view('customers.create', $survey->surveyDataList());
     }
 
     public function store(CustomerRequest $request, InsertIntoDatabaseService $insertService)
