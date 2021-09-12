@@ -1,28 +1,15 @@
 main {
     min-height: 100vh;
     padding-top: 80px;
-    padding-bottom: 60px;
+    padding-bottom: 35px;
 }
 
 label {
-    font-size: 22px;
+    font-size: 20px;
 }
 
-.wrapper-origin {
-    position: relative;
-    padding-bottom: 2vh;
-    box-sizing: border-box;
-}
-
-footer {
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-    text-align: center;
-    background-color: #cdc5a289;
-    color: rgba(116, 90, 73, 0.623);
-    font-size: 1.2vw;
-    margin-top: 2vh;
+.small {
+    font-size: 15px;
 }
 
 .padding-origin {
@@ -73,21 +60,47 @@ footer {
     margin-top: 1vh;
 }
 
-.footer-text {
-    font-size: 18px;
+.wrapper-origin {
+    position: relative;
+    padding-bottom: 20px;
+    box-sizing: border-box;
+}
+
+footer {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    background-color: #cdc5a289;
+    color: rgba(116, 90, 73, 0.623);
+    font-size: 5px;
+    margin-top: 2vh;
+}
+
+.footer-text,
+text {
+    font-size: 12px;
     margin-top: 30px;
     color: rgba(116, 90, 73);
 }
 
 .policy-title {
     text-align: center;
-    font-size: 40px;
+    font-size: 30px;
     font-weight: bold;
 }
+
 .policy {
     text-align: center;
-    font-size: 35px;
+    font-size: 25px;
     margin-top: 40px;
+}
+
+.title {
+    font-size: 2vw;
+    font-weight: bold;
+    font-family: sans-serif;
+    color: rgba(116, 90, 73);
 }
 
 .bg-origin-body {
@@ -108,10 +121,10 @@ footer {
     background-color: #a89c64d8;
     font-family: "Arial";
     font-weight: 500;
-    font-size: 18px;
+    font-size: 15px;
     border: 1px solid transparent;
     border-radius: 0.3rem;
-    padding: 10px 18px;
+    padding: 5px 13px;
 }
 
 .btn-origin-lg {
@@ -249,12 +262,10 @@ input.q_option {
 }
 
 input.plural-btn {
-    width: 40px;
-    height: 40px;
     border: 1px solid #ccc;
     background: #fff;
     border-radius: 5px;
-    padding: 0;
+    padding: 7px 10px;
     margin: 0;
     font-weight: bold;
     color: #847a4c;
@@ -263,7 +274,7 @@ input.plural-btn {
 @media screen and (max-width: 1024px) {
     main {
         padding-top: 60px;
-        padding-bottom: 20px;
+        padding-bottom: 10px;
     }
 
     label {
@@ -299,9 +310,13 @@ input.plural-btn {
     }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
     label {
         font-size: 15px;
+    }
+
+    .top-text {
+        text-align: center;
     }
 
     .image img {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Models\{Customer, VisitedRecord};
+use App\Models\{Customer, VisitedRecord, SalesHistory};
 use Auth;
 
 final class CustomerDataService
@@ -24,9 +24,9 @@ final class CustomerDataService
     //ログインユーザーに紐づく顧客をすべて取得
     private function getCustomers()
     {
-        if (Customer::where('user_id', Auth::id())->exists()) {
+        if (Customer::where('store_id', Auth::id())->exists()) {
             $this->customerExists = true;
-            return $this->customers = Customer::where('user_id', Auth::id())->paginate(10);
+            return $this->customers = Customer::where('store_id', Auth::id())->paginate(10);
         }
         return $this->customerExists;
     }
@@ -35,7 +35,7 @@ final class CustomerDataService
     public function getOrderedCustomer(int $request)
     {
         return $this->orderedCustomer = Customer::where([
-            ['user_id', Auth::id()],
+            ['store_id', Auth::id()],
             ['id', $request],
         ])->first();
     }
@@ -98,17 +98,8 @@ final class CustomerDataService
     {
         if ($this->customerExists) {
             foreach ($this->customers as $customer) {
-                if (VisitedRecord::where('customer_id', $customer->id)->exists()) {
-                    $rawAvgPurchasePrice = VisitedRecord::select('price')
-                        ->join('menus', function ($join) use ($customer) {
-                            $join->on('menus.id', 'visited_records.menu_id')
-                                ->where('customer_id', $customer->id);
-                        })->avg('price');
-
-                    $roundedAvgPurchasePrices[$customer->id] = intval(round($rawAvgPurchasePrice ?? 0));
-                } else {
-                    $roundedAvgPurchasePrices[$customer->id] = 0;
-                }
+                $rawAvgPurchasePrice = SalesHistory::where('customer_id', $customer->id)->avg('price_sold');
+                $roundedAvgPurchasePrices[$customer->id] = intval(round($rawAvgPurchasePrice ?? 0));
             }
             return $roundedAvgPurchasePrices;
         }
@@ -124,11 +115,7 @@ final class CustomerDataService
         if (empty($this->orderedCustomer->id)) {
             return 0;
         }
-        $rawAvgPurchasePrice = VisitedRecord::select('price')
-            ->join('menus', function ($join) use ($request) {
-                $join->on('menus.id', 'visited_records.menu_id')
-                    ->where('customer_id', $request);
-            })->avg('price');
+        $rawAvgPurchasePrice = SalesHistory::where('customer_id', $request)->avg('price_sold');
 
         return intval(round($rawAvgPurchasePrice ?? 0));
     }
@@ -136,11 +123,10 @@ final class CustomerDataService
     public function getControlNumberToSet(): int
     {
         $controlNumberExist = Customer::select('control_number')
-            ->where('user_id', Auth::id())
+            ->where('store_id', Auth::id())
             ->exists();
-            // ddd($controlNumberExist);
         if ($controlNumberExist) {
-            return Customer::where('user_id', Auth::id())->max('control_number') + 1;
+            return Customer::where('store_id', Auth::id())->max('control_number') + 1;
         } else {
             return 1;
         }

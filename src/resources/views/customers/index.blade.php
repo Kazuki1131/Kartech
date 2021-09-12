@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<div class="container">
+<div class="container pb-5">
 
     <form action="" class="row">
         <div class="input-group col-md-6">
@@ -12,9 +12,9 @@
             </span>
         </div>
         <div class="col-md-6">
-            <a href="{{ route('customers.create') }}" class="btn-origin float-right mb-2">顧客を追加</a>
         </div>
     </form>
+    <a href="{{ route('customers.create') }}" class="btn-origin float-right mb-2">顧客を追加</a>
     <!-- 10件ずつページネーションさせる -->
     <div class="table-responsive mt-1">
         <table class="table table-hover text-nowrap">

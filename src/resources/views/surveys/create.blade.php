@@ -8,14 +8,14 @@
     <div class="card mx-auto w-100 bg-origin-card">
         <div class="card-header card-head-origin">お客様アンケート新規作成</div>
         <div class="card-body mx-auto w-75">
-            <form action="{{ route('questionnaires.store') }}" method="POST" autocomplete="off">
+            <form action="{{ route('surveys.store') }}" method="POST" autocomplete="off">
                 @csrf
                 <div class="form-group mt-4">
-                    <label for="questionnaire" class="control-label">アンケート内容</label>
-                    <input class="form-control" id="questionnaire" name="item"
-                    placeholder="例：ご来店のきっかけ" value="{{ old('item') }}">
+                    <label for="survey" class="control-label">アンケート内容</label>
+                    <input class="form-control" id="survey" name="question"
+                    placeholder="例：ご来店のきっかけ" value="{{ old('question') }}">
                 </div>
-                @error('item')
+                @error('question')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
                 <div class="form-group mt-4">
