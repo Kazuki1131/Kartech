@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container pb-5">
     <a class="btn-origin-return float-right" href="{{ route('customers.index') }}">戻る</a>
     <div class="card mx-auto w-100 bg-origin-card">
         <div class="card-header card-head-origin">お客様情報入力</div>
@@ -71,23 +71,23 @@
                 @error('memo')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
-                @isset($questionnaireList)
+                @isset($surveyList)
                     <div class="h4 text-center mt-4">アンケートにご協力ください</div>
-                    @foreach($questionnaireList as $id => $questionnaire)
-                        @if($questionnaire['type'] === 0)
-                            <div class="h5 mt-4">{{ $questionnaire['item'] }}</div>
+                    @foreach($surveyList as $id => $survey)
+                        @if($survey['type'] === 0)
+                            <div class="h5 mt-4">{{ $survey['question'] }}</div>
                             <div class="form-group">
                                 <textarea name="answer_text[{{ $id }}]" class="form-control" cols="30" rows="3" maxlength="1000">{{ old("answer_text.$id") }}</textarea>
                             </div>
                             @error('answer_text.*')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
-                        @elseif($questionnaire['type'] === 1)
-                            <div class="h5 mt-4">{{ $questionnaire['item'] }}</div>
+                        @elseif($survey['type'] === 1)
+                            <div class="h5 mt-4">{{ $survey['question'] }}</div>
                             <div class="form-group">
                                 <select name="answer_select[{{ $id }}]" class="form-control">
                                     <option value="">選択してください</option>
-                                    @foreach($questionnaire['options'] as $option)
+                                    @foreach($survey['options'] as $option)
                                     <option value="{{ $option }}" {{ old("answer_select.$id") == "$option" ? 'selected' : '' }}>{{ $option }}</option>
                                     @endforeach
                                 </select>
@@ -95,9 +95,9 @@
                             @error('answer_select.*')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
-                        @elseif($questionnaire['type'] === 2)
-                            <div class="h5 mt-4">{{ $questionnaire['item'] }}（複数回答可）</div>
-                            @foreach($questionnaire['options'] as $index => $option)
+                        @elseif($survey['type'] === 2)
+                            <div class="h5 mt-4">{{ $survey['question'] }}（複数回答可）</div>
+                            @foreach($survey['options'] as $index => $option)
                                 <div class="form-check form-check-inline">
                                     <input name="answer_check[{{$id}}][{{$index}}]" type="checkbox" id="{{ $index }}" value="{{ $option }}"
                                     class="form-check-input" {{ old("answer_check.$id.$index") === "$option" ? 'checked' : '' }}>

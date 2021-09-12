@@ -8,13 +8,13 @@ final class ShowDataService
 {
     private $customer;
     private $visitedRecord;
-    private $questionnaire;
+    private $survey;
 
-    public function __construct($customer, $visitedRecord, $questionnaire)
+    public function __construct($customer, $visitedRecord, $survey)
     {
         $this->customer = $customer;
         $this->visitedRecord = $visitedRecord;
-        $this->questionnaire = $questionnaire;
+        $this->survey = $survey;
     }
 
     public function customer(int $request)
@@ -26,7 +26,7 @@ final class ShowDataService
             'avgPurchasePrices' => $this->customer->requestAvgPurchasePrice($request),
             'visitedRecords' => $this->visitedRecord->getVisitedRecords($request),
             'imagePaths' => $this->visitedRecord->getImagePaths(),
-            'answerList' => $this->questionnaire->getQuestionnaireAnswers($request)
+            'surveyList' => $this->survey->getRequestedCustomerSurvey($request)
         ];
     }
 }

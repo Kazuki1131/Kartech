@@ -1,3 +1,20 @@
+var i = 1;
+
+$("#addMenu").on("click", function() {
+    var clone = $("#menus").clone(true);
+    var pulldown = clone.children("#menu");
+    pulldown.attr("name", "menus[" + i + "]");
+    clone.insertBefore($("#addMenu"));
+    i++;
+});
+$(".deleteMenu").on("click", function() {
+    if ($("#menus #menu").length > 1) {
+        $(this)
+            .parent()
+            .remove();
+    }
+});
+
 var singleAnswer = document.getElementById("singleAnswer");
 var multipleAnswer = document.getElementById("multipleAnswers");
 
@@ -19,7 +36,6 @@ function formSwitch() {
 }
 window.addEventListener("load", formSwitch());
 
-var i = 1;
 $(document).on("click", ".addSingleAnswer", function() {
     var clone = $("#inputSingleAnswer").clone(true);
     var input = clone.children(".q_option");
