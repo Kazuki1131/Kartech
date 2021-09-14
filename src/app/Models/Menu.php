@@ -32,6 +32,11 @@ use Illuminate\Database\Eloquent\Model;
 class Menu extends Model
 {
     protected $fillable = ['store_id', 'name', 'description', 'price'];
+    protected $casts = [
+        'id' => 'integer',
+        'store_id' => 'integer',
+        'price' => 'integer',
+    ];
 
     public function store()
     {

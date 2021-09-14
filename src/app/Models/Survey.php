@@ -34,6 +34,12 @@ use Illuminate\Database\Eloquent\Model;
 class Survey extends Model
 {
     protected $fillable = ['store_id', 'question', 'type'];
+    protected $casts = [
+        'id' => 'integer',
+        'store_id' => 'integer',
+        'type' => 'integer',
+        'order_number' => 'integer',
+    ];
 
     public function store()
     {

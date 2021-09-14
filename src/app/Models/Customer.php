@@ -48,6 +48,12 @@ use Illuminate\Database\Eloquent\Model;
 class Customer extends Model
 {
     protected $fillable = ['store_id', 'control_number', 'name', 'name_kana', 'gender', 'birthday', 'tel', 'email', 'memo'];
+    protected $casts = [
+        'id' => 'integer',
+        'store_id' => 'integer',
+        'control_number' => 'integer',
+        'gender' => 'integer',
+    ];
 
     public function store()
     {

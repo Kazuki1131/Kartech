@@ -35,6 +35,11 @@ use Illuminate\Database\Eloquent\Model;
 class VisitedRecord extends Model
 {
     protected $fillable = ['store_id', 'customer_id', 'memo', 'image', 'visited_at'];
+    protected $casts = [
+        'id' => 'integer',
+        'store_id' => 'integer',
+        'customer_id' => 'integer',
+    ];
 
     public function store()
     {
