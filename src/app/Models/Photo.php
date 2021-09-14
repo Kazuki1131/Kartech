@@ -31,6 +31,13 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Photo extends Model
 {
+    protected $casts = [
+        'id' => 'integer',
+        'store_id' => 'integer',
+        'customer_id' => 'integer',
+        'record_id' => 'integer',
+    ];
+
     public function store()
     {
         return $this->belongsTo(Store::class);

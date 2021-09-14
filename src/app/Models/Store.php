@@ -72,6 +72,7 @@ class Store extends Authenticatable
      * @var array
      */
     protected $casts = [
+        'id' => 'integer',
         'email_verified_at' => 'datetime',
     ];
 

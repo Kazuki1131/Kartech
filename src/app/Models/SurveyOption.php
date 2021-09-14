@@ -26,6 +26,11 @@ use Symfony\Component\Console\Question\Question;
  */
 class SurveyOption extends Model
 {
+    protected $casts = [
+        'id' => 'integer',
+        'survey_id' => 'integer',
+    ];
+
     public function survey()
     {
         return $this->belongsTo(Survey::class);

@@ -36,6 +36,15 @@ use Illuminate\Database\Eloquent\Model;
  */
 class SalesHistory extends Model
 {
+    protected $casts = [
+        'id' => 'int',
+        'store_id' => 'int',
+        'customer_id' => 'int',
+        'record_id' => 'int',
+        'menu_id' => 'int',
+        'price_sold' => 'int',
+    ];
+
     public function store()
     {
         return $this->belongsTo(Store::class);

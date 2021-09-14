@@ -28,6 +28,12 @@ use Illuminate\Database\Eloquent\Model;
  */
 class AnswerToTheSurvey extends Model
 {
+    protected $casts = [
+        'id' => 'integer',
+        'customer_id' => 'integer',
+        'survey_id' => 'integer',
+    ];
+
     public function customer()
     {
         return $this->belongsTo(Customer::class);
