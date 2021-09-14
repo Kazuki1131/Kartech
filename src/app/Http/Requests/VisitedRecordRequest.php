@@ -27,7 +27,7 @@ class VisitedRecordRequest extends FormRequest
         return [
             'customer_id' => 'required|integer',
             'visited_at' => 'nullable|date',
-            'menu' => 'nullable|digits:1',
+            'menus.*' => 'nullable|integer',
             'images.*' => 'nullable|image|max:30000',
             'memo' => 'nullable|string|max:1000',
         ];
@@ -37,7 +37,7 @@ class VisitedRecordRequest extends FormRequest
     {
         return [
             'visited_at' => '来店日',
-            'menu' => '提供メニュー',
+            'menus.*' => '提供メニュー',
             'images.*' => '写真',
             'memo' => 'お客様メモ',
         ];
@@ -46,6 +46,7 @@ class VisitedRecordRequest extends FormRequest
     public function messages()
     {
         return [
+            'menus.*.integer' => '不正な値が入力されました。',
             'images.*.max' => '一度に送信できるのは30メガバイトまでです。',
         ];
     }

@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Auth;
 
-class QuestionnaireRequest extends FormRequest
+class SurveyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +26,7 @@ class QuestionnaireRequest extends FormRequest
     public function rules(Request $request)
     {
         return [
-            'item' => 'required|string|max:100',
+            'question' => 'required|string|max:100',
             'type' => 'required|digits:1',
             'singleAnswers.*' => 'nullable|string|max:100',
             'multipleAnswers.*' => 'nullable|string|max:100',
@@ -36,7 +36,7 @@ class QuestionnaireRequest extends FormRequest
     public function attributes()
     {
         return [
-            'item' => 'アンケート内容',
+            'question' => 'アンケート内容',
             'type' => 'アンケートタイプ',
             'singleAnswers.*' => '選択肢',
             'multipleAnswers.*' => '選択肢',
