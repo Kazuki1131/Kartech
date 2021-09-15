@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container pb-5">
-    <a class="btn-origin-return float-right" href="{{ route('customers.index') }}">戻る</a>
+    <a class="btn-origin-return" href="{{ route('customers.index') }}">戻る</a>
     <div class="card mx-auto w-100 bg-origin-card">
         <div class="card-header card-head-origin">お客様情報入力</div>
         <div class="card-body mx-auto w-75">
@@ -110,7 +110,7 @@
                         @endif
                     @endforeach
                 @endisset
-                <button type="submit" class="btn btn-origin d-block mx-auto mt-4">完了</button>
+                <button type="submit" class="btn-origin d-block mx-auto">完了</button>
             </form>
         </div>
     </div>
