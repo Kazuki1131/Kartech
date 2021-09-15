@@ -19,7 +19,6 @@ final class CustomerDataService
      */
     private $customers;
     private $orderedCustomer;
-    private $visitedAts;
 
     //ログインユーザーに紐づく顧客をすべて取得
     private function getAllCustomersInTheShop()
@@ -46,12 +45,14 @@ final class CustomerDataService
         if ($this->customerExists) {
             foreach ($this->customers as $customer) {
                 if (VisitedRecord::where('customer_id', $customer->id)->exists()) {
-                    $this->visitedAts[$customer->id] = VisitedRecord::where('customer_id', $customer->id)
+                    $visitedAts[$customer->id] = VisitedRecord::where('customer_id', $customer->id)
                         ->orderBy('visited_at', 'desc')
                         ->pluck('visited_at');
+                } else {
+                    $visitedAts[$customer->id] = [];
                 }
             }
-            return $this->visitedAts;
+            return $visitedAts;
         }
         return [];
     }
