@@ -36,9 +36,7 @@ class VisitedRecordController extends Controller
      */
     public function store(VisitedRecordRequest $request, InsertIntoDatabaseService $insertService)
     {
-        $visitedRecordId = $insertService->visitedRecords($request);
-        $insertService->photos($request, $visitedRecordId);
-        $insertService->salesHistories($request, $visitedRecordId);
+        $insertService->visitedRecordCreate($request);
         return redirect()->route('customers.show',['customer' => $request->customer_id])
             ->with('flash_message', '来店記録を追加しました。');
     }

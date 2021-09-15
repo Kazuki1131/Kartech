@@ -85,11 +85,11 @@
                         </div>
                         <div class="col-md-6 mb-4">
                             <div class="subtitle">- 提供したサービス -</div>
-                            @foreach($servicesSold as $service)
-                                @if($visitedRecord->id === $service->visited_id)
-                                    <div class="ml-2 text">・{{ $service->menu_name }}（¥{{ number_format($service->price_sold) }}）</div>
-                                @endif
+                            @unless(empty($servicesSoldList[$visitedRecord->id]))
+                            @foreach($servicesSoldList[$visitedRecord->id] as $service)
+                                <div class="ml-2 text">・{{ $service->menu_name }}（¥{{ number_format($service->price_sold) }}）</div>
                             @endforeach
+                            @endunless
                         </div>
                     </div>
                 @endforeach
