@@ -6,6 +6,7 @@
         <h1 class="jumbotron-title">美容系サロンのための<br>顧客管理アプリ。</h1>
         <div class="jumbotron-text">管理と分析をもっとスマートに。</div>
         <a class="btn-origin-lg" href="{{ route('register') }}">無料ユーザー登録</a>
+        <a href="{{ route('login.guest') }}" class="btn-origin-lg bg-guest-login">ゲストログイン</a>
     </div>
 </div>
 <div class="container-fluid text-center">
