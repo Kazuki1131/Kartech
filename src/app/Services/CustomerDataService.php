@@ -76,9 +76,10 @@ final class CustomerDataService
         if (empty($this->orderedCustomer->id)) {
             return 0;
         }
-        $rawAvgPurchasePrice = SalesHistory::where('customer_id', $request)->avg('price_sold');
+        $totalSellingPrice = SalesHistory::where('customer_id', $request)->sum('price_sold');
+        $numberOfVisits = VisitedRecord::where('customer_id', $request)->count();
 
-        return intval(round(intval($rawAvgPurchasePrice ?? 0)));
+        return $totalSellingPrice / $numberOfVisits;
     }
 
     public function getControlNumberToSet(): int
