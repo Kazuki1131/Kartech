@@ -1,12 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container pb-5">
     <a class="btn-origin-return float-right" href="{{ route('customers.index') }}">戻る</a>
     <div class="card mx-auto w-100 bg-origin-card">
-        <div class="card-header">
-            <h3 class="text-center"><i class="fas fa-pen mr-2"></i>来店記録の作成</h3>
-        </div>
+        <div class="card-header card-head-origin">来店記録の作成</div>
         <div class="card-body mx-auto w-75">
             <form action="{{ route('visited_records.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -19,12 +17,18 @@
                 @error('visited_at')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
-                <!-- 要修正：複数のメニューを選べるようにする -->
                 <div class="form-group mt-4">
-                    <label for="menu" class="mb-0 h5">提供メニュー</label>
-                    <select name="menu" id="menu" class="form-control">
-                        <option value=""></option>
-                    </select>
+                    <label for="menu" class="mb-0 h5">提供したサービス</label>
+                    <div id="menus">
+                        <select name="menus[0]" id="menu" class="form-control d-inline-block w-75 mt-1">
+                            <option value="">選択してください。</option>
+                            @foreach($menus as $menu)
+                                <option value="{{ $menu->id }}">{{ $menu->name }}（{{ number_format($menu->price) }}円）</option>
+                            @endforeach
+                        </select>
+                        <input type="button" value="－" class="deleteMenu plural-btn">
+                    </div>
+                    <input type="button" value="提供したサービスの追加" id="addMenu" class="addMenu plural-btn mt-1">
                 </div>
                 @error('menu')
                     <div class="text-danger">{{ $message }}</div>
