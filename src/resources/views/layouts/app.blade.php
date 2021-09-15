@@ -46,6 +46,9 @@
                     <ul class="navbar-nav ml-auto">
                         @guest
                             <li class="nav-item mr-4">
+                                <a href="{{ route('login.guest') }}" class="nav-link">ゲストログイン</a>
+                            </li>
+                            <li class="nav-item mr-4">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('ログイン') }}</a>
                             </li>
                             @if (Route::has('register'))
