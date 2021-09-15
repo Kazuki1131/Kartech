@@ -52,12 +52,12 @@
                         </div>
 
                         <div class="form-group text-center">
-                                <button type="submit" class="btn-origin">{{ __('Login') }}</button>
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
+                            <button type="submit" class="btn-origin">{{ __('Login') }}</button>
+                            @if (Route::has('password.request'))
+                            <a class="btn btn-link" href="{{ route('password.request') }}">
+                                {{ __('Forgot Your Password?') }}
+                            </a>
+                            @endif
                         </div>
                     </form>
                 </div>
