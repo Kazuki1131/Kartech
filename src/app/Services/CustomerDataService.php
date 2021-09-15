@@ -62,10 +62,15 @@ final class CustomerDataService
     {
         if ($this->customerExists) {
             foreach ($this->customers as $customer) {
-                $rawAvgPurchasePrice = SalesHistory::where('customer_id', $customer->id)->avg('price_sold');
-                $roundedAvgPurchasePrices[$customer->id] = intval(round(intval($rawAvgPurchasePrice ?? 0)));
+                $totalSellingPrice = SalesHistory::where('customer_id', $customer->id)->sum('price_sold');
+                $numberOfVisits = VisitedRecord::where('customer_id', $customer->id)->count();
+                if ($numberOfVisits !== 0) {
+                    $avgSellingPrice[$customer->id] = $totalSellingPrice / $numberOfVisits;
+                } else {
+                    $avgSellingPrice[$customer->id] = 0;
+                }
             }
-            return $roundedAvgPurchasePrices;
+            return $avgSellingPrice;
         }
         return [];
     }
@@ -78,8 +83,10 @@ final class CustomerDataService
         }
         $totalSellingPrice = SalesHistory::where('customer_id', $request)->sum('price_sold');
         $numberOfVisits = VisitedRecord::where('customer_id', $request)->count();
-
-        return $totalSellingPrice / $numberOfVisits;
+        if ($numberOfVisits !== 0) {
+            return $totalSellingPrice / $numberOfVisits;
+        }
+        return 0;
     }
 
     public function getControlNumberToSet(): int
