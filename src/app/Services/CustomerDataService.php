@@ -22,11 +22,11 @@ final class CustomerDataService
     private $visitedAts;
 
     //ログインユーザーに紐づく顧客をすべて取得
-    private function getCustomers()
+    private function getAllCustomersInTheShop()
     {
-        if (Customer::where('store_id', Auth::id())->exists()) {
+        if (Customer::where('shop_id', Auth::id())->exists()) {
             $this->customerExists = true;
-            return $this->customers = Customer::where('store_id', Auth::id())->paginate(10);
+            return $this->customers = Customer::where('shop_id', Auth::id())->paginate(10);
         }
         return $this->customerExists;
     }
@@ -35,21 +35,20 @@ final class CustomerDataService
     public function getOrderedCustomer(int $request)
     {
         return $this->orderedCustomer = Customer::where([
-            ['store_id', Auth::id()],
+            ['shop_id', Auth::id()],
             ['id', $request],
         ])->first();
     }
 
     //来店日を取得（ログインユーザーに紐づく顧客すべて）
-    private function allVisitedAts(): array
+    private function getAllCustomersVisitedAtsInTheShop(): array
     {
         if ($this->customerExists) {
             foreach ($this->customers as $customer) {
                 if (VisitedRecord::where('customer_id', $customer->id)->exists()) {
                     $this->visitedAts[$customer->id] = VisitedRecord::where('customer_id', $customer->id)
-                        ->orderBy('visited_at', 'desc')->pluck('visited_at');
-                } else {
-                    $this->visitedAts[$customer->id] = null;
+                        ->orderBy('visited_at', 'desc')
+                        ->pluck('visited_at');
                 }
             }
             return $this->visitedAts;
@@ -57,59 +56,20 @@ final class CustomerDataService
         return [];
     }
 
-    //来店日を取得（リクエストされた顧客のみ）
-    public function requestVisitedAts()
-    {
-        if (empty($this->orderedCustomer)) {
-            return [];
-        }
-        return VisitedRecord::where('customer_id', $this->orderedCustomer->id)->orderBy('visited_at', 'desc')->pluck('visited_at');
-    }
-
-    //最終来店日を取得（ログインユーザーに紐づく顧客すべて）
-    private function allLastVisitDates(): array
-    {
-        if ($this->customerExists) {
-            foreach ($this->customers as $customer) {
-                $lastVisitDates[$customer->id] =  $this->allVisitedAts()[$customer->id][0] ?? null;
-            }
-            return $lastVisitDates;
-        }
-        return [];
-    }
-
-    //総来店回数を取得（ログインユーザーに紐づく顧客すべて）
-    private function allVisitedTimes(): array
-    {
-        if ($this->customerExists) {
-            foreach ($this->customers as $customer) {
-                $visitedTimes[$customer->id] = $this->visitedAts[$customer->id] ? count($this->visitedAts[$customer->id]) : 0;
-            }
-            return $visitedTimes;
-        }
-        return [];
-    }
-
-    /**
-     * ログインユーザーに紐づく顧客すべての平均単価を取得
-     * 要修正：メニューの金額を変更すると平均単価に影響してしまう
-     */
-    private function allAvgPurchasePrices(): array
+    //ログインユーザーに紐づく顧客すべての平均単価を取得
+    private function getAllCustomersAvgPurchasePriceInTheShop(): array
     {
         if ($this->customerExists) {
             foreach ($this->customers as $customer) {
                 $rawAvgPurchasePrice = SalesHistory::where('customer_id', $customer->id)->avg('price_sold');
-                $roundedAvgPurchasePrices[$customer->id] = intval(round($rawAvgPurchasePrice ?? 0));
+                $roundedAvgPurchasePrices[$customer->id] = intval(round(intval($rawAvgPurchasePrice ?? 0)));
             }
             return $roundedAvgPurchasePrices;
         }
         return [];
     }
 
-    /**
-     * リクエストされた顧客の平均単価を取得
-     * 要修正：メニューの金額を変更すると平均単価に影響してしまう
-     */
+    //リクエストされた顧客の平均単価を取得
     public function requestAvgPurchasePrice(int $request): int
     {
         if (empty($this->orderedCustomer->id)) {
@@ -117,16 +77,16 @@ final class CustomerDataService
         }
         $rawAvgPurchasePrice = SalesHistory::where('customer_id', $request)->avg('price_sold');
 
-        return intval(round($rawAvgPurchasePrice ?? 0));
+        return intval(round(intval($rawAvgPurchasePrice ?? 0)));
     }
 
     public function getControlNumberToSet(): int
     {
         $controlNumberExist = Customer::select('control_number')
-            ->where('store_id', Auth::id())
+            ->where('shop_id', Auth::id())
             ->exists();
         if ($controlNumberExist) {
-            return Customer::where('store_id', Auth::id())->max('control_number') + 1;
+            return Customer::where('shop_id', Auth::id())->max('control_number') + 1;
         } else {
             return 1;
         }
@@ -135,10 +95,9 @@ final class CustomerDataService
     public function indexDataList(): array
     {
         return [
-            'customers' => $this->getCustomers(),
-            'lastVisitDates' => $this->allLastVisitDates(),
-            'visitedTimes' => $this->allVisitedTimes(),
-            'avgPurchasePrices' => $this->allAvgPurchasePrices(),
+            'customers' => $this->getAllCustomersInTheShop(),
+            'visitedDates' => $this->getAllCustomersVisitedAtsInTheShop(),
+            'avgPurchasePrices' => $this->getAllCustomersAvgPurchasePriceInTheShop(),
         ];
     }
 }

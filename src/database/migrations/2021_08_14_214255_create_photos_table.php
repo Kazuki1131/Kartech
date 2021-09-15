@@ -15,20 +15,20 @@ class CreatePhotosTable extends Migration
     {
         Schema::create('photos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('store_id')->unsigned();
+            $table->bigInteger('shop_id')->unsigned();
             $table->bigInteger('customer_id')->unsigned();
-            $table->bigInteger('record_id')->unsigned();
+            $table->bigInteger('visited_id')->unsigned();
             $table->string('image_path')->nullable();
             $table->timestamps();
 
             //外部キー制約
-            $table->foreign('store_id')
-                ->references('id')->on('stores')
+            $table->foreign('shop_id')
+                ->references('id')->on('shops')
                 ->onDelete('cascade');
             $table->foreign('customer_id')
                 ->references('id')->on('customers')
                 ->onDelete('cascade');
-            $table->foreign('record_id')
+            $table->foreign('visited_id')
                 ->references('id')->on('visited_records')
                 ->onDelete('cascade');
         });

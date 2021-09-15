@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
  * App\Models\SalesHistory
  *
  * @property int $id
- * @property int $store_id
+ * @property int $shop_id
  * @property int $customer_id
  * @property int $record_id
  * @property int $menu_id
@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Customer $customer
  * @property-read \App\Models\Menu $menu
- * @property-read \App\Models\Store $store
+ * @property-read \App\Models\Shop $shop
  * @property-read \App\Models\VisitedRecord $visited_record
  * @method static \Illuminate\Database\Eloquent\Builder|SalesHistory newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|SalesHistory newQuery()
@@ -30,7 +30,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|SalesHistory whereMenuName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SalesHistory wherePriceSold($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SalesHistory whereRecordId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SalesHistory whereStoreId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SalesHistory whereShopId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SalesHistory whereUpdatedAt($value)
  * @mixin \Eloquent
  */
@@ -38,16 +38,16 @@ class SalesHistory extends Model
 {
     protected $casts = [
         'id' => 'int',
-        'store_id' => 'int',
+        'shop_id' => 'int',
         'customer_id' => 'int',
         'record_id' => 'int',
         'menu_id' => 'int',
         'price_sold' => 'int',
     ];
 
-    public function store()
+    public function shop()
     {
-        return $this->belongsTo(Store::class);
+        return $this->belongsTo(Shop::class);
     }
 
     public function customer()
