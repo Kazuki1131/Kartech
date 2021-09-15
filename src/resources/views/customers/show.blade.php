@@ -31,14 +31,14 @@
                 </div>
             </div>
         </div>
-        @if($surveyList)
+        @if ($surveyList)
             <div class="card-body h6 mb-0">
                 <h2 class="text-center title">ー アンケートの回答 ー</h2>
                 <div class="row py-4">
                     <div class="col-md-6">
                         <ul class="list-group mb-1">
-                            @foreach($surveyList as $index => $survey)
-                                @if($index % 2 === 0)
+                            @foreach ($surveyList as $index => $survey)
+                                @if ($index % 2 === 0)
                                     <li class="list-group-item text-center bg-origin-card">
                                         <h5 class="">{{ $survey['question'] }}</h5>
                                         <div>{{$survey['answer']}}</div>
@@ -49,8 +49,8 @@
                     </div>
                     <div class="col-md-6">
                         <ul class="list-group">
-                            @foreach($surveyList as $index => $survey)
-                                @unless($index % 2 === 0)
+                            @foreach ($surveyList as $index => $survey)
+                                @unless ($index % 2 === 0)
                                     <li class="list-group-item text-center bg-origin-card">
                                         <h5 class="">{{ $survey['question'] }}</h5>
                                         <div>{{$survey['answer']}}</div>
@@ -62,17 +62,17 @@
                 </div>
             </div>
         @endif
-        @if($visitedRecords)
+        @if ($visitedRecords)
             <div class="card-body h6 px-0">
                 <h2 class="text-center title">ー 来店記録 ー</h2>
-                @foreach($visitedRecords as $visitedRecord)
-                    @foreach($imagePaths as $recordId => $imagePath)
-                        @if($visitedRecord->id === $recordId)
+                @foreach ($visitedRecords as $visitedRecord)
+                    @foreach ($imagePaths as $recordId => $imagePath)
+                        @if ($visitedRecord->id === $recordId)
                             <div class="h4 ml-2 subtitle">
                                 【{{ $visitedRecord->visited_at ?? '来店日未登録' }}】
                             </div>
                             <div class="image">
-                                @foreach($imagePath as $image)
+                                @foreach ($imagePath as $image)
                                     <img src="{{ Storage::disk('s3')->url($image) }}" alt="image_{{ $recordId }}">
                                 @endforeach
                             </div>
@@ -85,10 +85,10 @@
                         </div>
                         <div class="col-md-6 mb-4">
                             <div class="subtitle">- 提供したサービス -</div>
-                            @unless(empty($servicesSoldList[$visitedRecord->id]))
-                            @foreach($servicesSoldList[$visitedRecord->id] as $service)
-                                <div class="ml-2 text">・{{ $service->menu_name }}（¥{{ number_format($service->price_sold) }}）</div>
-                            @endforeach
+                            @unless (empty($servicesSoldList[$visitedRecord->id]))
+                                @foreach ($servicesSoldList[$visitedRecord->id] as $service)
+                                    <div class="ml-2 text">・{{ $service->menu_name }}（¥{{ number_format($service->price_sold) }}）</div>
+                                @endforeach
                             @endunless
                         </div>
                     </div>
