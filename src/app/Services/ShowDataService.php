@@ -9,24 +9,25 @@ final class ShowDataService
     private $customer;
     private $visitedRecord;
     private $survey;
+    private $salesHistory;
 
-    public function __construct($customer, $visitedRecord, $survey)
+    public function __construct($customer, $visitedRecord, $survey, $salesHistory)
     {
         $this->customer = $customer;
         $this->visitedRecord = $visitedRecord;
         $this->survey = $survey;
+        $this->salesHistory = $salesHistory;
     }
 
     public function customer(int $request)
     {
         return [
             'customer' => $this->customer->getOrderedCustomer($request),
-            'lastVisitDate' => $this->customer->requestVisitedAts()[0] ?? null,
-            'visitedTimes' => count($this->customer->requestVisitedAts()),
             'avgPurchasePrices' => $this->customer->requestAvgPurchasePrice($request),
             'visitedRecords' => $this->visitedRecord->getVisitedRecords($request),
             'imagePaths' => $this->visitedRecord->getImagePaths(),
-            'surveyList' => $this->survey->getRequestedCustomerSurvey($request)
+            'surveyList' => $this->survey->getRequestedCustomerSurvey($request),
+            'servicesSold' => $this->salesHistory->getServicesSoldOnTheRequestedDate($request)
         ];
     }
 }
