@@ -27,7 +27,7 @@ final class ShowDataService
             'visitedRecords' => $this->visitedRecord->getVisitedRecords($request),
             'imagePaths' => $this->visitedRecord->getImagePaths(),
             'surveyList' => $this->survey->getRequestedCustomerSurvey($request),
-            'servicesSold' => $this->salesHistory->getServicesSoldOnTheRequestedDate($request)
+            'servicesSoldList' => $this->salesHistory->getServicesSoldOnTheRequestedDate($request)
         ];
     }
 }

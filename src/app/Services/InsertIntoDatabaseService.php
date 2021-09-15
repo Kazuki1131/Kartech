@@ -11,6 +11,8 @@ use App\Services\CustomerDataService;
 
 final class InsertIntoDatabaseService
 {
+    private $visitedRecordId;
+
     public function customers($request)
     {
         $customer = new Customer;
@@ -89,17 +91,17 @@ final class InsertIntoDatabaseService
         $menu->save();
     }
 
-    public function visitedRecords($request)
+    private function visitedRecords($request)
     {
         $visitedRecord = new VisitedRecord;
         $visitedRecord->shop_id = Auth::id();
         $visitedRecord->fill($request->all());
         $visitedRecord->save();
 
-        return $visitedRecord->id;
+        $this->visitedRecordId = $visitedRecord->id;
     }
 
-    public function photos($request, $visitedRecordId)
+    private function photos($request, $visitedRecordId)
     {
         if ($request->hasFile('images')){
             foreach ($request->images as $image){
@@ -114,19 +116,31 @@ final class InsertIntoDatabaseService
         }
     }
 
-    public function salesHistories($request, $visitedRecordId)
+    private function salesHistories($request, $visitedRecordId)
     {
+        $menus = Menu::where('shop_id', Auth::id())->get();
+        $insertData = [];
         foreach ($request->menus as $menuId) {
-            $menu = Menu::find($menuId);
-            $insertData[] = [
-                'shop_id' => Auth::id(),
-                'customer_id' => $request->customer_id,
-                'visited_id' => $visitedRecordId,
-                'menu_id' => $menuId,
-                'menu_name' => $menu->name,
-                'price_sold' => $menu->price
-            ];
+            foreach ($menus as $menu) {
+                if(intval($menuId) === $menu->id){
+                    $insertData[] = [
+                        'shop_id' => Auth::id(),
+                        'customer_id' => $request->customer_id,
+                        'visited_id' => $visitedRecordId,
+                        'menu_id' => $menuId,
+                        'menu_name' => $menu->name,
+                        'price_sold' => $menu->price
+                    ];
+                }
+            }
         }
         DB::table('sales_histories')->insert($insertData);
+    }
+
+    public function visitedRecordCreate($request)
+    {
+        $this->visitedRecords($request);
+        $this->photos($request, $this->visitedRecordId);
+        $this->salesHistories($request, $this->visitedRecordId);
     }
 }

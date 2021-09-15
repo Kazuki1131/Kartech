@@ -13,7 +13,7 @@ final class SalesHistoryDataService
         if (SalesHistory::where('customer_id', $request)->exists()) {
             $visitedRecordIdList = VisitedRecord::where('customer_id', $request)->pluck('id');
             foreach ($visitedRecordIdList as $visitedRecordId) {
-                $servicesSold = SalesHistory::select('visited_id', 'menu_name', 'price_sold')->where('visited_id', $visitedRecordId)->get();
+                $servicesSold[$visitedRecordId] = SalesHistory::select('visited_id', 'menu_name', 'price_sold')->where('visited_id', $visitedRecordId)->get();
             }
             return $servicesSold;
         }
