@@ -25,7 +25,7 @@
                 <div class="col-md-6">
                     <ul>
                         <li class="origin-li-top">最終来店日：{{ $visitedRecords[0]->visited_at ?? '' }}</li>
-                        <li class="origin-li">総来店回数：{{ count($visitedRecords) }}回</li>
+                        <li class="origin-li">総来店回数：{{ count($visitedRecords ?? []) }}回</li>
                         <li class="origin-li">平均単価：{{ $avgPurchasePrices ?? 0 }}円</li>
                     </ul>
                 </div>
@@ -95,8 +95,6 @@
                 @endforeach
             </div>
         @endif
-    </div>
-    <div class="text-center mt-4">
     </div>
 </div>
 @endsection

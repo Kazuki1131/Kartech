@@ -110,7 +110,7 @@
                         @endif
                     @endforeach
                 @endisset
-                <button type="submit" class="btn-origin d-block mx-auto">完了</button>
+                <button type="submit" class="btn-origin d-block mx-auto mt-4">完了</button>
             </form>
         </div>
     </div>
