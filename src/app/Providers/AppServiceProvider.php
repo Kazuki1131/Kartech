@@ -2,10 +2,9 @@
 
 namespace App\Providers;
 
-use App\Services\{CustomerDataService, QuestionnaireDataService, ShowDataService, VisitedRecordDataService};
+use App\Services\{CustomerDataService, SurveyDataService, ShowDataService, VisitedRecordDataService, SalesHistoryDataService};
 use Illuminate\Support\ServiceProvider;
 use Auth;
-use URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,12 +15,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(QuestionnaireDataService::class, function ($app) {
-            return new QuestionnaireDataService(Auth::id());
+        $this->app->bind(SurveyDataService::class, function ($app) {
+            return new SurveyDataService(Auth::id());
         });
 
         $this->app->bind(ShowDataService::class, function ($app) {
-            return new ShowDataService(new CustomerDataService, new VisitedRecordDataService, $this->app->make(QuestionnaireDataService::class));
+            return new ShowDataService(new CustomerDataService, new VisitedRecordDataService, $this->app->make(SurveyDataService::class), new SalesHistoryDataService);
         });
     }
 

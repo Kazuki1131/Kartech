@@ -21,7 +21,7 @@ final class SurveyDataService
     public function __construct($authId)
     {
         $this->authId = $authId;
-        $this->surveys = Survey::where('store_id', $this->authId)->get();
+        $this->surveys = Survey::where('shop_id', $this->authId)->get();
     }
 
     /**
@@ -34,13 +34,13 @@ final class SurveyDataService
         $selectionTypeIsMultiple = 2;
 
         if (
-            Survey::where('store_id', $this->authId)
+            Survey::where('shop_id', $this->authId)
                 ->where(function($query) use($selectionTypeIsSingle, $selectionTypeIsMultiple) {
                     $query->where('type', $selectionTypeIsSingle)
                         ->orWhere('type', $selectionTypeIsMultiple);
                 })->exists()
         ) {
-            $selectionTypePrimaryId = Survey::where('store_id', $this->authId)
+            $selectionTypePrimaryId = Survey::where('shop_id', $this->authId)
             ->where(function($query) use($selectionTypeIsSingle, $selectionTypeIsMultiple) {
                 $query->where('type', $selectionTypeIsSingle)
                 ->orWhere('type', $selectionTypeIsMultiple);
@@ -83,7 +83,7 @@ final class SurveyDataService
      */
     public function surveyDataList(): array
     {
-        if (Survey::where('store_id', $this->authId)->exists()) {
+        if (Survey::where('shop_id', $this->authId)->exists()) {
             foreach ($this->surveys as $survey) {
                 $surveyData[$survey->id] = [
                     'question' => $survey->question,

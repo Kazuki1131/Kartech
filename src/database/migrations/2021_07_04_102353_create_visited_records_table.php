@@ -15,15 +15,15 @@ class CreateVisitedRecordsTable extends Migration
     {
         Schema::create('visited_records', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('store_id')->unsigned();
+            $table->bigInteger('shop_id')->unsigned();
             $table->bigInteger('customer_id')->unsigned();
             $table->text('memo')->nullable();
             $table->date('visited_at')->nullable();
             $table->timestamps();
 
             //外部キー制約
-            $table->foreign('store_id')
-                ->references('id')->on('stores')
+            $table->foreign('shop_id')
+                ->references('id')->on('shops')
                 ->onDelete('cascade');
             $table->foreign('customer_id')
                 ->references('id')->on('customers')

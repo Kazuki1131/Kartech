@@ -15,15 +15,15 @@ class CreateSurveysTable extends Migration
     {
         Schema::create('surveys', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('store_id')->unsigned();
+            $table->bigInteger('shop_id')->unsigned();
             $table->string('question');
             $table->tinyInteger('type')->unsigned();
             $table->integer('order_number')->unsigned()->nullable();
             $table->timestamps();
 
             //外部キー制約
-            $table->foreign('store_id')
-            ->references('id')->on('stores')
+            $table->foreign('shop_id')
+            ->references('id')->on('shops')
             ->onDelete('cascade');
         });
     }

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
  * App\Models\Survey
  *
  * @property int $id
- * @property int $store_id
+ * @property int $shop_id
  * @property string $question
  * @property int $type
  * @property int|null $order_number
@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\AnswerToTheSurvey[] $answer_to_the_survey
  * @property-read int|null $answer_to_the_survey_count
- * @property-read \App\Models\Store $store
+ * @property-read \App\Models\Shop $shop
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\SurveyOption[] $survey_option
  * @property-read int|null $survey_option_count
  * @method static \Illuminate\Database\Eloquent\Builder|Survey newModelQuery()
@@ -26,24 +26,24 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Survey whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Survey whereOrderNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Survey whereQuestion($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Survey whereStoreId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Survey whereShopId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Survey whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Survey whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class Survey extends Model
 {
-    protected $fillable = ['store_id', 'question', 'type'];
+    protected $fillable = ['shop_id', 'question', 'type'];
     protected $casts = [
         'id' => 'integer',
-        'store_id' => 'integer',
+        'shop_id' => 'integer',
         'type' => 'integer',
         'order_number' => 'integer',
     ];
 
-    public function store()
+    public function shop()
     {
-        return $this->belongsTo(Store::class);
+        return $this->belongsTo(Shop::class);
     }
 
     public function survey_option()

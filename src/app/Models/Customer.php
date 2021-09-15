@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
  * App\Models\Customer
  *
  * @property int $id
- * @property int $store_id
+ * @property int $shop_id
  * @property int $control_number
  * @property string|null $name
  * @property string $name_kana
@@ -25,7 +25,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read int|null $photo_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\SalesHistory[] $sales_history
  * @property-read int|null $sales_history_count
- * @property-read \App\Models\Store $store
+ * @property-read \App\Models\Shop $shop
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\VisitedRecord[] $visited_record
  * @property-read int|null $visited_record_count
  * @method static \Illuminate\Database\Eloquent\Builder|Customer newModelQuery()
@@ -40,24 +40,24 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Customer whereMemo($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Customer whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Customer whereNameKana($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Customer whereStoreId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Customer whereShopId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Customer whereTel($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Customer whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class Customer extends Model
 {
-    protected $fillable = ['store_id', 'control_number', 'name', 'name_kana', 'gender', 'birthday', 'tel', 'email', 'memo'];
+    protected $fillable = ['shop_id', 'control_number', 'name', 'name_kana', 'gender', 'birthday', 'tel', 'email', 'memo'];
     protected $casts = [
         'id' => 'integer',
-        'store_id' => 'integer',
+        'shop_id' => 'integer',
         'control_number' => 'integer',
         'gender' => 'integer',
     ];
 
-    public function store()
+    public function shop()
     {
-        return $this->belongsTo(Store::class);
+        return $this->belongsTo(Shop::class);
     }
 
     public function visited_record()

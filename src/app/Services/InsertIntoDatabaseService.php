@@ -6,7 +6,7 @@ namespace App\Services;
 
 use DB;
 use Auth;
-use App\Models\{Customer, Questionnaire, VisitedRecord};
+use App\Models\{Customer, Survey, VisitedRecord, Menu};
 use App\Services\CustomerDataService;
 
 final class InsertIntoDatabaseService
@@ -16,14 +16,14 @@ final class InsertIntoDatabaseService
         $customer = new Customer;
         $service = new CustomerDataService;
 
-        $customer->user_id = Auth::id();
+        $customer->shop_id = Auth::id();
         $customer->control_number = $service->getControlNumberToSet();
         $customer->fill($request->all());
         $customer->save();
         if (isset($request->answer_text)) {
             foreach ($request->answer_text as $id => $answer) {
                 $answerData[] = [
-                    'questionnaire_id' => $id,
+                    'survey_id' => $id,
                     'customer_id' => $customer->id,
                     'answer' => $answer
                 ];
@@ -32,7 +32,7 @@ final class InsertIntoDatabaseService
         if (isset($request->answer_select)) {
             foreach ($request->answer_select as $id => $answer) {
                 $answerData[] = [
-                    'questionnaire_id' => $id,
+                    'survey_id' => $id,
                     'customer_id' => $customer->id,
                     'answer' => $answer
                 ];
@@ -41,63 +41,92 @@ final class InsertIntoDatabaseService
         if (isset($request->answer_check)) {
             foreach ($request->answer_check as $id => $answer) {
                 $answerData[] = [
-                    'questionnaire_id' => $id,
+                    'survey_id' => $id,
                     'customer_id' => $customer->id,
                     'answer' => implode(' , ', $answer)
                 ];
             }
         }
         if (isset($answerData)) {
-            DB::table('questionnaire_answers')->insert($answerData);
+            DB::table('answer_to_the_surveys')->insert($answerData);
         }
     }
 
-    public function questionnaires($request)
+    public function surveys($request)
     {
-        $questionnaire = new Questionnaire;
-
-        $questionnaire->user_id = Auth::id();
-        $questionnaire->fill($request->all());
-        $questionnaire->save();
+        $survey = new Survey;
+        $survey->shop_id = Auth::id();
+        $survey->fill($request->all());
+        $survey->save();
         if ($request->type === '0'){
-            return redirect()->route('questionnaires.create')->with('flash_message', '新しいアンケートを追加しました。');
+            return redirect()->route('surveys.create')->with('flash_message', '新しいアンケートを追加しました。');
         } elseif ($request->type === '1') {
             foreach ($request->singleAnswers as $singleAnswer) {
                 $insertData[] = [
-                    'questionnaire_id' => $questionnaire->id,
+                    'survey_id' => $survey->id,
                     'option' => $singleAnswer
                 ];
             }
-            DB::table('questionnaire_options')->insert($insertData);
+            DB::table('survey_options')->insert($insertData);
         } elseif ($request->type === '2') {
             foreach ($request->multipleAnswers as $multipleAnswer) {
                 $insertData[] = [
-                    'questionnaire_id' => $questionnaire->id,
+                    'survey_id' => $survey->id,
                     'option' => $multipleAnswer
                 ];
             }
-            DB::table('questionnaire_options')->insert($insertData);
+            DB::table('survey_options')->insert($insertData);
         } else {
             return abort(404);
         }
     }
 
+    public function menus($request)
+    {
+        $menu = new Menu;
+        $menu->shop_id = Auth::id();
+        $menu->fill($request->all());
+        $menu->save();
+    }
+
     public function visitedRecords($request)
     {
-        $visitedRecord = New VisitedRecord;
-
-        $visitedRecord->user_id = Auth::id();
+        $visitedRecord = new VisitedRecord;
+        $visitedRecord->shop_id = Auth::id();
         $visitedRecord->fill($request->all());
         $visitedRecord->save();
 
+        return $visitedRecord->id;
+    }
+
+    public function photos($request, $visitedRecordId)
+    {
         if ($request->hasFile('images')){
             foreach ($request->images as $image){
                 $insertData[] = [
-                    'record_id' => $visitedRecord->id,
+                    'shop_id' => Auth::id(),
+                    'customer_id' => $request->customer_id,
+                    'visited_id' => $visitedRecordId,
                     'image_path' => $image->store('images', 's3', 'public')
                 ];
             }
             DB::table('photos')->insert($insertData);
         }
+    }
+
+    public function salesHistories($request, $visitedRecordId)
+    {
+        foreach ($request->menus as $menuId) {
+            $menu = Menu::find($menuId);
+            $insertData[] = [
+                'shop_id' => Auth::id(),
+                'customer_id' => $request->customer_id,
+                'visited_id' => $visitedRecordId,
+                'menu_id' => $menuId,
+                'menu_name' => $menu->name,
+                'price_sold' => $menu->price
+            ];
+        }
+        DB::table('sales_histories')->insert($insertData);
     }
 }

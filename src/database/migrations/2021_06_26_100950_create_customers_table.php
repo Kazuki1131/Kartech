@@ -15,7 +15,7 @@ class CreateCustomersTable extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('store_id')->unsigned();
+            $table->bigInteger('shop_id')->unsigned();
             $table->bigInteger('control_number')->unsigned();
             $table->string('name')->nullable();
             $table->string('name_kana');
@@ -27,8 +27,8 @@ class CreateCustomersTable extends Migration
             $table->timestamps();
 
             //外部キー制約
-            $table->foreign('store_id')
-            ->references('id')->on('stores')
+            $table->foreign('shop_id')
+            ->references('id')->on('shops')
             ->onDelete('cascade');
         });
     }

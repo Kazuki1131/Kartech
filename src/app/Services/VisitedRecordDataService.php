@@ -27,20 +27,20 @@ final class VisitedRecordDataService
     public function getVisitedRecords(int $request)
     {
         $this->visitedRecordExist = VisitedRecord::where([
-            ['user_id', Auth::id()],
-            ['customer_id', $request]
-        ])->exists();
+                ['shop_id', Auth::id()],
+                ['customer_id', $request]
+            ])->exists();
 
         if ($this->visitedRecordExist) {
             $this->visitedRecordPrimaryId = VisitedRecord::where([
-                ['user_id', Auth::id()],
+                ['shop_id', Auth::id()],
                 ['customer_id', $request]
             ])->pluck('id');
 
             return VisitedRecord::where([
-                ['user_id', Auth::id()],
+                ['shop_id', Auth::id()],
                 ['customer_id', $request]
-            ])->paginate(5);
+            ])->orderBy('visited_at', 'desc')->paginate(5);
         }
         return null;
 
@@ -53,7 +53,7 @@ final class VisitedRecordDataService
     {
         if ($this->visitedRecordExist) {
             foreach ($this->visitedRecordPrimaryId as $id){
-                $ImagePaths[$id] = Photo::where('record_id', $id)->pluck('image_path');
+                $ImagePaths[$id] = Photo::where('visited_id', $id)->pluck('image_path');
             }
             return $ImagePaths;
         }
