@@ -22,8 +22,8 @@ final class ShowDataService
     public function customer(int $request)
     {
         return [
-            'customer' => $this->customer->getOrderedCustomer($request),
-            'avgPurchasePrices' => $this->customer->requestAvgPurchasePrice($request),
+            'customer' => $this->customer->getAllColumnsOfRequestedCustomer($request),
+            'avgPurchasePrices' => $this->customer->getAvgSellingPriceOfRequestedCustomer($request),
             'visitedRecords' => $this->visitedRecord->getVisitedRecords($request),
             'imagePaths' => $this->visitedRecord->getImagePaths(),
             'surveyList' => $this->survey->getRequestedCustomerSurvey($request),

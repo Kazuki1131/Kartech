@@ -32,7 +32,7 @@ final class CustomerDataService
     }
 
     //リクエストされた顧客だけ取得
-    public function getOrderedCustomer(int $request)
+    public function getAllColumnsOfRequestedCustomer(int $request)
     {
         return $this->orderedCustomer = Customer::where([
             ['shop_id', Auth::id()],
@@ -57,7 +57,7 @@ final class CustomerDataService
     }
 
     //ログインユーザーに紐づく顧客すべての平均単価を取得
-    private function getAllCustomersAvgPurchasePriceInTheShop(): array
+    private function getAvgSellingPriceForAllCustomersInTheShop(): array
     {
         if ($this->customerExists) {
             foreach ($this->customers as $customer) {
@@ -70,7 +70,7 @@ final class CustomerDataService
     }
 
     //リクエストされた顧客の平均単価を取得
-    public function requestAvgPurchasePrice(int $request): int
+    public function getAvgSellingPriceOfRequestedCustomer(int $request): int
     {
         if (empty($this->orderedCustomer->id)) {
             return 0;
@@ -97,7 +97,7 @@ final class CustomerDataService
         return [
             'customers' => $this->getAllCustomersInTheShop(),
             'visitedDates' => $this->getAllCustomersVisitedAtsInTheShop(),
-            'avgPurchasePrices' => $this->getAllCustomersAvgPurchasePriceInTheShop(),
+            'avgSellingPrices' => $this->getAvgSellingPriceForAllCustomersInTheShop(),
         ];
     }
 }

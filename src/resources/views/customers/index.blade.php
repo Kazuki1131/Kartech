@@ -37,15 +37,9 @@
                             <td>
                                 <a href="{{ route('customers.show', ['customer' => $customer]) }}">{{ $customer->name_kana }}</a>
                             </td>
-                            @foreach ($visitedDates as $customerId => $visitedDate)
-                                @if ($customer->id === $customerId)
-                                <td>{{ $visitedDate[0] ?? ''}}</td>
-                                <td>{{ count($visitedDate) }}回</td>
-                                @endif
-                            @endforeach
-                            @foreach ($avgPurchasePrices as $avgPurchasePrice)
-                                <td>{{ $avgPurchasePrice ?? 0 }}円</td>
-                            @endforeach
+                            <td>{{ $visitedDates[$customer->id][0] ?? ''}}</td>
+                            <td>{{ count($visitedDates[$customer->id] ?? []) }}回</td>
+                            <td>{{ $avgSellingPrices[$customer->id] }}円</td>
                             <td>{{ $customer->tel }}</td>
                         </tr>
                     @endforeach
