@@ -7,7 +7,7 @@ namespace App\Services;
 use App\Models\Menu;
 use Auth;
 
-final class MenuDataService
+final class GetMenuListService
 {
     public function getAllMenusInTheShop()
     {

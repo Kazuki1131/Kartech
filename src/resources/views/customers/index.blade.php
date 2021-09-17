@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('content')
 <div class="container pb-5">
     @if (session('flash_message'))
