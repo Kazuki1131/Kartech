@@ -7,7 +7,7 @@ namespace App\Services;
 use DB;
 use Auth;
 use App\Models\{Customer, Survey, VisitedRecord, Menu};
-use App\Services\CustomerDataService;
+use App\Services\CustomersIndexDataService;
 
 final class InsertIntoDatabaseService
 {
@@ -16,10 +16,17 @@ final class InsertIntoDatabaseService
     public function customers($request)
     {
         $customer = new Customer;
-        $service = new CustomerDataService;
-
+        $service = new CustomersIndexDataService;
+        $controlNumberExist = Customer::select('control_number')
+            ->where('shop_id', Auth::id())
+            ->exists();
+        if ($controlNumberExist) {
+            $control_number = Customer::where('shop_id', Auth::id())->max('control_number') + 1;
+        } else {
+            $control_number = 1;
+        }
         $customer->shop_id = Auth::id();
-        $customer->control_number = $service->getControlNumberToSet();
+        $customer->control_number = $control_number;
         $customer->fill($request->all());
         $customer->save();
         if (isset($request->answer_text)) {

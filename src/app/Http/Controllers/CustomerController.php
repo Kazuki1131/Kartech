@@ -29,7 +29,7 @@ class CustomerController extends Controller
         if(!is_numeric($request->customer)){
             return abort(404);
         }
-        return view('customers.show', $service->customersShowDataList($request->customer));
+        return view('customers.show', $service->customersShowDataList($request));
     }
 
     public function search(Request $request, CustomersIndexDataService $customer)

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\VisitedRecordRequest;
-use App\Services\{InsertIntoDatabaseService, MenuDataService};
+use App\Services\{InsertIntoDatabaseService, GetMenuListService};
 
 class VisitedRecordController extends Controller
 {
@@ -23,7 +23,7 @@ class VisitedRecordController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request, MenuDataService $menus)
+    public function create(Request $request, GetMenuListService $menus)
     {
         return view('visited_records.create', ['customerId' => $request->customer_id, 'menus' => $menus->getAllMenusInTheShop()]);
     }

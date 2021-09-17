@@ -100,6 +100,7 @@
                         </div>
                     </div>
                 @endforeach
+                <div class="row justify-content-center">{{ $visitedRecords->links() }}</div>
             </div>
         @endif
     </div>
