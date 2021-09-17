@@ -15,7 +15,9 @@
                 <div class="col-md-6">
                     <ul>
                         <li class="origin-li-top">顧客番号：{{ $customer->control_number ?? '' }}</li>
-                        <li class="origin-li">生年月日：{{ $customer->birthday ?? '未登録' }}</li>
+                        <li class="origin-li">生年月日：{{ $customer->birthday
+                            ? $customer->birthday . '（' . \Carbon\Carbon::parse($customer->birthday)->age . '歳）'
+                            : '未登録'}}</li>
                         <li class="origin-li">電話番号：{{ $customer->tel ?? '' }}</li>
                         <li class="origin-li">
                             性別：{{ $customer->gender ?  $customer->gender === 1 ? '女性' : '男性' : ''}}

@@ -24,8 +24,8 @@ final class ShowDataService
         return [
             'customer' => $this->customer->getAllColumnsOfRequestedCustomer($request),
             'avgPurchasePrices' => $this->customer->getAvgSellingPriceOfRequestedCustomer($request),
-            'visitedRecords' => $this->visitedRecord->getVisitedRecords($request),
-            'imagePaths' => $this->visitedRecord->getImagePaths(),
+            'visitedRecords' => $this->visitedRecord->getVisitedRecordsOfRequestedCustomer($request),
+            'imagePaths' => $this->visitedRecord->getImagePathsOfRequestedCustomer($request),
             'surveyList' => $this->survey->getRequestedCustomerSurvey($request),
             'servicesSoldList' => $this->salesHistory->getServicesSoldOnTheRequestedDate($request)
         ];
