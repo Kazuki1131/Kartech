@@ -49,6 +49,7 @@ final class CustomersShowDataService
             }
             return $ImagePaths;
         }
+        return [];
     }
 
     /**

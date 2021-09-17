@@ -48,7 +48,7 @@
                                 @if ($index % 2 === 0)
                                     <li class="list-group-item text-center bg-origin-card">
                                         <h5 class="">{{ $survey['question'] }}</h5>
-                                        <div>{{$survey['answer']}}</div>
+                                        <div>{{ $survey['answer'] ?? '未回答' }}</div>
                                     </li>
                                 @endif
                             @endforeach
@@ -60,7 +60,7 @@
                                 @unless ($index % 2 === 0)
                                     <li class="list-group-item text-center bg-origin-card">
                                         <h5 class="">{{ $survey['question'] }}</h5>
-                                        <div>{{$survey['answer']}}</div>
+                                        <div>{{ $survey['answer'] ?? '未回答'}}</div>
                                     </li>
                                 @endunless
                             @endforeach
@@ -69,7 +69,7 @@
                 </div>
             </div>
         @endif
-        @if ($visitedRecords)
+        @if ($visitedRecords->count())
             <div class="card-body h6 px-0">
                 <h2 class="text-center title">ー 来店記録 ー</h2>
                 @foreach ($visitedRecords as $visitedRecord)
