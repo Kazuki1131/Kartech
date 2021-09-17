@@ -10,11 +10,6 @@ use Auth;
 final class CustomerDataService
 {
     /**
-     * @var bool
-     */
-    private $customerExists = false;
-
-    /**
      * @var \Illuminate\Database\Eloquent\Collection
      */
     private $customers;
@@ -23,11 +18,7 @@ final class CustomerDataService
     //ログインユーザーに紐づく顧客をすべて取得
     private function getAllCustomersInTheShop()
     {
-        if (Customer::where('shop_id', Auth::id())->exists()) {
-            $this->customerExists = true;
             return $this->customers = Customer::where('shop_id', Auth::id())->paginate(10);
-        }
-        return $this->customerExists;
     }
 
     //リクエストされた顧客だけ取得
@@ -42,7 +33,7 @@ final class CustomerDataService
     //来店日を取得（ログインユーザーに紐づく顧客すべて）
     private function getAllCustomersVisitedAtsInTheShop(): array
     {
-        if ($this->customerExists) {
+        if ($this->customers->count()) {
             foreach ($this->customers as $customer) {
                 if (VisitedRecord::where('customer_id', $customer->id)->exists()) {
                     $visitedAts[$customer->id] = VisitedRecord::where('customer_id', $customer->id)
@@ -60,7 +51,7 @@ final class CustomerDataService
     //ログインユーザーに紐づく顧客すべての平均単価を取得
     private function getAvgSellingPriceForAllCustomersInTheShop(): array
     {
-        if ($this->customerExists) {
+        if ($this->customers->count()) {
             foreach ($this->customers as $customer) {
                 $totalSellingPrice = SalesHistory::where('customer_id', $customer->id)->sum('price_sold');
                 $numberOfVisits = VisitedRecord::where('customer_id', $customer->id)->count();
@@ -107,6 +98,31 @@ final class CustomerDataService
             'customers' => $this->getAllCustomersInTheShop(),
             'visitedDates' => $this->getAllCustomersVisitedAtsInTheShop(),
             'avgSellingPrices' => $this->getAvgSellingPriceForAllCustomersInTheShop(),
+        ];
+    }
+
+    public function search($request)
+    {
+        if ($request->searchColumn === 'name') {
+            $this->customers = Customer::where([
+                    ['shop_id', Auth::id()],
+                    [$request->searchColumn, 'like', '%' . $request->keyword . '%']
+                ])->orWhere (function ($query) use ($request) {
+                    $query->where([
+                        ['shop_id', Auth::id()],
+                        ['name_kana', 'like', '%' . $request->keyword . '%']
+                    ]);
+                })->paginate(10);
+        } else {
+            $this->customers = Customer::where([
+                ['shop_id', Auth::id()],
+                [$request->searchColumn, $request->keyword]
+                ])->paginate(10);
+        }
+        return [
+            'customers' => $this->customers,
+            'visitedDates' => $this->getAllCustomersVisitedAtsInTheShop(),
+            'avgSellingPrices' => $this->getAvgSellingPriceForAllCustomersInTheShop()
         ];
     }
 }

@@ -19,6 +19,7 @@ Auth::routes();
 Route::get('guest', 'Auth\LoginController@guestLogin')->name('login.guest');
 
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('/search/customers', 'CustomerController@search')->name('customers.search');
     Route::resource('customers', 'CustomerController');
     Route::resource('visited_records', 'VisitedRecordController');
     Route::resource('surveys', 'SurveyController');

@@ -31,4 +31,16 @@ class CustomerController extends Controller
         }
         return view('customers.show', $showDataList->customer($request->customer));
     }
+
+    public function search(Request $request, CustomerDataService $customer)
+    {
+        if (!$request->keyword){
+            return redirect()->route('customers.index')->with('flash_message', '条件を入力してから検索してください。');
+        } elseif ($request->searchColumn === 'control_number' && !is_numeric($request->keyword)) {
+            return redirect()->route('customers.index')->with('flash_message', '顧客番号で絞り込む場合は数字を入力してください。');
+        } elseif ($request->searchColumn === 'name' && is_numeric($request->keyword)) {
+            return redirect()->route('customers.index')->with('flash_message', '名前で絞り込む場合は数字で検索することはできません。');
+        }
+        return view('customers.index', $customer->search($request));
+    }
 }
