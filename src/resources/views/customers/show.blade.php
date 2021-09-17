@@ -2,6 +2,11 @@
 
 @section('content')
 <div class="container pb-5">
+    @if (session('flash_message'))
+        <div class="alert bg-origin-body text-center">
+            {{ session('flash_message') }}
+        </div>
+    @endif
     <a class="btn-origin-return float-left" href="{{ route('customers.index') }}">戻る</a>
     <a href="{{ route('visited_records.create', ['customer_id' => $customer->id]) }}" class="btn-origin float-right mb-2">来店記録の作成</a>
     <div class="card mx-auto w-100 bg-origin-card px-0">

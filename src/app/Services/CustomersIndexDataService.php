@@ -7,27 +7,17 @@ namespace App\Services;
 use App\Models\{Customer, VisitedRecord, SalesHistory};
 use Auth;
 
-final class CustomerDataService
+final class CustomersIndexDataService
 {
     /**
      * @var \Illuminate\Database\Eloquent\Collection
      */
     private $customers;
-    private $orderedCustomer;
 
     //ログインユーザーに紐づく顧客をすべて取得
     private function getAllCustomersInTheShop()
     {
-            return $this->customers = Customer::where('shop_id', Auth::id())->paginate(10);
-    }
-
-    //リクエストされた顧客だけ取得
-    public function getAllColumnsOfRequestedCustomer(int $request)
-    {
-        return $this->orderedCustomer = Customer::where([
-            ['shop_id', Auth::id()],
-            ['id', $request],
-        ])->first();
+        return $this->customers = Customer::where('shop_id', Auth::id())->paginate(10);
     }
 
     //来店日を取得（ログインユーザーに紐づく顧客すべて）
@@ -66,20 +56,6 @@ final class CustomerDataService
         return [];
     }
 
-    //リクエストされた顧客の平均単価を取得
-    public function getAvgSellingPriceOfRequestedCustomer(int $request): int
-    {
-        if (empty($this->orderedCustomer->id)) {
-            return 0;
-        }
-        $totalSellingPrice = SalesHistory::where('customer_id', $request)->sum('price_sold');
-        $numberOfVisits = VisitedRecord::where('customer_id', $request)->count();
-        if ($numberOfVisits !== 0) {
-            return $totalSellingPrice / $numberOfVisits;
-        }
-        return 0;
-    }
-
     public function getControlNumberToSet(): int
     {
         $controlNumberExist = Customer::select('control_number')
@@ -92,7 +68,7 @@ final class CustomerDataService
         }
     }
 
-    public function indexDataList(): array
+    public function allCustomersDataList(): array
     {
         return [
             'customers' => $this->getAllCustomersInTheShop(),
@@ -101,7 +77,7 @@ final class CustomerDataService
         ];
     }
 
-    public function search($request)
+    public function searchedCustomersDataList($request)
     {
         if ($request->searchColumn === 'name') {
             $this->customers = Customer::where([

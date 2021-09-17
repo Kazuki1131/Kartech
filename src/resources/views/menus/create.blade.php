@@ -1,7 +1,11 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="container pb-5">
+    @if (session('flash_message'))
+        <div class="alert bg-origin-body text-center">
+            {{ session('flash_message') }}
+        </div>
+    @endif
     <a class="btn-origin-return float-right" href="{{ route('customers.index') }}">戻る</a>
     <div class="card mx-auto w-100 bg-origin-card">
         <div class="card-header card-head-origin">メニュー新規登録</div>

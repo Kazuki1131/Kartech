@@ -2,6 +2,11 @@
 
 @section('content')
 <div class="container pb-5">
+    @if (session('flash_message'))
+        <div class="alert bg-origin-body text-center">
+            {{ session('flash_message') }}
+        </div>
+    @endif
     <div class="text-right">
         <a class="btn-origin-return" href="{{ route('customers.index') }}">戻る</a>
     </div>

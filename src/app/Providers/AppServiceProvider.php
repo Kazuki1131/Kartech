@@ -15,13 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(SurveyDataService::class, function ($app) {
-            return new SurveyDataService(Auth::id());
-        });
 
-        $this->app->bind(ShowDataService::class, function ($app) {
-            return new ShowDataService(new CustomerDataService, new VisitedRecordDataService, $this->app->make(SurveyDataService::class), new SalesHistoryDataService);
-        });
     }
 
     /**
