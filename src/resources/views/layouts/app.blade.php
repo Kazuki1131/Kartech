@@ -57,9 +57,9 @@
                                 </li>
                             @endif
                         @else
-                            @if (\Route::is('index'))
+                            @if (\Route::is('top'))
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('customers.index') }}">カルテを検索する</a>
+                                <a class="nav-link" href="{{ route('customers.index') }}">顧客一覧ページ</a>
                             </li>
                             @endif
                             <li class="nav-item">

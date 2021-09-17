@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Models\{Customer, SalesHistory, VisitedRecord, Photo, Survey, AnswerToTheSurvey};
 use Auth;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 final class CustomersShowDataService
 {
@@ -29,25 +30,12 @@ final class CustomersShowDataService
     {
         if ($this->customer->count()) {
             $totalSellingPrice = SalesHistory::where('customer_id', $request)->sum('price_sold');
-            $this->visitedRecords = VisitedRecord::where('customer_id', $request)->get();
+            $this->visitedRecords = VisitedRecord::where('customer_id', $request)->orderBy('visited_at', 'desc')->paginate(5);
             if ($this->visitedRecords->count() !== 0) {
-                return $totalSellingPrice / $this->visitedRecords->count();
+                return intval($totalSellingPrice / $this->visitedRecords->total());
             }
         }
         return 0;
-    }
-
-    /**
-     * @property int $request
-     *
-     * @return Illuminate\Database\Eloquent\Collection
-     */
-    private function getVisitedRecordsOfRequestedCustomer()
-    {
-        if ($this->visitedRecords->count() !== 0) {
-            return $this->visitedRecords->orderBy('visited_at', 'desc')->paginate(5);
-        }
-        return null;
     }
 
     /**
@@ -56,7 +44,7 @@ final class CustomersShowDataService
     private function getImagePathsOfRequestedCustomer(): array
     {
         if ($this->visitedRecords->count()) {
-            foreach ($this->visitedRecord->pluck('id') as $id){
+            foreach ($this->visitedRecords->pluck('id') as $id){
                 $ImagePaths[$id] = Photo::where('visited_id', $id)->pluck('image_path');
             }
             return $ImagePaths;
@@ -101,15 +89,16 @@ final class CustomersShowDataService
         return [];
     }
 
-    public function customersShowDataList(int $request)
+    public function customersShowDataList($request)
     {
+        $customerId = intval($request->customer);
         return [
-            'customer' => $this->getAllColumnsOfRequestedCustomer($request),
-            'avgPurchasePrices' => $this->getAvgSellingPriceOfRequestedCustomer($request),
-            'visitedRecords' => $this->getVisitedRecordsOfRequestedCustomer(),
+            'customer' => $this->getAllColumnsOfRequestedCustomer($customerId),
+            'avgPurchasePrices' => $this->getAvgSellingPriceOfRequestedCustomer($customerId),
+            'visitedRecords' => $this->visitedRecords,
             'imagePaths' => $this->getImagePathsOfRequestedCustomer(),
-            'surveyList' => $this->getSurveyOfRequestedCustomer($request),
-            'servicesSoldList' => $this->getServicesSoldOnTheRequestedDate($request)
+            'surveyList' => $this->getSurveyOfRequestedCustomer($customerId),
+            'servicesSoldList' => $this->getServicesSoldOnTheRequestedDate($customerId)
         ];
     }
 }

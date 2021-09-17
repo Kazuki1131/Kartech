@@ -46,7 +46,7 @@ final class CustomersIndexDataService
                 $totalSellingPrice = SalesHistory::where('customer_id', $customer->id)->sum('price_sold');
                 $numberOfVisits = VisitedRecord::where('customer_id', $customer->id)->count();
                 if ($numberOfVisits !== 0) {
-                    $avgSellingPrice[$customer->id] = $totalSellingPrice / $numberOfVisits;
+                    $avgSellingPrice[$customer->id] = intval($totalSellingPrice / $numberOfVisits);
                 } else {
                     $avgSellingPrice[$customer->id] = 0;
                 }
@@ -54,18 +54,6 @@ final class CustomersIndexDataService
             return $avgSellingPrice;
         }
         return [];
-    }
-
-    public function getControlNumberToSet(): int
-    {
-        $controlNumberExist = Customer::select('control_number')
-            ->where('shop_id', Auth::id())
-            ->exists();
-        if ($controlNumberExist) {
-            return Customer::where('shop_id', Auth::id())->max('control_number') + 1;
-        } else {
-            return 1;
-        }
     }
 
     public function allCustomersDataList(): array
