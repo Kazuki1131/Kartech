@@ -1,10 +1,17 @@
 @extends('layouts.app')
 @section('content')
 <div class="container pb-5">
-
+    @if (session('flash_message'))
+        <div class="alert bg-origin-body text-center">
+            {{ session('flash_message') }}
+        </div>
+    @endif
+    @if ($customers->count() === 0)
+        <div class="alert bg-origin-body text-center">該当する顧客は0件でした。</div>
+    @endif
     <form action="{{ route('customers.search') }}" method="GET">
         <div class="form-inline">
-            <select name="filter" class="form-control" style="width: 150px;">
+            <select name="searchColumn" class="form-control" style="width: 150px;">
                 <option value="control_number">顧客番号</option>
                 <option value="name">名前</option>
             </select>
