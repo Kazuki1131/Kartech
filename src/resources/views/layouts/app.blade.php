@@ -57,17 +57,21 @@
                                 </li>
                             @endif
                         @else
-                            @if (\Route::is('top'))
+                            @unless (\Route::is('customers.index'))
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('customers.index') }}">顧客一覧ページ</a>
                             </li>
-                            @endif
+                            @endunless
+                            @unless (\Route::is('surveys.create'))
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('surveys.create') }}">お客様アンケート</a>
                             </li>
+                            @endunless
+                            @unless (\Route::is('menus.create'))
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('menus.create') }}">提供メニュー</a>
                             </li>
+                            @endunless
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
