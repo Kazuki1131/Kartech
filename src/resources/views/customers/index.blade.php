@@ -13,14 +13,14 @@
     <form action="{{ route('customers.search') }}" method="GET">
         <div class="form-inline">
             <select name="searchColumn" class="form-control" style="width: 150px;">
-                <option value="control_number">顧客番号</option>
-                <option value="name">名前</option>
+                <option value="control_number" {{ $searchColumn ?? '' === "control_number" ? "selected" : '' }}>顧客番号</option>
+                <option value="name" {{ $searchColumn ?? '' === "name" ? "selected" : '' }}>名前</option>
             </select>
             <label>で絞り込む</label>
         </div>
         <div class="row">
             <div class="input-group col-md-6">
-                <input type="search" class="form-control" name="keyword">
+                <input type="search" class="form-control" name="keyword" value="{{ $keyword ?? '' }}">
                 <button type="submit" class="input-group-prepend btn-origin-search">
                     <i class="fa fa-search" aria-hidden="true"></i>
                 </button>
@@ -29,7 +29,7 @@
     </form>
     <a href="{{ route('customers.create') }}" class="btn-origin float-right my-2">顧客を追加</a>
     <div class="table-responsive mt-1">
-        <table class="table table-hover text-nowrap">
+        <table class="table table-hover text-nowrap sample">
             <caption>この表は横スクロールできます（挟画面時のみ）</caption>
             <thead class="bg-origin-body">
                 <tr>
@@ -46,17 +46,31 @@
                 @if ($customers)
                     @foreach ($customers as $customer)
                         <tr>
-                            <th scope="row">{{ $customer->control_number }}</th>
+                            <th scope="row">
+                                <a href="{{ route('customers.show', ['customer' => $customer]) }}">{{ $customer->control_number }}</a>
+                            </th>
                             <td>
                                 <a href="{{ route('customers.show', ['customer' => $customer]) }}">{{ $customer->name_kana }}</a>
                             </td>
-                            <td>{{ $customer->birthday
-                                ? $customer->birthday . '（' . \Carbon\Carbon::parse($customer->birthday)->age . '歳）'
-                                : '未登録'}}</td>
-                            <td>{{ $visitedDates[$customer->id][0] ?? ''}}</td>
-                            <td>{{ count($visitedDates[$customer->id] ?? []) }}回</td>
-                            <td>{{ $avgSellingPrices[$customer->id] }}円</td>
-                            <td>{{ $customer->tel }}</td>
+                            <td>
+                                <a href="{{ route('customers.show', ['customer' => $customer]) }}">
+                                    {{ $customer->birthday
+                                    ? $customer->birthday . '（' . \Carbon\Carbon::parse($customer->birthday)->age . '歳）'
+                                    : '未登録'}}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ route('customers.show', ['customer' => $customer]) }}">{{ $visitedDates[$customer->id][0] ?? ''}}</a>
+                                </td>
+                            <td>
+                                <a href="{{ route('customers.show', ['customer' => $customer]) }}">{{ count($visitedDates[$customer->id] ?? []) }}回</a>
+                            </td>
+                            <td>
+                                <a href="{{ route('customers.show', ['customer' => $customer]) }}">{{ $avgSellingPrices[$customer->id] }}円</a>
+                            </td>
+                            <td>
+                                <a href="{{ route('customers.show', ['customer' => $customer]) }}">{{ $customer->tel }}</a>
+                            </td>
                         </tr>
                     @endforeach
                 @endif
