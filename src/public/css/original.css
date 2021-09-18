@@ -274,6 +274,11 @@ input.plural-btn {
     color: #847a4c;
 }
 
+table.sample th a,
+table.sample td a {
+    display: block;
+}
+
 @media screen and (max-width: 1024px) {
     main {
         padding-top: 60px;
