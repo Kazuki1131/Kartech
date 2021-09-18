@@ -86,7 +86,9 @@ final class CustomersIndexDataService
         return [
             'customers' => $this->customers,
             'visitedDates' => $this->getAllCustomersVisitedAtsInTheShop(),
-            'avgSellingPrices' => $this->getAvgSellingPriceForAllCustomersInTheShop()
+            'avgSellingPrices' => $this->getAvgSellingPriceForAllCustomersInTheShop(),
+            'searchColumn' => $request->searchColumn,
+            'keyword' => $request->keyword
         ];
     }
 }
