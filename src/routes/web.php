@@ -24,4 +24,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('visited_records', 'VisitedRecordController');
     Route::resource('surveys', 'SurveyController');
     Route::resource('menus', 'MenuController');
+    Route::resource('consent_forms', 'ConsentFormController');
 });
