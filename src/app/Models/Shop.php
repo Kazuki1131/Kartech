@@ -17,6 +17,8 @@ use Illuminate\Notifications\Notifiable;
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ConsentForm[] $consent_form
+ * @property-read int|null $consent_form_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Customer[] $customer
  * @property-read int|null $customer_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Menu[] $menu
@@ -102,6 +104,11 @@ class Shop extends Authenticatable
 
     public function survey()
     {
-        return $this->hasMany(survey::class);
+        return $this->hasMany(Survey::class);
+    }
+
+    public function consent_form()
+    {
+        return $this->hasMany(ConsentForm::class);
     }
 }
