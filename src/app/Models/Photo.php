@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property int $shop_id
  * @property int $customer_id
- * @property int $record_id
+ * @property int $visited_id
  * @property string|null $image_path
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -24,9 +24,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Photo whereCustomerId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Photo whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Photo whereImagePath($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Photo whereRecordId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Photo whereShopId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Photo whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Photo whereVisitedId($value)
  * @mixin \Eloquent
  */
 class Photo extends Model

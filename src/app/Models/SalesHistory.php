@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property int $shop_id
  * @property int $customer_id
- * @property int $record_id
+ * @property int $visited_id
  * @property int $menu_id
  * @property string $menu_name
  * @property int $price_sold
@@ -29,9 +29,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|SalesHistory whereMenuId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SalesHistory whereMenuName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SalesHistory wherePriceSold($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SalesHistory whereRecordId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SalesHistory whereShopId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SalesHistory whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SalesHistory whereVisitedId($value)
  * @mixin \Eloquent
  */
 class SalesHistory extends Model
