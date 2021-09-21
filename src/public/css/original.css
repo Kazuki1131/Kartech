@@ -13,6 +13,16 @@ label,
     font-size: 15px;
 }
 
+.text-brown {
+    font-size: 20px;
+    color: rgb(103, 59, 29);
+}
+
+.small-brown {
+    font-size: 15px;
+    color: rgb(103, 59, 29);
+}
+
 .padding-origin {
     padding-top: 40px;
     padding-bottom: 40px;
@@ -50,7 +60,7 @@ label,
 
 .top-text {
     font-size: 1.5vw;
-    color: rgba(116, 90, 73, 0.623);
+    color: rgb(112, 76, 53);
     padding: 0 2vw;
     text-align: left;
 }
@@ -114,7 +124,7 @@ footer {
 }
 
 .bg-origin-nav {
-    background-color: #cdc5a2;
+    background-color: #beb58a76;
 }
 
 .bg-origin-card {
@@ -277,6 +287,11 @@ input.plural-btn {
 table.sample th a,
 table.sample td a {
     display: block;
+}
+
+.inner-left {
+    display: inline-block;
+    text-align: left;
 }
 
 @media screen and (max-width: 1024px) {
