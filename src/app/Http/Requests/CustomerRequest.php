@@ -25,8 +25,8 @@ class CustomerRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'nullable|string|max:30',
-            'name_kana' => 'required|string|max:30',
+            'name' => 'required|string|max:30',
+            'name_kana' => ['required', 'string', 'max:30','regex:/^[ァ-ヾ]+$/u'],
             'gender' => 'nullable|digits:1',
             'birthday' => 'nullable|date',
             'tel' => 'required|digits_between:8,11',
@@ -35,6 +35,7 @@ class CustomerRequest extends FormRequest
             'answer_text.*' => 'nullable|string|max:1000',
             'answer_select.*' => 'nullable|string|max:100',
             'answer_check.*.*' => 'nullable|string|max:100',
+            'agree' => 'accepted'
         ];
     }
 
@@ -51,6 +52,14 @@ class CustomerRequest extends FormRequest
             'answer_text.*' => '回答',
             'answer_select.*' => '回答',
             'answer_check.*.*' => '回答',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name_kana.regex' => 'お客様名(カナ)にはカタカナを入力してください。',
+            'agree.accepted' => '「同意する」にチェックを入れてください。',
         ];
     }
 }

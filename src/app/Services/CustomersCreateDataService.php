@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Models\{Survey, SurveyOption};
+use App\Models\{Survey, SurveyOption, ConsentForm};
 use Auth;
 
-final class GetSurveyListService
+final class CustomersCreateDataService
 {
     /**
      * @return Illuminate\Database\Eloquent\Collection
@@ -35,7 +35,7 @@ final class GetSurveyListService
     /**
      * @return array
      */
-    public function surveyDataList(): array
+    private function surveyData(): array
     {
         $surveys = Survey::where('shop_id', Auth::id())->get();
 
@@ -52,8 +52,22 @@ final class GetSurveyListService
                     }
                 }
             }
-            return ['surveyList' => $surveyData];
+            return $surveyData;
         }
         return [];
+    }
+
+    private function consentFormData(): string
+    {
+        return ConsentForm::where('shop_id', Auth::id())->value('content') ?? '';
+
+    }
+
+    public function dataList(): array
+    {
+            return [
+                'surveyList' => $this->surveyData(),
+                'consentForm' => $this->consentFormData()
+            ];
     }
 }

@@ -4,37 +4,26 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Models\{Customer, SalesHistory, VisitedRecord, Photo, Survey, AnswerToTheSurvey};
+use App\Models\{SalesHistory, VisitedRecord, Photo, Survey, AnswerToTheSurvey};
 use Auth;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 final class CustomersShowDataService
 {
-    private $customer;
     private $visitedRecords;
     private $surveys;
     private $surveyAnswers;
     private $salesHistories;
 
-    //リクエストされた顧客だけ取得
-    private function getAllColumnsOfRequestedCustomer(int $request)
-    {
-        return $this->customer = Customer::where([
-                ['shop_id', Auth::id()],
-                ['id', $request],
-            ])->first();
-    }
-
     //リクエストされた顧客の平均単価を取得
-    private function getAvgSellingPriceOfRequestedCustomer(int $request): int
+    private function getAvgSellingPriceOfRequestedCustomer(int $customerId): int
     {
-        if ($this->customer->count()) {
-            $totalSellingPrice = SalesHistory::where('customer_id', $request)->sum('price_sold');
-            $this->visitedRecords = VisitedRecord::where('customer_id', $request)->orderBy('visited_at', 'desc')->paginate(5);
-            if ($this->visitedRecords->count() !== 0) {
-                return intval($totalSellingPrice / $this->visitedRecords->total());
-            }
+        $totalSellingPrice = SalesHistory::where('customer_id', $customerId)->sum('price_sold');
+        $this->visitedRecords = VisitedRecord::where('customer_id', $customerId)->orderBy('visited_at', 'desc')->paginate(5);
+
+        if ($this->visitedRecords->count() !== 0) {
+            return intval($totalSellingPrice / $this->visitedRecords->total());
         }
+
         return 0;
     }
 
@@ -57,10 +46,10 @@ final class CustomersShowDataService
      *
      * @return array
      */
-    private function getSurveyOfRequestedCustomer(int $request): array
+    private function getSurveyOfRequestedCustomer(int $customerId): array
     {
         $this->surveys = Survey::where('shop_id', Auth::id())->get();
-        $this->surveyAnswers = AnswerToTheSurvey::where('customer_id', $request)->get();
+        $this->surveyAnswers = AnswerToTheSurvey::where('customer_id', $customerId)->get();
 
         if ($this->surveyAnswers->count()) {
             foreach ($this->surveys as $survey) {
@@ -78,9 +67,9 @@ final class CustomersShowDataService
         return [];
     }
 
-    private function getServicesSoldOnTheRequestedDate(int $request)
+    private function getServicesSoldOnTheRequestedDate(int $customerId)
     {
-        $this->salesHistories = SalesHistory::where('customer_id', $request)->get();
+        $this->salesHistories = SalesHistory::where('customer_id', $customerId)->get();
         if ($this->salesHistories->count()) {
             foreach ($this->visitedRecords->pluck('id') as $visitedRecordId) {
                 $servicesSold[$visitedRecordId] = SalesHistory::select('visited_id', 'menu_name', 'price_sold')->where('visited_id', $visitedRecordId)->get();
@@ -90,16 +79,15 @@ final class CustomersShowDataService
         return [];
     }
 
-    public function customersShowDataList($request)
+    public function customersShowDataList($customer)
     {
-        $customerId = intval($request->customer);
         return [
-            'customer' => $this->getAllColumnsOfRequestedCustomer($customerId),
-            'avgPurchasePrices' => $this->getAvgSellingPriceOfRequestedCustomer($customerId),
+            'customer' => $customer,
+            'avgPurchasePrices' => $this->getAvgSellingPriceOfRequestedCustomer($customer->id),
             'visitedRecords' => $this->visitedRecords,
             'imagePaths' => $this->getImagePathsOfRequestedCustomer(),
-            'surveyList' => $this->getSurveyOfRequestedCustomer($customerId),
-            'servicesSoldList' => $this->getServicesSoldOnTheRequestedDate($customerId)
+            'surveyList' => $this->getSurveyOfRequestedCustomer($customer->id),
+            'servicesSoldList' => $this->getServicesSoldOnTheRequestedDate($customer->id)
         ];
     }
 }
