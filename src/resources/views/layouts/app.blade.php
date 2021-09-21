@@ -26,6 +26,7 @@
 </head>
 <body class="bg-origin-body">
     <div id="app">
+        @unless (\Route::is('customers.create'))
         @guest
         <nav class="navbar navbar-expand-lg navbar-light bg-origin-nav fixed-top">
             <div class="container">
@@ -33,69 +34,74 @@
                     <h1 class="font-origin-title">Kartech</h1>
                 </a>
         @else
-        <nav class="navbar navbar-expand-lg navbar-light bg-origin-head">
+        <nav class="navbar navbar-expand-lg navbar-light bg-origin-nav">
             <div class="container">
                 <a class="navbar-brand" href="{{ route('customers.index') }}">
                     <h1 class="font-origin-title">Kartech</h1>
                 </a>
         @endguest
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav ml-auto">
-                        @guest
-                            <li class="nav-item mr-4">
-                                <a href="{{ route('login.guest') }}" class="nav-link">ゲストログイン</a>
-                            </li>
-                            <li class="nav-item mr-4">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('ログイン') }}</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('ユーザー登録') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            @unless (\Route::is('customers.index'))
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ml-auto">
+                    @guest
+                        <li class="nav-item mr-4">
+                            <a href="{{ route('login.guest') }}" class="nav-link">ゲストログイン</a>
+                        </li>
+                        <li class="nav-item mr-4">
+                            <a class="nav-link" href="{{ route('login') }}">{{ __('ログイン') }}</a>
+                        </li>
+                        @if (Route::has('register'))
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('customers.index') }}">顧客一覧ページ</a>
+                                <a class="nav-link" href="{{ route('register') }}">{{ __('ユーザー登録') }}</a>
                             </li>
-                            @endunless
-                            @unless (\Route::is('surveys.create'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('surveys.create') }}">お客様アンケート</a>
-                            </li>
-                            @endunless
-                            @unless (\Route::is('menus.create'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('menus.create') }}">提供メニュー</a>
-                            </li>
-                            @endunless
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                        @endif
+                    @else
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                顧客管理
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('customers.index') }}">顧客一覧・検索</a>
+                                <a class="dropdown-item" href="{{ route('customers.create') }}" target="_blank" rel="noopener">顧客新規追加</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('surveys.create') }}">お客様アンケート</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('menus.create') }}">提供メニュー</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('consent_forms.create') }}">同意書作成</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }}
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                                    document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
                                 </a>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                                                        document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
                         @endguest
                     </ul>
                 </div>
             </div>
         </nav>
+        @endunless
     </div>
     <main>
         @yield('content')
     </main>
+    @unless (\Route::is('customers.create'))
     <div class="wrapper-origin">
         <footer>
             <nav class="nav justify-content-center">
@@ -312,5 +318,6 @@
             <a href="https://twitter.com/kzk_engineer" class="footer-text">@kzk-engineer</a>
         </footer>
     </div>
+    @endunless
 </body>
 </html>

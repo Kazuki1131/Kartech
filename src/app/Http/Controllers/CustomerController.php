@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\CustomerRequest;
-use App\Services\{CustomersIndexDataService, GetSurveyListService, InsertIntoDatabaseService, CustomersShowDataService};
+use App\Http\Requests\{CustomerRequest, CustomersSearchRequest};
+use App\Services\{CustomersIndexDataService, CustomersCreateDataService, InsertIntoDatabaseService, CustomersShowDataService};
+use App\Models\Customer;
 
 class CustomerController extends Controller
 {
@@ -13,23 +14,25 @@ class CustomerController extends Controller
         return view('customers.index', $service->allCustomersDataList());
     }
 
-    public function create(GetSurveyListService $service)
+    public function create(CustomersCreateDataService $service)
     {
-        return view('customers.create', $service->surveyDataList());
+        return view('customers.create', $service->dataList());
     }
 
     public function store(CustomerRequest $request, InsertIntoDatabaseService $insertService)
     {
         $insertService->customers($request);
-        return redirect()->route('customers.index')->with('flash_message', '新しい顧客を追加しました。');
+        return redirect()->route('customers.create')->with('flash_message', '新しくお客様が追加されました。');
     }
 
-    public function show(Request $request, CustomersShowDataService $service)
+    public function show(Customer $customer, CustomersShowDataService $service)
     {
-        if(!is_numeric($request->customer)){
-            return abort(404);
-        }
-        return view('customers.show', $service->customersShowDataList($request));
+        return view('customers.show', $service->customersShowDataList($customer));
+    }
+
+    public function edit(Customer $customer)
+    {
+        return view('customers.edit', ['customer' => $customer]);
     }
 
     public function search(Request $request, CustomersIndexDataService $customer)

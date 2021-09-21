@@ -6,7 +6,13 @@
             {{ session('flash_message') }}
         </div>
     @endif
-    <a class="btn-origin-return float-right" href="{{ route('customers.index') }}">戻る</a>
+    <div class="text-center">
+        <p class="inner-left">
+            お店で提供しているメニューを登録してください。<br>
+            メニューを登録すると、来店記録ページでお客様に提供したメニューを一緒に記録できるようになります。<br>
+        </p>
+    </div>
+    <a class="btn-origin-return float-right" href="{{ route('customers.index') }}">顧客一覧画面</a>
     <div class="card mx-auto w-100 bg-origin-card">
         <div class="card-header card-head-origin">メニュー新規登録</div>
         <div class="card-body mx-auto w-75">
