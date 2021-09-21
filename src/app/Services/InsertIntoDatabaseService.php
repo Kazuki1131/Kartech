@@ -6,7 +6,7 @@ namespace App\Services;
 
 use DB;
 use Auth;
-use App\Models\{Customer, Survey, VisitedRecord, Menu};
+use App\Models\{Customer, Survey, VisitedRecord, Menu, ConsentForm};
 use App\Services\CustomersIndexDataService;
 
 final class InsertIntoDatabaseService
@@ -149,5 +149,13 @@ final class InsertIntoDatabaseService
         $this->visitedRecords($request);
         $this->photos($request, $this->visitedRecordId);
         $this->salesHistories($request, $this->visitedRecordId);
+    }
+
+    public function consentForms($request)
+    {
+        DB::table('consent_forms')->insert([
+            'shop_id' => Auth::id(),
+            'content' => $request->content
+        ]);
     }
 }
