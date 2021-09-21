@@ -7,17 +7,17 @@
             {{ session('flash_message') }}
         </div>
     @endif
-    @if (empty($customers) && $customers->count() === 0)
+    @if (isset($keyword) && $customers->count() === 0)
         <div class="alert bg-origin-body text-center">該当する顧客は0件でした。</div>
     @endif
     @foreach ($errors->all() as $message)
-    <div>{{ $message }}</div>
+    <div class="alert text-center bg-origin-body">{{ $message }}</div>
     @endforeach
     <form action="{{ route('customers.search') }}" method="GET">
         <div class="form-inline">
             <select name="searchColumn" class="form-control" style="width: 150px;">
-                <option value="control_number" {{ old('searchColumn', $searchColumn ?? '') === "control_number" ? "selected" : '' }}>顧客番号</option>
-                <option value="name" {{ old('searchColumn', $searchColumn ?? '') === "name" ? "selected" : '' }}>名前</option>
+                <option value="control_number" {{ $searchColumn ?? '' === "control_number" ? "selected" : '' }}>顧客番号</option>
+                <option value="name" {{ $searchColumn ?? '' === "name" ? "selected" : '' }}>名前</option>
             </select>
             <label>で絞り込む</label>
         </div>
