@@ -15,8 +15,10 @@
                 {{ $customer->name ?? '' }}（{{ $customer->name_kana ?? ''}}）
         </div>
         <div class="card-body h6 mb-0">
-            <h2 class="text-center title">ー 基本情報 ー</h2>
-            <a href="{{ route('customers.edit', ['customer' => $customer]) }}" class="float-right">編集</a>
+            <div class="text-center">
+                <h2 class="d-inline-block title">ー 基本情報 ー</h2>
+                <a href="{{ route('customers.edit', ['customer' => $customer]) }}" class="float-right text-brown">編集</a>
+            </div>
             <div class="row">
                 <div class="col-md-6">
                     <ul>

@@ -50,29 +50,29 @@
                     @foreach ($customers as $customer)
                         <tr>
                             <th scope="row">
-                                <a href="{{ route('customers.show', ['customer' => $customer]) }}">{{ $customer->control_number }}</a>
+                                <a href="{{ route('customers.show', $customer) }}">{{ $customer->control_number }}</a>
                             </th>
                             <td>
-                                <a href="{{ route('customers.show', ['customer' => $customer]) }}">{{ $customer->name_kana }}</a>
+                                <a href="{{ route('customers.show', $customer) }}">{{ $customer->name_kana }}</a>
                             </td>
                             <td>
-                                <a href="{{ route('customers.show', ['customer' => $customer]) }}">
+                                <a href="{{ route('customers.show', $customer) }}">
                                     {{ $customer->birthday
                                     ? $customer->birthday . '（' . \Carbon\Carbon::parse($customer->birthday)->age . '歳）'
                                     : '未登録'}}
                                 </a>
                             </td>
                             <td>
-                                <a href="{{ route('customers.show', ['customer' => $customer]) }}">{{ $visitedDates[$customer->id][0] ?? ''}}</a>
+                                <a href="{{ route('customers.show', $customer) }}">{{ $visitedDates[$customer->id][0] ?? ''}}</a>
                                 </td>
                             <td>
-                                <a href="{{ route('customers.show', ['customer' => $customer]) }}">{{ count($visitedDates[$customer->id] ?? []) }}回</a>
+                                <a href="{{ route('customers.show', $customer) }}">{{ count($visitedDates[$customer->id] ?? []) }}回</a>
                             </td>
                             <td>
-                                <a href="{{ route('customers.show', ['customer' => $customer]) }}">{{ $avgSellingPrices[$customer->id] }}円</a>
+                                <a href="{{ route('customers.show', $customer) }}">{{ $avgSellingPrices[$customer->id] }}円</a>
                             </td>
                             <td>
-                                <a href="{{ route('customers.show', ['customer' => $customer]) }}">{{ $customer->tel }}</a>
+                                <a href="{{ route('customers.show', $customer) }}">{{ $customer->tel }}</a>
                             </td>
                         </tr>
                     @endforeach
