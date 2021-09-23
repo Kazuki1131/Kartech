@@ -4,8 +4,10 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Auth;
+use Illuminate\Validation\Rule;
+use App\Models\Customer;
 
-class CustomerRequest extends FormRequest
+class CustomerUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +26,13 @@ class CustomerRequest extends FormRequest
      */
     public function rules()
     {
+        $customer = Customer::where([
+            ['id', $this->id],
+            ['shop_id', Auth::id()]
+        ])->get();
+
         return [
+            'control_number' => ['required', 'max:8', Rule::unique('customers')->ignore(intval($this->id))->where('shop_id', Auth::id())],
             'name' => 'required|string|max:30',
             'name_kana' => ['required', 'string', 'max:30','regex:/^[ァ-ヾ]+$/u'],
             'gender' => 'nullable|digits:1',
@@ -32,16 +40,13 @@ class CustomerRequest extends FormRequest
             'tel' => 'required|digits_between:8,11',
             'email' => 'nullable|email',
             'memo' => 'nullable|string|max:1000',
-            'answer_text.*' => 'nullable|string|max:1000',
-            'answer_select.*' => 'nullable|string|max:100',
-            'answer_check.*.*' => 'nullable|string|max:100',
-            'agree' => 'accepted'
         ];
     }
 
     public function attributes()
     {
         return [
+            'control_number' => '顧客番号',
             'name' => 'お客様名',
             'name_kana' => 'お客様名(カナ)',
             'gender' => '性別',
@@ -49,9 +54,6 @@ class CustomerRequest extends FormRequest
             'tel' => '電話番号',
             'email' => 'メールアドレス',
             'memo' => 'メモ',
-            'answer_text.*' => '回答',
-            'answer_select.*' => '回答',
-            'answer_check.*.*' => '回答',
         ];
     }
 
@@ -59,7 +61,6 @@ class CustomerRequest extends FormRequest
     {
         return [
             'name_kana.regex' => 'お客様名(カナ)にはカタカナを入力してください。',
-            'agree.accepted' => '「同意する」にチェックを入れてください。',
         ];
     }
 }
