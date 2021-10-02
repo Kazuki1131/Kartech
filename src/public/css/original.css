@@ -31,14 +31,17 @@ label,
 .jumbotron-title {
     font-size: 5vw;
     font-weight: bold;
-    margin-top: 7vh;
+    color: rgb(255, 248, 231);
+    -webkit-text-stroke: 3px rgb(83, 83, 83);
 }
 
 .jumbotron-text {
     font-size: 2vw;
     font-weight: bold;
-    color: rgba(116, 90, 73, 0.623);
+    color: rgb(255, 238, 226);
     margin-top: 2vh;
+    background-color: rgba(128, 128, 128, 0.581);
+    padding: 0 10px;
 }
 
 .relative {
@@ -131,6 +134,28 @@ footer {
     background-color: transparent;
 }
 
+.bg-img {
+    background-image: url(https://kartech.s3.ap-northeast-1.amazonaws.com/images/1ec8356351721b9f5697b3f92cb6b69b_m.jpg),
+        url(https://kartech.s3.ap-northeast-1.amazonaws.com/images/salon.jpeg);
+    background-size: 50% auto, 50% auto;
+    background-position: left top, right top;
+    background-repeat: no-repeat, no-repeat;
+    width: 100%;
+    height: 33vw;
+    text-align: center;
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.4);
+    background-blend-mode: lighten;
+}
+
+.absolute-top {
+    position: absolute;
+    top: 50%; /*親要素を起点に上から50%*/
+    left: 50%; /*親要素を起点に左から50%*/
+    transform: translateY(-50%) translateX(-50%); /*要素の大きさの半分ずつを戻す*/
+    -webkit-transform: translateY(-50%) translateX(-50%);
+}
+
 .btn-origin {
     display: inline-block;
     color: #ffffff;
@@ -146,7 +171,7 @@ footer {
 .btn-origin-lg {
     display: inline-block;
     color: #ffffff;
-    background-color: #6d590069;
+    background-color: #695237d3;
     font-family: "Arial";
     font-weight: 500;
     font-size: 1.5vw;
@@ -154,6 +179,8 @@ footer {
     border-radius: 3rem;
     padding: 1vh 2vw;
     margin-top: 4vh;
+    margin-right: 40px;
+    margin-left: 10px;
     text-align: center;
 }
 
@@ -196,7 +223,7 @@ footer {
 }
 
 .bg-guest-login {
-    background-color: gray;
+    background-color: rgba(128, 128, 128, 0.505);
 }
 
 a:link[class="btn-origin-lg"],
@@ -296,7 +323,6 @@ table.sample td a {
 
 @media screen and (max-width: 1024px) {
     main {
-        padding-top: 60px;
         padding-bottom: 10px;
     }
 
@@ -332,33 +358,61 @@ table.sample td a {
         font-size: 15px;
     }
 
+    .top-title {
+        font-size: 3.5vw;
+    }
+
     .top-text {
         text-align: center;
     }
 
+    .bg-img {
+        background-image: url(https://kartech.s3.ap-northeast-1.amazonaws.com/images/salon.jpeg);
+        background-size: 100% auto;
+        background-position: left top;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 60vw;
+    }
+
+    .absolute-top {
+        top: 20%; /*親要素を起点に上から50%*/
+        left: 8%; /*親要素を起点に左から50%*/
+        transform: unset;
+        -webkit-transform: unset;
+        margin: auto;
+    }
+
     .btn-origin,
-    .btn-origin-top,
     .btn-origin-return {
         font-size: 15px;
         padding: 5px 15px;
     }
 
+    .btn-origin-top {
+        font-size: 10px;
+        padding: 3px 10px;
+    }
     .btn-origin-search {
         font-size: 15px;
         padding: 5px 15px;
     }
 
     .btn-origin-lg {
-        font-size: 5vw;
+        font-size: 3vw;
         padding: 1vh 5vw;
+        margin-right: 20px;
     }
 
     .jumbotron-title {
-        font-size: 7vw;
+        font-size: 6vw;
+        -webkit-text-stroke: 1px rgb(83, 83, 83);
     }
 
     .jumbotron-text {
-        font-size: 5vw;
+        font-size: 3vw;
+        width: 75%;
+        margin: 0 auto;
     }
 
     .card-head-origin {

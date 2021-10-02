@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="jumbotron jumbotron-fluid bg-origin-body">
-    <div class="container text-center">
-        <h1 class="jumbotron-title">美容系サロンのための<br>顧客管理アプリ。</h1>
+<div class="bg-img">
+    <div class="absolute-top">
+        <h1 class="jumbotron-title">美容サロンのための<br>顧客管理アプリ。</h1>
         <div class="jumbotron-text">管理と分析をもっとスマートに。</div>
         @guest
         <a class="btn-origin-lg" href="{{ route('register') }}">無料ユーザー登録</a>
