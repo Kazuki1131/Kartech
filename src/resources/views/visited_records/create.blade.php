@@ -6,11 +6,12 @@
     <div class="card mx-auto w-100 bg-origin-card">
         <div class="card-header card-head-origin">来店記録の作成</div>
         <div class="card-body mx-auto w-75">
+            <p><span class="text-danger">*</span>入力必須</p>
             <form action="{{ route('visited_records.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" value="{{ $customerId }}" name="customer_id">
                 <div class="form-group mt-4">
-                    <label for="visited_at" class="mb-0">来店日</label>
+                    <label for="visited_at" class="mb-0"><span class="text-danger">*</span>来店日</label>
                     <input type="date" class="form-control" id="visited_at" value="{{ old('visited_at') }}"
                     name="visited_at" style="width: 180px">
                 </div>
