@@ -26,7 +26,7 @@ class VisitedRecordRequest extends FormRequest
     {
         return [
             'customer_id' => 'required|integer',
-            'visited_at' => 'nullable|date',
+            'visited_at' => 'required|date',
             'menus.*' => 'nullable|integer',
             'images.*' => 'nullable|image|max:30000',
             'memo' => 'nullable|string|max:1000',
