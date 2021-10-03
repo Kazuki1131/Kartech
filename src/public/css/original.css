@@ -363,7 +363,12 @@ table.sample td a {
     }
 
     .top-text {
+        font-size: 2vw;
         text-align: center;
+    }
+
+    .top-text-center {
+        font-size: 2vw;
     }
 
     .bg-img {
@@ -380,7 +385,6 @@ table.sample td a {
         left: 8%; /*親要素を起点に左から50%*/
         transform: unset;
         -webkit-transform: unset;
-        margin: auto;
     }
 
     .btn-origin,
@@ -390,7 +394,7 @@ table.sample td a {
     }
 
     .btn-origin-top {
-        font-size: 10px;
+        font-size: 2vw;
         padding: 3px 10px;
     }
     .btn-origin-search {
