@@ -67,14 +67,15 @@
                                 <a class="dropdown-item" href="{{ route('customers.create') }}" target="_blank" rel="noopener">顧客新規追加</a>
                             </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('surveys.create') }}">お客様アンケート</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('menus.create') }}">提供メニュー</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('consent_forms.create') }}">同意書作成</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                設定
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('surveys.create') }}">お客様アンケート作成</a>
+                                <a class="dropdown-item" href="{{ route('menus.create') }}" target="_blank" rel="noopener">提供メニュー登録</a>
+                                <a class="dropdown-item" href="{{ route('consent_forms.create') }}" target="_blank" rel="noopener">サービス提供同意書の作成</a>
+                            </div>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
