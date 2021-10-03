@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\MenuRequest;
 use App\Services\InsertIntoDatabaseService;
 
 class MenuController extends Controller
@@ -33,7 +34,7 @@ class MenuController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, InsertIntoDatabaseService $insertService)
+    public function store(MenuRequest $request, InsertIntoDatabaseService $insertService)
     {
         $insertService->menus($request);
         return redirect()->route('menus.create')->with('flash_message', 'メニューが登録されました。');
