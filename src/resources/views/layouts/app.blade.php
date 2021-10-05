@@ -73,8 +73,8 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('surveys.create') }}">お客様アンケート作成</a>
-                                <a class="dropdown-item" href="{{ route('menus.create') }}" target="_blank" rel="noopener">提供メニュー登録</a>
-                                <a class="dropdown-item" href="{{ route('consent_forms.create') }}" target="_blank" rel="noopener">サービス提供同意書の作成</a>
+                                <a class="dropdown-item" href="{{ route('menus.create') }}">提供メニュー登録</a>
+                                <a class="dropdown-item" href="{{ route('consent_forms.create') }}">サービス提供同意書の作成</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">

@@ -124,7 +124,7 @@
                                         <span>&times;</span>
                                     </button>
                                 </div>
-                                <div class="modal-body text">{{ $consentForm }}</div>
+                                <div class="modal-body text">@php echo nl2br($consentForm) @endphp</div>
                             </div>
                         </div>
                     </div>
