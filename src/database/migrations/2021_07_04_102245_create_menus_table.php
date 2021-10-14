@@ -18,7 +18,7 @@ class CreateMenusTable extends Migration
             $table->bigInteger('shop_id')->unsigned();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->integer('price')->unsigned();
+            $table->integer('price');
             $table->timestamps();
 
             //外部キー制約
