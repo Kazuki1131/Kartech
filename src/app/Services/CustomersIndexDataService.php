@@ -67,7 +67,9 @@ final class CustomersIndexDataService
 
     public function searchedCustomersDataList($request)
     {
-        if ($request->searchColumn === 'name') {
+        if ($request->keyword === null) {
+            $this->customers = Customer::where('shop_id', Auth::id())->paginate(10);
+        } elseif ($request->searchColumn === 'name') {
             $this->customers = Customer::where([
                     ['shop_id', Auth::id()],
                     [$request->searchColumn, 'like', '%' . $request->keyword . '%']
