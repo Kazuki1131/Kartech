@@ -35,7 +35,7 @@
                 <div class="col-md-6">
                     <ul>
                         <li class="origin-li">最終来店日：{{ $visitedRecords[0]->visited_at ?? '' }}</li>
-                        <li class="origin-li">総来店回数：{{ count($visitedRecords ?? []) }}回</li>
+                        <li class="origin-li">総来店回数：{{ $numberOfVisits ?? 0 }}回</li>
                         <li class="origin-li">平均単価：{{ $avgPurchasePrices ?? 0 }}円</li>
                         <li class="origin-li">メモ：{{ $customer->memo ?? '未登録' }}</li>
                     </ul>
