@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<div class="container pb-5">
+<div class="container py-5">
     @if (session('flash_message'))
         <div class="alert bg-origin-body text-center">
             {{ session('flash_message') }}
