@@ -138,7 +138,9 @@
                 @else
                     <input type="hidden" name="agree" value="yes">
                 @endunless
-                <div class="text-center text mb-4">入力が終わりましたらスタッフにお知らせください。</div>
+                <div class="mb-4 text-center">
+                    <span class="text border-dark border-bottom">入力が終わりましたらスタッフにお知らせください。</span>
+                </div>
                 <button type="submit" class="btn-origin d-block mx-auto mt-4">完了</button>
             </form>
         </div>

@@ -2,14 +2,16 @@
 
 @section('content')
 <div class="bg-img">
-    <div class="absolute-top">
+    <div class="absolute-jumbotron">
         <h1 class="jumbotron-title">美容サロンのための<br>顧客管理アプリ。</h1>
         <div class="jumbotron-text">管理と分析をもっとスマートに。</div>
-        @guest
-        <a class="btn-origin-lg" href="{{ route('register') }}">無料ユーザー登録</a>
-        <a href="{{ route('login.guest') }}" class="btn-origin-lg bg-guest-login">ゲストログイン</a>
-        @endguest
     </div>
+@guest
+    <div class="absolute-button">
+        <a href="{{ route('register') }}" class="btn-origin-register">無料ユーザー登録</a>
+        <a href="{{ route('login') }}" class="btn-origin-login">ログイン</a>
+    </div>
+@endguest
 </div>
 <div class="container-fluid text-center">
     <section class="row align-items-center">

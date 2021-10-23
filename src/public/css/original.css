@@ -148,12 +148,20 @@ footer {
     background-blend-mode: lighten;
 }
 
-.absolute-top {
+.absolute-jumbotron {
     position: absolute;
     top: 50%; /*親要素を起点に上から50%*/
     left: 50%; /*親要素を起点に左から50%*/
     transform: translateY(-50%) translateX(-50%); /*要素の大きさの半分ずつを戻す*/
     -webkit-transform: translateY(-50%) translateX(-50%);
+}
+
+.absolute-button {
+    position: absolute;
+    top: 85%; /*親要素を起点に上から85%*/
+    left: 45%; /*親要素を起点に左から50%*/
+    transform: translateY(-50%) translateX(-50%); /*要素の大きさの半分ずつを戻す*/
+    -webkit-transform: translateY(-50%) translateX(-45%);
 }
 
 .btn-origin {
@@ -168,19 +176,32 @@ footer {
     padding: 5px 13px;
 }
 
-.btn-origin-lg {
+.btn-origin-login {
     display: inline-block;
     color: #ffffff;
-    background-color: #695237d3;
+    background-color: rgba(128, 128, 128, 0.718);
     font-family: "Arial";
     font-weight: 500;
     font-size: 1.5vw;
     border: 1px solid rgba(255, 255, 255, 0.793);
     border-radius: 3rem;
     padding: 1vh 2vw;
-    margin-top: 4vh;
-    margin-right: 40px;
-    margin-left: 10px;
+    margin-left: 3vw;
+    text-align: center;
+}
+
+.btn-origin-register {
+    display: inline-block;
+    color: #ffffff;
+    background-color: #695237d3;
+    font-family: "Arial";
+    font-weight: 500;
+    font-size: 1.4vw;
+    border: 1px solid rgba(255, 255, 255, 0.793);
+    border-radius: 3rem;
+    padding: 1vh 2vw;
+    margin-right: 3vw;
+    margin-left: 2vw;
     text-align: center;
 }
 
@@ -220,10 +241,6 @@ footer {
     border: 1px solid transparent;
     border-radius: 0.3rem;
     padding: 2px 10px;
-}
-
-.bg-guest-login {
-    background-color: rgba(128, 128, 128, 0.505);
 }
 
 a:link[class="btn-origin-lg"],
@@ -380,11 +397,18 @@ table.sample td a {
         height: 60vw;
     }
 
-    .absolute-top {
-        top: 20%; /*親要素を起点に上から50%*/
-        left: 8%; /*親要素を起点に左から50%*/
-        transform: unset;
-        -webkit-transform: unset;
+    .absolute-jumbotron {
+        top: 40%; /*親要素を起点に上から50%*/
+        left: 30%; /*親要素を起点に左から25%*/
+        transform: translateY(-50%) translateX(-15%);
+        -webkit-transform: translateY(-50%) translateX(-10%);
+    }
+
+    .absolute-button {
+        top: 80%; /*親要素を起点に上から50%*/
+        left: 30%; /*親要素を起点に左から25%*/
+        transform: translateY(-50%) translateX(-20%);
+        -webkit-transform: translateY(-50%) translateX(-20%);
     }
 
     .btn-origin,
@@ -402,10 +426,17 @@ table.sample td a {
         padding: 5px 15px;
     }
 
-    .btn-origin-lg {
+    .btn-origin-login {
         font-size: 3vw;
         padding: 1vh 5vw;
-        margin-right: 20px;
+        margin-right: 3vw;
+    }
+
+    .btn-origin-register {
+        font-size: 2.9vw;
+        padding: 1vh 5vw;
+        margin-right: 3vw;
+        margin-left: 2vw;
     }
 
     .jumbotron-title {
@@ -415,7 +446,6 @@ table.sample td a {
 
     .jumbotron-text {
         font-size: 3vw;
-        width: 75%;
         margin: 0 auto;
     }
 

@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container pb-5">
+<div class="container py-5">
     @if (session('flash_message'))
-        <div class="alert bg-origin-body text-center">
-            {{ session('flash_message') }}
-        </div>
+    <div class="alert bg-origin-body text-center">
+        {{ session('flash_message') }}
+    </div>
     @endif
     @if (isset($keyword) && $customers->count() === 0)
-        <div class="alert bg-origin-body text-center">該当する顧客は0件でした。</div>
+    <div class="alert bg-origin-body text-center">該当する顧客は0件でした。</div>
     @endif
     @foreach ($errors->all() as $message)
     <div class="alert text-center bg-origin-body">{{ $message }}</div>
@@ -16,8 +16,8 @@
     <form action="{{ route('customers.search') }}" method="GET">
         <div class="form-inline">
             <select name="searchColumn" class="form-control" style="width: 150px;">
-                <option value="control_number" {{ $searchColumn ?? '' === "control_number" ? "selected" : '' }}>顧客番号</option>
-                <option value="name" {{ $searchColumn ?? '' === "name" ? "selected" : '' }}>名前</option>
+                <option value="control_number" selected>顧客番号</option>
+                <option value="name" {{ isset($searchColumn) ? $searchColumn === "name" ? "selected" : '' : '' }}>名前</option>
             </select>
             <label>で絞り込む</label>
         </div>
