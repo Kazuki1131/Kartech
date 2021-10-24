@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\MenuRequest;
-use App\Services\InsertIntoDatabaseService;
+use App\Services\{InsertIntoDatabaseService, GetMenuListService};
+use App\Models\Menu;
 
 class MenuController extends Controller
 {
@@ -13,9 +14,9 @@ class MenuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(GetMenuListService $menus)
     {
-        //
+        return view('menus.index',['menus' => $menus->getAllMenusInTheShop()]);
     }
 
     /**
@@ -57,9 +58,9 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Menu $menu)
     {
-        //
+        return view('menus.edit', ['menu' => $menu]);
     }
 
     /**
@@ -69,9 +70,10 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(MenuRequest $request, Menu $menu)
     {
-        //
+        $menu->fill($request->all())->save();
+        return redirect()->route('menus.edit', ['menu' => $menu])->with('flash_message', 'メニューを更新しました。');
     }
 
     /**
@@ -82,6 +84,8 @@ class MenuController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $menu = Menu::find($id);
+        $menu->delete();
+        return redirect()->route('menus.index')->with('flash_massage', 'メニューを削除しました');
     }
 }
