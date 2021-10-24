@@ -71,3 +71,7 @@ $(".deleteMultipleAnswer").on("click", function() {
             .remove();
     }
 });
+
+function Check() {
+    return confirm("この操作は取り消せません。削除してもよろしいですか？");
+}
