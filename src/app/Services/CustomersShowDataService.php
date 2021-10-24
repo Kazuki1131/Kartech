@@ -84,6 +84,7 @@ final class CustomersShowDataService
         return [
             'customer' => $customer,
             'avgPurchasePrices' => $this->getAvgSellingPriceOfRequestedCustomer($customer->id),
+            'numberOfVisits' => $this->visitedRecords->total(),
             'visitedRecords' => $this->visitedRecords,
             'imagePaths' => $this->getImagePathsOfRequestedCustomer(),
             'surveyList' => $this->getSurveyOfRequestedCustomer($customer->id),

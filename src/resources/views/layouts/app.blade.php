@@ -34,17 +34,17 @@
                     <h1 class="font-origin-title">Kartech</h1>
                 </a>
         @else
-        <nav class="navbar navbar-expand-lg navbar-light bg-origin-nav">
+        <nav class="navbar navbar-expand-lg navbar-light bg-origin-nav fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="{{ route('customers.index') }}">
                     <h1 class="font-origin-title">Kartech</h1>
                 </a>
         @endguest
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav ml-auto">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav ml-auto">
                     @guest
                         <li class="nav-item mr-4">
                             <a href="{{ route('login.guest') }}" class="nav-link">ゲストログイン</a>
@@ -92,7 +92,7 @@
                                 </form>
                             </div>
                         </li>
-                        @endguest
+                    @endguest
                     </ul>
                 </div>
             </div>

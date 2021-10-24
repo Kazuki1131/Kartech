@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container pb-5">
+<div class="container py-5">
     <a class="btn-origin-return float-right" href="{{ route('customers.index') }}">戻る</a>
     <div class="card mx-auto w-100 bg-origin-card">
         <div class="card-header card-head-origin">来店記録の作成</div>
