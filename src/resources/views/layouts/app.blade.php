@@ -19,10 +19,10 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/original.js') }}" defer></script>
+    <script src="{{ asset('js/original.js') . '?20211024' }}" defer></script>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/original.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/original.css') . '?20211024' }}" rel="stylesheet">
 </head>
 <body class="bg-origin-body">
     <div id="app">
@@ -72,8 +72,8 @@
                                 設定
                             </a>
                             <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('menus.index') }}">提供メニュー設定</a>
                                 <a class="dropdown-item" href="{{ route('surveys.create') }}">お客様アンケート作成</a>
-                                <a class="dropdown-item" href="{{ route('menus.create') }}">提供メニュー登録</a>
                                 <a class="dropdown-item" href="{{ route('consent_forms.create') }}">サービス提供同意書の作成</a>
                             </div>
                         </li>
@@ -100,6 +100,7 @@
         @endunless
     </div>
     <main>
+        @include('layouts.flash_messages')
         @yield('content')
     </main>
     @unless (\Route::is('customers.create'))

@@ -1,18 +1,13 @@
 @extends('layouts.app')
 @section('content')
 <div class="container pb-5">
-    @if (session('flash_message'))
-        <div class="alert bg-origin-body text-center">
-            {{ session('flash_message') }}
-        </div>
-    @endif
     <div class="text-center">
         <p class="inner-left">
             お店で提供しているメニューを登録してください。<br>
             メニューを登録すると、来店記録ページでお客様に提供したメニューを一緒に記録できるようになります。<br>
         </p>
     </div>
-    <a class="btn-origin-return float-right" href="{{ route('customers.index') }}">顧客一覧画面</a>
+    <a class="btn btn-origin-return float-right" href="{{ route('menus.index') }}">登録済みメニューの一覧</a>
     <div class="card mx-auto w-100 bg-origin-card">
         <div class="card-header card-head-origin">メニュー新規登録</div>
         <div class="card-body mx-auto w-75">
@@ -37,12 +32,12 @@
                 <div class="form-group">
                     <label for="description" class="mb-0">メニュー内容</label>
                     <textarea name="description" class="form-control" cols="30" rows="3"
-                    id="description" maxlength="1000" placeholder="メニューの概要を入力してください。"></textarea>
+                    id="description" maxlength="1000" placeholder="メニューの概要を入力してください。">{{old('description')}}</textarea>
                 </div>
                 @error('description')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
-                <button type="submit" class="btn-origin d-block mx-auto mt-4">登録する</button>
+                <button type="submit" class="btn btn-origin d-block mx-auto mt-4">登録する</button>
             </form>
         </div>
     </div>
