@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<div class="container pb-5">
+<div class="container py-5">
     <div class="text-center">
         <p class="inner-left">
             お店で提供しているメニューを登録してください。<br>
