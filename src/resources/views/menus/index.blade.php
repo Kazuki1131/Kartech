@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container pb-5">
+<div class="container py-5">
     <a href="{{ route('menus.create') }}" class="btn btn-origin float-right my-2">メニューを追加</a>
     <div class="table-responsive mt-1">
         <table class="table table-hover text-nowrap sample">

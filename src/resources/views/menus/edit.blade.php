@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container pb-5">
+<div class="container py-5">
     <a class="btn btn-origin-return" href="{{ route('menus.index') }}">登録済みメニューの一覧</a>
     <form name="deleteform" method="POST" action="{{ route('menus.destroy', $menu) }}">
         @method('delete')
