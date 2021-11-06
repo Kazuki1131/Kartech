@@ -37,7 +37,7 @@ class VisitedRecordController extends Controller
      */
     public function store(VisitedRecordStoreRequest $request, InsertIntoDatabaseService $insertService)
     {
-        $insertService->visitedRecordCreate($request->validate());
+        $insertService->visitedRecordCreate($request->validated());
         return redirect()->route('customers.show',['customer' => $request->customer_id])
             ->with('flash_message', '来店記録を追加しました。');
     }
@@ -75,7 +75,7 @@ class VisitedRecordController extends Controller
     {
         $request->fill($request->validate())->save();
         return redirect()->route('customers.show',['customer' => $request->customer_id])
-            ->with('flash_message', '来店記録を追加しました。');
+            ->with('flash_message', '来店記録を更新しました。');
     }
 
     /**
