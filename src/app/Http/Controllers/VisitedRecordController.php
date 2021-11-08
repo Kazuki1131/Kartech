@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\VisitedRecordRequest;
+use App\Http\Requests\{VisitedRecordStoreRequest, VisitedRecordUpdateRequest};
 use App\Services\{InsertIntoDatabaseService, GetMenuListService};
+use App\Models\{VisitedRecord, Photo};
 
 class VisitedRecordController extends Controller
 {
@@ -34,9 +35,9 @@ class VisitedRecordController extends Controller
      * @param  App\Http\Requests\VisitedRecordRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(VisitedRecordRequest $request, InsertIntoDatabaseService $insertService)
+    public function store(VisitedRecordStoreRequest $request, InsertIntoDatabaseService $insertService)
     {
-        $insertService->visitedRecordCreate($request);
+        $insertService->visitedRecordCreate($request->validated());
         return redirect()->route('customers.show',['customer' => $request->customer_id])
             ->with('flash_message', '来店記録を追加しました。');
     }
@@ -58,9 +59,9 @@ class VisitedRecordController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(VisitedRecord $visitedRecord)
     {
-        //
+        return view('visited_records.edit', ['visitedRecord' => $visitedRecord]);
     }
 
     /**
@@ -70,9 +71,11 @@ class VisitedRecordController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(VisitedRecordUpdateRequest $request)
     {
-        //
+        $request->fill($request->validate())->save();
+        return redirect()->route('customers.show',['customer' => $request->customer_id])
+            ->with('flash_message', '来店記録を更新しました。');
     }
 
     /**
@@ -81,8 +84,10 @@ class VisitedRecordController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(VisitedRecord $visitedRecord)
     {
-        //
+        VisitedRecord::destroy($visitedRecord->id);
+        Photo::where('visited_id', $visitedRecord->id)->delete();
+        return redirect()->route('customers.show', $visitedRecord->customer_id)->with('flash_massage', '来店記録を削除しました。');
     }
 }

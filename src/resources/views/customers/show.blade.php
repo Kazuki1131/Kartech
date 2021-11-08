@@ -17,7 +17,7 @@
         <div class="card-body h6 mb-0">
             <div class="text-center">
                 <h2 class="d-inline-block title">ー 基本情報 ー</h2>
-                <a href="{{ route('customers.edit', ['customer' => $customer]) }}" class="float-right text-brown">編集</a>
+                <a href="{{ route('customers.edit', $customer) }}" class="float-right text-brown">編集</a>
             </div>
             <div class="row">
                 <div class="col-md-6">
@@ -79,8 +79,10 @@
                 @foreach ($visitedRecords as $visitedRecord)
                     @foreach ($imagePaths as $recordId => $imagePath)
                         @if ($visitedRecord->id === $recordId)
-                            <div class="h4 ml-2 subtitle">
-                                【{{ $visitedRecord->visited_at ?? '来店日未登録' }}】
+                            <div class="d-inline-block h4 ml-2 subtitle">
+                                <a href="{{ route('visited_records.edit', $visitedRecord) }}" class="float-right">
+                                    【{{ $visitedRecord->visited_at ?? '来店日未登録' }}】
+                                </a>
                             </div>
                             <div class="image">
                                 @foreach ($imagePath as $image)
@@ -91,8 +93,10 @@
                     @endforeach
                     <div class="row ml-2 my-4">
                         <div class="col-md-6 mb-4">
-                            <div class="subtitle">- 接客メモ -</div>
-                            <div class="ml-2 text">{{ $visitedRecord->memo ?? '未登録' }}</div>
+                            <a href="{{ route('visited_records.edit', $visitedRecord) }}">
+                                <div class="subtitle">- 接客メモ -</div>
+                                <div class="ml-2 text">{{ $visitedRecord->memo ?? '未登録' }}</div>
+                            </a>
                         </div>
                         <div class="col-md-6 mb-4">
                             <div class="subtitle">- 提供したサービス -</div>
